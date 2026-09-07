@@ -20,7 +20,7 @@ description: Get paginated list of all supported fund symbols with code and name
 python <RUN_PY> fund-support-symbols-all-funds-paginated --page 1 --page-size 20
 ```
 
-`<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。脚本输出带分页信息的 JSON，每项含 `institution_code`（基金代码）和 `institution_name`（基金名称），以表格展示。
+`<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。脚本输出带分页信息的 JSON，每项含 `fund_code`（基金代码）和 `fund_name`（基金名称），以表格展示。
 
 ## 注意
 

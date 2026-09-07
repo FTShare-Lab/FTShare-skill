@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""查询指定基金在指定区间的累计收益率时间序列"""
+"""查询同花顺行业成分股列表"""
 import argparse
 import json
 import sys
@@ -38,19 +38,29 @@ def safe_urlopen(req_or_url):
         req_or_url = urllib.request.Request(str(req_or_url), headers=_REQUEST_HEADERS, method="GET")
     return SAFE_URLOPENER.open(req_or_url)
 
-VALID_CAL_TYPES = ["1M", "3M", "6M", "1Y", "3Y", "5Y", "YTD"]
 
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询基金累计收益率")
-    parser.add_argument("--fund-code", required=True, help="6 位数字基金代码，如 159619")
-    parser.add_argument("--cal-type", required=True, choices=VALID_CAL_TYPES,
-                        help="区间类型：1M / 3M / 6M / 1Y / 3Y / 5Y / YTD")
+    parser = argparse.ArgumentParser(description="查询同花顺行业成分股列表")
+    parser.add_argument("--industry-code", default=None, help="同花顺行业代码，精确匹配，如 881157")
+    parser.add_argument("--industry-name", default=None, help="同花顺行业名称，精确匹配，如 证券")
+    parser.add_argument("--stock-code", default=None, help="股票代码，精确匹配，如 600905")
+    parser.add_argument("--stock-name", default=None, help="股票名称，精确匹配，如 三峡能源")
+    parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始（默认 1）")
+    parser.add_argument("--page-size", type=int, default=100, help="每页数量，默认 100，最大 1000")
     args = parser.parse_args()
 
-    params = {"fund_code": args.fund_code, "cal-type": args.cal_type}
-    url = f"{BASE_URL}/api/v1/market/data/fund/fund-cal-return?" + urllib.parse.urlencode(params)
+    params = {
+        "industry_code": args.industry_code,
+        "industry_name": args.industry_name,
+        "stock_code": args.stock_code,
+        "stock_name": args.stock_name,
+        "page": args.page,
+        "page_size": args.page_size,
+    }
+    params = {key: value for key, value in params.items() if value is not None}
+    url = f"{BASE_URL}/api/v1/market/data/ths-industry-constituents?" + urllib.parse.urlencode(params)
 
     try:
         with safe_urlopen(url) as resp:

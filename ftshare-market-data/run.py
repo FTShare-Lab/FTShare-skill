@@ -14,7 +14,7 @@ ftshare-market-data 统一调度入口。
     python run.py semantic-search-news --query 人工智能
     python run.py cb-lists
     python run.py etf-pcfs --date 20260309
-    python run.py fund-basicinfo-single-fund --institution-code 000001
+    python run.py fund-basicinfo-single-fund --fund-code 000001
     python run.py hk-candlesticks --trade-code 00700.HK --interval-unit day --until-date 2026-03-24 --since-date 2026-03-01 --limit 20
     python run.py index-weight-summary --page 1 --page-size 20
     python run.py index-weight-list --index-code 000300 --page 1 --page-size 20
