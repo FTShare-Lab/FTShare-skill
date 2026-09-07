@@ -44,12 +44,12 @@ VALID_CAL_TYPES = ["1M", "3M", "6M", "1Y", "3Y", "5Y", "YTD"]
 def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询基金累计收益率")
-    parser.add_argument("--institution-code", required=True, help="6 位数字基金代码，如 159619")
+    parser.add_argument("--fund-code", required=True, help="6 位数字基金代码，如 159619")
     parser.add_argument("--cal-type", required=True, choices=VALID_CAL_TYPES,
                         help="区间类型：1M / 3M / 6M / 1Y / 3Y / 5Y / YTD")
     args = parser.parse_args()
 
-    params = {"institution_code": args.institution_code, "cal-type": args.cal_type}
+    params = {"fund_code": args.fund_code, "cal-type": args.cal_type}
     url = f"{BASE_URL}/api/v1/market/data/fund/fund-cal-return?" + urllib.parse.urlencode(params)
 
     try:

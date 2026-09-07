@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""查询指定基金的基础信息"""
+"""查询基金基础信息（分页）"""
 import argparse
 import json
 import sys
@@ -42,11 +42,14 @@ def safe_urlopen(req_or_url):
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询指定基金基础信息")
-    parser.add_argument("--institution-code", required=True, help="6 位数字基金代码，如 000001")
+    parser = argparse.ArgumentParser(description="查询基金基础信息（分页）")
+    parser.add_argument("--fund-code", default=None, help="6 位数字基金代码，如 000001；不传时返回全市场默认分页")
+    parser.add_argument("--page", type=int, default=None, help="页码，从 1 开始（默认 1）")
+    parser.add_argument("--page-size", type=int, default=None, help="每页记录数，默认 200，最大 500")
     args = parser.parse_args()
 
-    params = {"institution_code": args.institution_code}
+    params = {"fund_code": args.fund_code, "page": args.page, "page_size": args.page_size}
+    params = {key: value for key, value in params.items() if value is not None}
     url = f"{BASE_URL}/api/v1/market/data/fund/fund-basicinfo?" + urllib.parse.urlencode(params)
 
     try:
