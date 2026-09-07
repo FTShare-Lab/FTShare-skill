@@ -138,7 +138,7 @@ python run.py stock-ipos --all
 | **ETF** | `etf-description-all`、`etf-components-all`、`etf-pre-single`、`etf-pcfs`、`etf-adjust-factor`、`etf-minutes`、`etf-minutes-batch`、`etf-realtime-minute-kline`、`etf-realtime-day-kline` |
 | **基金** | `fund-basicinfo-single-fund`、`fund-cal-return-...`、`fund-nav-single-fund-paginated`、`fund-overview-all-funds-paginated`、`fund-support-symbols-all-funds-paginated` |
 | **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all/paginated/download`、`index-weight-summary/list/download` |
-| **板块（东财 / 同花顺）** | `eastmoney-concept-boards`、`eastmoney-board-constituents/daily-ohlc/latest-ohlc`、`10jqk-board-list/kline/all-kline` |
+| **板块（东财 / 同花顺）** | `eastmoney-concept-boards`、`eastmoney-board-constituents/daily-ohlc/latest-ohlc`、`10jqk-board-list/kline/all-kline`、`ths-industry-constituents` |
 | **港股** | `company-hk`、`hk-candlesticks`、`northbound`、`southbound`、`eastmoney-hk-index-daily-kline`、`hsi-daily-weight` |
 | **美股** | `eastmoney-us-stock-list`、`eastmoney-us-stock-daily-ohlc`、`us-basic` |
 | **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
