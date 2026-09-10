@@ -42,6 +42,7 @@ description: 单只股票/ETF/指数/可转债历史 K 线 GET 接口（market.f
 | ts_millis_open | int | 开盘时间戳 | 毫秒 |
 | turnover | string | 成交额 | 元 |
 | volume | int64 | 成交量 | 股/份 |
+| turnover_rate | number | 换手率 | % |
 
 ## 4. 调用方式
 

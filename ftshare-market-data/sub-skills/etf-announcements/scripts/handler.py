@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""东方财富板块资金流（GET /api/v1/market/data/eastmoney-sector-flow）"""
+"""ETF 公告列表（GET /api/v2/market/data/announcements/etf-announcements）"""
 import argparse
 import json
 import sys
@@ -20,9 +20,7 @@ SAFE_URLOPENER = urllib.request.build_opener()
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
-ENDPOINT = "/api/v1/market/data/eastmoney-sector-flow"
-
-BOARD_TYPES = ("industry", "concept", "regional")
+ENDPOINT = "/api/v2/market/data/announcements/etf-announcements"
 
 HEADERS = {
     "X-Client-Name": "ft-claw",
@@ -51,30 +49,20 @@ def safe_urlopen(req_or_url):
 
 
 def build_params(args):
-    params = {}
-    if args.board_code is not None:
-        params["board_code"] = args.board_code
-    if args.board_type is not None:
-        params["board_type"] = args.board_type
-    if args.board_level is not None:
-        params["board_level"] = args.board_level
-    if args.trade_date is not None:
-        params["trade_date"] = args.trade_date
+    params = {"page": args.page, "page_size": args.page_size}
+    if args.etf_code is not None:
+        params["etf_code"] = args.etf_code
     if args.start_date is not None:
         params["start_date"] = args.start_date
     if args.end_date is not None:
         params["end_date"] = args.end_date
-    if args.page is not None:
-        params["page"] = args.page
-    if args.page_size is not None:
-        params["page_size"] = args.page_size
     return params
 
 
-def fetch(params):
-    query = ("?" + urllib.parse.urlencode(params)) if params else ""
+def fetch_page(params):
+    query = urllib.parse.urlencode(params)
     req = urllib.request.Request(
-        f"{BASE_URL}{ENDPOINT}{query}",
+        f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
         method="GET",
     )
@@ -91,22 +79,42 @@ def fetch(params):
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="东方财富板块（行业/概念/地域）日资金流")
-    parser.add_argument("--board-code", dest="board_code", default=None,
-                        help="板块代码，如 BK0488")
-    parser.add_argument("--board-type", dest="board_type", default=None, choices=BOARD_TYPES,
-                        help="板块类型：industry（行业）/concept（概念）/regional（地域）")
-    parser.add_argument("--board-level", dest="board_level", type=int, default=None,
-                        help="行业层级：1=一级、2=二级、3=三级；不传返回全部层级，仅匹配 industry")
-    parser.add_argument("--trade-date", dest="trade_date", default=None, help="交易日 YYYYMMDD")
-    parser.add_argument("--start-date", dest="start_date", default=None, help="区间起始日 YYYYMMDD")
-    parser.add_argument("--end-date", dest="end_date", default=None, help="区间结束日 YYYYMMDD")
-    parser.add_argument("--page", type=int, default=None, help="页码，从 1 开始，默认 1")
-    parser.add_argument("--page-size", dest="page_size", type=int, default=None,
-                        help="每页条数，默认 50，最大 500")
+    parser = argparse.ArgumentParser(
+        description="ETF 公告列表：按标的（--etf-code）或按单日日期（--start-date）查询"
+    )
+    parser.add_argument("--etf-code", dest="etf_code", default=None,
+                        help="ETF 代码，支持裸代码/短后缀/长后缀，如 159915、159915.SZ、510300.XSHG")
+    parser.add_argument("--start-date", dest="start_date", default=None,
+                        help="日期 YYYYMMDD（按日期查询时必填，仅支持单日）")
+    parser.add_argument("--end-date", dest="end_date", default=None,
+                        help="日期 YYYYMMDD；不填默认等于 start_date，且必须等于 start_date")
+    parser.add_argument("--page", type=int, required=True, help="页码（必填）")
+    parser.add_argument("--page-size", dest="page_size", type=int, required=True, help="每页条数（必填）")
+    parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取全量数据")
     args = parser.parse_args()
 
-    print(json.dumps(fetch(build_params(args)), ensure_ascii=False, indent=2))
+    if args.etf_code is None and args.start_date is None:
+        print("必须提供 --etf-code（按标的查）或 --start-date（按日期查）", file=sys.stderr)
+        raise SystemExit(2)
+
+    params = build_params(args)
+    if args.fetch_all:
+        first = fetch_page(params)
+        data = first.get("data") or {}
+        records = list(data.get("records", []))
+        total_pages = data.get("pages") or 1
+        for page in range(2, total_pages + 1):
+            page_data = fetch_page({**params, "page": page})
+            records.extend((page_data.get("data") or {}).get("records", []))
+        result = {
+            "records": records,
+            "pages": total_pages,
+            "total": data.get("total", len(records)),
+        }
+    else:
+        result = fetch_page(params)
+
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

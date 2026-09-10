@@ -21,6 +21,6 @@ description: 按交易日查询股票历史行情截面列表。必填 --trade-d
 所有请求必须设置环境变量 `FTSHARE_API_KEY`；handler 将其作为 `FTSHARE_API_KEY` 请求头发送，并设置 `Content-Type: application/json`。缺失凭据时不会发起请求。
 
 ```bash
-python <RUN_PY> stock-history-list --trade-date 20260829 --page 1 --page-size 5
-python <RUN_PY> stock-history-list --trade-date 20260829 --code 600000.SH --page 1 --page-size 5
+python <RUN_PY> stock-history-list --trade-date 20260909 --page 1 --page-size 5
+python <RUN_PY> stock-history-list --trade-date 20260909 --code 600000.SH --page 1 --page-size 5
 ```

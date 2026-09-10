@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""东方财富板块资金流（GET /api/v1/market/data/eastmoney-sector-flow）"""
+"""ETF 份额变动（GET /api/v2/market/data/etf-share）"""
 import argparse
 import json
 import sys
@@ -20,14 +20,14 @@ SAFE_URLOPENER = urllib.request.build_opener()
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
-ENDPOINT = "/api/v1/market/data/eastmoney-sector-flow"
-
-BOARD_TYPES = ("industry", "concept", "regional")
+ENDPOINT = "/api/v2/market/data/etf-share"
 
 HEADERS = {
     "X-Client-Name": "ft-claw",
     "Content-Type": "application/json",
 }
+
+STATI_PERD = ("日", "季度", "年度", "截止时点", "半年", "全部")
 
 
 def safe_urlopen(req_or_url):
@@ -51,30 +51,22 @@ def safe_urlopen(req_or_url):
 
 
 def build_params(args):
-    params = {}
-    if args.board_code is not None:
-        params["board_code"] = args.board_code
-    if args.board_type is not None:
-        params["board_type"] = args.board_type
-    if args.board_level is not None:
-        params["board_level"] = args.board_level
-    if args.trade_date is not None:
-        params["trade_date"] = args.trade_date
+    params = {"etf_code": args.etf_code}
+    if args.stati_perd is not None:
+        params["stati_perd"] = args.stati_perd
     if args.start_date is not None:
         params["start_date"] = args.start_date
     if args.end_date is not None:
         params["end_date"] = args.end_date
-    if args.page is not None:
-        params["page"] = args.page
-    if args.page_size is not None:
-        params["page_size"] = args.page_size
+    params["page"] = args.page
+    params["page_size"] = args.page_size
     return params
 
 
-def fetch(params):
-    query = ("?" + urllib.parse.urlencode(params)) if params else ""
+def fetch_page(params):
+    query = urllib.parse.urlencode(params)
     req = urllib.request.Request(
-        f"{BASE_URL}{ENDPOINT}{query}",
+        f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
         method="GET",
     )
@@ -91,22 +83,39 @@ def fetch(params):
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="东方财富板块（行业/概念/地域）日资金流")
-    parser.add_argument("--board-code", dest="board_code", default=None,
-                        help="板块代码，如 BK0488")
-    parser.add_argument("--board-type", dest="board_type", default=None, choices=BOARD_TYPES,
-                        help="板块类型：industry（行业）/concept（概念）/regional（地域）")
-    parser.add_argument("--board-level", dest="board_level", type=int, default=None,
-                        help="行业层级：1=一级、2=二级、3=三级；不传返回全部层级，仅匹配 industry")
-    parser.add_argument("--trade-date", dest="trade_date", default=None, help="交易日 YYYYMMDD")
-    parser.add_argument("--start-date", dest="start_date", default=None, help="区间起始日 YYYYMMDD")
-    parser.add_argument("--end-date", dest="end_date", default=None, help="区间结束日 YYYYMMDD")
-    parser.add_argument("--page", type=int, default=None, help="页码，从 1 开始，默认 1")
-    parser.add_argument("--page-size", dest="page_size", type=int, default=None,
-                        help="每页条数，默认 50，最大 500")
+    parser = argparse.ArgumentParser(description="按 ETF 代码分页查询份额变动")
+    parser.add_argument("--etf-code", dest="etf_code", required=True,
+                        help="ETF 代码，如 510300")
+    parser.add_argument("--stati-perd", dest="stati_perd", default=None, choices=STATI_PERD,
+                        help="统计周期：日/季度/年度/截止时点/半年/全部；不传默认全部")
+    parser.add_argument("--start-date", dest="start_date", type=int, default=None,
+                        help="开始日期 YYYYMMDD，按 trade_date 过滤")
+    parser.add_argument("--end-date", dest="end_date", type=int, default=None,
+                        help="结束日期 YYYYMMDD，按 trade_date 过滤")
+    parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始，默认 1")
+    parser.add_argument("--page-size", dest="page_size", type=int, default=50,
+                        help="每页条数，默认 50，最大 200")
+    parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取全量数据")
     args = parser.parse_args()
 
-    print(json.dumps(fetch(build_params(args)), ensure_ascii=False, indent=2))
+    params = build_params(args)
+    if args.fetch_all:
+        first = fetch_page(params)
+        data = first.get("data") or {}
+        items = list(data.get("items", []))
+        total_pages = data.get("total_pages") or 1
+        for page in range(2, total_pages + 1):
+            page_data = fetch_page({**params, "page": page})
+            items.extend((page_data.get("data") or {}).get("items", []))
+        result = {
+            "items": items,
+            "total_pages": total_pages,
+            "total_items": data.get("total_items", len(items)),
+        }
+    else:
+        result = fetch_page(params)
+
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

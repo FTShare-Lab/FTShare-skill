@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""东方财富板块资金流（GET /api/v1/market/data/eastmoney-sector-flow）"""
+"""期货行情：期货合约日/周/月/季/年 K 线（GET /api/v1/market/data/futures/kline）"""
 import argparse
 import json
 import sys
@@ -20,9 +20,15 @@ SAFE_URLOPENER = urllib.request.build_opener()
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
-ENDPOINT = "/api/v1/market/data/eastmoney-sector-flow"
+ENDPOINT = "/api/v1/market/data/futures/kline"
 
-BOARD_TYPES = ("industry", "concept", "regional")
+INTERVALS = (
+    "daily", "1d",
+    "weekly", "1w", "week",
+    "monthly", "1mo", "month",
+    "quarterly", "1q", "quarter",
+    "yearly", "1y", "year",
+)
 
 HEADERS = {
     "X-Client-Name": "ft-claw",
@@ -51,30 +57,23 @@ def safe_urlopen(req_or_url):
 
 
 def build_params(args):
-    params = {}
-    if args.board_code is not None:
-        params["board_code"] = args.board_code
-    if args.board_type is not None:
-        params["board_type"] = args.board_type
-    if args.board_level is not None:
-        params["board_level"] = args.board_level
-    if args.trade_date is not None:
-        params["trade_date"] = args.trade_date
-    if args.start_date is not None:
-        params["start_date"] = args.start_date
-    if args.end_date is not None:
-        params["end_date"] = args.end_date
-    if args.page is not None:
-        params["page"] = args.page
-    if args.page_size is not None:
-        params["page_size"] = args.page_size
+    params = {
+        "symbol": args.symbol,
+        "interval": args.interval,
+    }
+    if args.start is not None:
+        params["start"] = args.start
+    if args.end is not None:
+        params["end"] = args.end
+    if args.limit is not None:
+        params["limit"] = args.limit
     return params
 
 
 def fetch(params):
-    query = ("?" + urllib.parse.urlencode(params)) if params else ""
+    query = urllib.parse.urlencode(params)
     req = urllib.request.Request(
-        f"{BASE_URL}{ENDPOINT}{query}",
+        f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
         method="GET",
     )
@@ -91,20 +90,22 @@ def fetch(params):
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="东方财富板块（行业/概念/地域）日资金流")
-    parser.add_argument("--board-code", dest="board_code", default=None,
-                        help="板块代码，如 BK0488")
-    parser.add_argument("--board-type", dest="board_type", default=None, choices=BOARD_TYPES,
-                        help="板块类型：industry（行业）/concept（概念）/regional（地域）")
-    parser.add_argument("--board-level", dest="board_level", type=int, default=None,
-                        help="行业层级：1=一级、2=二级、3=三级；不传返回全部层级，仅匹配 industry")
-    parser.add_argument("--trade-date", dest="trade_date", default=None, help="交易日 YYYYMMDD")
-    parser.add_argument("--start-date", dest="start_date", default=None, help="区间起始日 YYYYMMDD")
-    parser.add_argument("--end-date", dest="end_date", default=None, help="区间结束日 YYYYMMDD")
-    parser.add_argument("--page", type=int, default=None, help="页码，从 1 开始，默认 1")
-    parser.add_argument("--page-size", dest="page_size", type=int, default=None,
-                        help="每页条数，默认 50，最大 500")
+    parser = argparse.ArgumentParser(description="查询期货合约日/周/月/季/年 K 线")
+    parser.add_argument("--symbol", required=True,
+                        help="期货合约代码，如 A2605.DCE；支持交易所短后缀")
+    parser.add_argument("--interval", default="daily", choices=INTERVALS,
+                        help="K 线周期，默认 daily；周/月/季/年 K 基于日 K 按北京时间聚合")
+    parser.add_argument("--start", type=int, default=None,
+                        help="起始时间戳（毫秒，闭区间）；可省略时间范围")
+    parser.add_argument("--end", type=int, default=None,
+                        help="结束时间戳（毫秒，闭区间）；不能单独传入")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="返回条数，默认 500；最小值 1，传 0 时按 1 处理")
     args = parser.parse_args()
+
+    if args.end is not None and args.start is None:
+        print("--end 不能单独传入，必须与 --start 同时使用", file=sys.stderr)
+        raise SystemExit(2)
 
     print(json.dumps(fetch(build_params(args)), ensure_ascii=False, indent=2))
 

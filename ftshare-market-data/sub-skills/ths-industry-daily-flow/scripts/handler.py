@@ -1,67 +1,99 @@
 #!/usr/bin/env python3
-import argparse, json, os, sys, urllib.error, urllib.parse, urllib.request
-BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
-ENDPOINT = '/api/v1/market/data/ths-industry-daily-flow'
-SAFE_URLOPENER = urllib.request.build_opener()
-_REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
+"""同花顺行业板块资金流日度（GET /api/v1/market/data/ths-industry-daily-flow）"""
+import argparse
+import json
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+import os
+
 def _require_api_key():
     key = os.environ.get("FTSHARE_API_KEY")
     if not key:
-        print("FTSHARE_API_KEY environment variable is required", file=sys.stderr); raise SystemExit(2)
+        print("FTSHARE_API_KEY environment variable is required", file=sys.stderr)
+        raise SystemExit(2)
     return key
-def safe_urlopen(request, timeout=30):
-    url = request.full_url if isinstance(request, urllib.request.Request) else str(request)
-    parsed, base = urllib.parse.urlparse(url), urllib.parse.urlparse(BASE_URL)
-    if parsed.scheme != base.scheme or parsed.netloc != base.netloc:
-        print(f"Invalid URL for safe_urlopen: {url}", file=sys.stderr); raise SystemExit(1)
-    if not isinstance(request, urllib.request.Request): request = urllib.request.Request(url, method="GET")
-    request.add_unredirected_header("FTSHARE_API_KEY", _require_api_key())
-    request.add_unredirected_header("Content-Type", "application/json")
-    return SAFE_URLOPENER.open(request, timeout=timeout)
-def main():
-    key = _require_api_key(); parser = argparse.ArgumentParser(description='同花顺行业板块资金流日度')
-    parser.add_argument("--start_date", required=True)
-    parser.add_argument("--end_date", required=True)
-    parser.add_argument("--sector_name")
-    parser.add_argument("--page")
-    parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--trade_date", required=True)
-    parser.add_argument("--sector_index", required=False)
-    parser.add_argument("--change_pct", required=False)
-    parser.add_argument("--company_count", required=False)
-    parser.add_argument("--inflow", required=False)
-    parser.add_argument("--outflow", required=False)
-    parser.add_argument("--net_amount", required=False)
-    parser.add_argument("--leader_name", required=False)
-    parser.add_argument("--leader_change_pct", required=False)
-    parser.add_argument("--leader_price", required=False)
-    args = parser.parse_args()
+
+
+SAFE_URLOPENER = urllib.request.build_opener()
+
+BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
+_REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
+ENDPOINT = "/api/v1/market/data/ths-industry-daily-flow"
+
+HEADERS = {
+    "X-Client-Name": "ft-claw",
+    "Content-Type": "application/json",
+}
+
+
+def safe_urlopen(req_or_url):
+    if isinstance(req_or_url, urllib.request.Request):
+        url = req_or_url.full_url
+    else:
+        url = str(req_or_url)
+    parsed = urllib.parse.urlparse(url)
+    base_parsed = urllib.parse.urlparse(BASE_URL)
+    if parsed.scheme != base_parsed.scheme or parsed.netloc != base_parsed.netloc:
+        print(f"Invalid URL for safe_urlopen: {url}", file=sys.stderr)
+        sys.exit(1)
+    if not isinstance(req_or_url, urllib.request.Request):
+        req_or_url = urllib.request.Request(str(req_or_url), headers=_REQUEST_HEADERS, method="GET")
+    if isinstance(req_or_url, urllib.request.Request):
+        for key, value in _REQUEST_HEADERS.items():
+            req_or_url.add_unredirected_header(key, value)
+    else:
+        req_or_url = urllib.request.Request(str(req_or_url), headers=_REQUEST_HEADERS, method="GET")
+    return SAFE_URLOPENER.open(req_or_url)
+
+
+def build_params(args):
     params = {}
-    if args.start_date is not None: params["start_date"] = args.start_date
-    if args.end_date is not None: params["end_date"] = args.end_date
-    if args.sector_name is not None: params["sector_name"] = args.sector_name
-    if args.page is not None: params["page"] = args.page
-    if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.sector_name is not None: params["sector_name"] = args.sector_name
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.sector_index is not None: params["sector_index"] = args.sector_index
-    if args.change_pct is not None: params["change_pct"] = args.change_pct
-    if args.company_count is not None: params["company_count"] = args.company_count
-    if args.inflow is not None: params["inflow"] = args.inflow
-    if args.outflow is not None: params["outflow"] = args.outflow
-    if args.net_amount is not None: params["net_amount"] = args.net_amount
-    if args.leader_name is not None: params["leader_name"] = args.leader_name
-    if args.leader_change_pct is not None: params["leader_change_pct"] = args.leader_change_pct
-    if args.leader_price is not None: params["leader_price"] = args.leader_price
+    if args.start_date is not None:
+        params["start_date"] = args.start_date
+    if args.end_date is not None:
+        params["end_date"] = args.end_date
+    if args.board_name is not None:
+        params["board_name"] = args.board_name
+    if args.page is not None:
+        params["page"] = args.page
+    if args.page_size is not None:
+        params["page_size"] = args.page_size
+    return params
+
+
+def fetch(params):
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
-    request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
+    req = urllib.request.Request(
+        f"{BASE_URL}{ENDPOINT}{query}",
+        headers={**HEADERS, **_REQUEST_HEADERS},
+        method="GET",
+    )
     try:
-        with safe_urlopen(request) as response: payload = json.loads(response.read().decode())
-        print(json.dumps(payload, ensure_ascii=False, indent=2))
-    except urllib.error.HTTPError as error:
-        print(f"HTTP {error.code}: {error.read().decode()}", file=sys.stderr); raise SystemExit(1)
-    except urllib.error.URLError as error:
-        print(f"请求失败: {error.reason}", file=sys.stderr); raise SystemExit(1)
-if __name__ == "__main__": main()
+        with safe_urlopen(req) as resp:
+            return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        print(f"HTTP {e.code}: {e.read().decode()}", file=sys.stderr)
+        sys.exit(1)
+    except urllib.error.URLError as e:
+        print(f"Request failed: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def main():
+    _require_api_key()
+    parser = argparse.ArgumentParser(description="同花顺行业板块资金流日度")
+    parser.add_argument("--start-date", dest="start_date", default=None, help="开始日期 YYYYMMDD")
+    parser.add_argument("--end-date", dest="end_date", default=None, help="结束日期 YYYYMMDD")
+    parser.add_argument("--board-name", dest="board_name", default=None,
+                        help="行业板块名称，精确匹配，如 证券；不传返回全部行业板块")
+    parser.add_argument("--page", type=int, default=None, help="页码")
+    parser.add_argument("--page-size", dest="page_size", type=int, default=None, help="每页条数")
+    args = parser.parse_args()
+
+    print(json.dumps(fetch(build_params(args)), ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

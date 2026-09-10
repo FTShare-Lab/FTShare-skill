@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""批量查询多只标的 K 线（GET /api/v2/market/data/stock-candlesticks/batch）"""
+"""批量查询多只 ETF K 线（GET /api/v2/market/data/etf-candlesticks/batch）"""
 import argparse
 import json
 import sys
@@ -20,10 +20,15 @@ SAFE_URLOPENER = urllib.request.build_opener()
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
-ENDPOINT = "/api/v2/market/data/stock-candlesticks/batch"
+ENDPOINT = "/api/v2/market/data/etf-candlesticks/batch"
 
 INTERVAL_UNITS = ("Day", "Week", "Month", "Year")
 ADJUST_KINDS = ("None", "Forward", "Backward")
+
+HEADERS = {
+    "X-Client-Name": "ft-claw",
+    "Content-Type": "application/json",
+}
 
 
 def safe_urlopen(req_or_url):
@@ -46,12 +51,6 @@ def safe_urlopen(req_or_url):
     return SAFE_URLOPENER.open(req_or_url)
 
 
-HEADERS = {
-    "X-Client-Name": "ft-claw",
-    "Content-Type": "application/json",
-}
-
-
 def parse_symbols(raw):
     syms = [s.strip() for s in raw.split(",") if s.strip()]
     if not syms:
@@ -60,8 +59,7 @@ def parse_symbols(raw):
     return syms
 
 
-def build_body(symbols, interval_unit, adjust_kind,
-               since_ts_millis, until_ts_millis, limit):
+def build_query(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_millis, limit):
     body = {
         "symbols": symbols,
         "interval_unit": interval_unit,
@@ -76,14 +74,11 @@ def build_body(symbols, interval_unit, adjust_kind,
     return body
 
 
-def fetch(symbols, interval_unit, adjust_kind,
-          since_ts_millis, until_ts_millis, limit):
-    body = build_body(symbols, interval_unit, adjust_kind,
-                      since_ts_millis, until_ts_millis, limit)
+def fetch(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_millis, limit):
+    body = build_query(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_millis, limit)
     query = urllib.parse.urlencode(body, doseq=True)
-    url = f"{BASE_URL}{ENDPOINT}?{query}"
     req = urllib.request.Request(
-        url,
+        f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
         method="GET",
     )
@@ -91,8 +86,7 @@ def fetch(symbols, interval_unit, adjust_kind,
         with safe_urlopen(req) as resp:
             return json.loads(resp.read().decode())
     except urllib.error.HTTPError as e:
-        msg = e.read().decode()
-        print(f"HTTP {e.code}: {msg}", file=sys.stderr)
+        print(f"HTTP {e.code}: {e.read().decode()}", file=sys.stderr)
         sys.exit(1)
     except urllib.error.URLError as e:
         print(f"Request failed: {e}", file=sys.stderr)
@@ -101,9 +95,9 @@ def fetch(symbols, interval_unit, adjust_kind,
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="批量查询多只标的 K 线（GET 查询参数）")
+    parser = argparse.ArgumentParser(description="批量获取多只 ETF 的历史 K 线（不支持分钟周期）")
     parser.add_argument("--symbols", required=True,
-                        help="标的代码列表，逗号分隔，如 600519.SH,510300.SH,113027.SH,000300.SH；支持长短后缀混用")
+                        help="ETF 代码列表，逗号分隔，如 510300.XSHG,159915.XSHE；也接受 .SH/.SZ 短后缀")
     parser.add_argument("--interval-unit", dest="interval_unit", required=True, type=str.capitalize,
                         choices=INTERVAL_UNITS, help="K 线周期：Day/Week/Month/Year（大小写不敏感，不支持 Minute）")
     parser.add_argument("--adjust-kind", dest="adjust_kind", default="None",
@@ -121,8 +115,8 @@ def main():
         raise SystemExit(2)
 
     symbols = parse_symbols(args.symbols)
-    data = fetch(symbols, args.interval_unit,
-                 args.adjust_kind, args.since_ts_millis, args.until_ts_millis, args.limit)
+    data = fetch(symbols, args.interval_unit, args.adjust_kind,
+                 args.since_ts_millis, args.until_ts_millis, args.limit)
     print(json.dumps(data, ensure_ascii=False, indent=2))
 
 

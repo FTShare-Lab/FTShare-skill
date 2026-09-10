@@ -18,3 +18,5 @@ python <RUN_PY> stock-minutes --symbol 000001.SZ --since-ts-millis 1787189400000
 ```
 
 接口返回 JSON；HTTP 错误输出到 stderr 并以非零状态退出。
+
+响应为数组结构（非分页），每根 K 线字段：open / high / low / close / ts_millis / ts_millis_open / turnover / volume / turnover_rate（换手率）。

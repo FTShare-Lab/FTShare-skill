@@ -1,59 +1,61 @@
 ---
 name: stock-candlesticks-batch
-description: 批量获取多只股票/ETF/可转债/指数 K 线 GET 接口（market.ft.tech，stock-candlesticks/batch）。用户问多只标的的 K 线、批量日 K/周 K/月 K/年 K、混合多类证券的 K 线时使用。必填 --symbols、--interval-unit、--until-ts-millis；可选 --interval-value、--adjust-kind、--since-ts-millis、--limit。
+description: 批量获取多只股票/ETF/可转债/指数 K 线 GET 接口（market.ft.tech，stock-candlesticks/batch）。用户问多只标的的日/周/月/年 K 线、批量开高低收、混合多类证券的 K 线时使用。必填 --symbols、--interval-unit、--since-ts-millis、--until-ts-millis；可选 --adjust-kind、--limit。
 ---
 
-# 批量股票 K 线 - 批量查询多只标的 K 线（stock-candlesticks/batch）
+# 批量股票K线
 
 ## 1. 接口描述
 
 | 项目 | 说明 |
 |------|------|
-| 接口名称 | 批量查询多只标的 K 线（通用） |
+| 接口名称 | 批量股票K线（stock_candlesticks_batch） |
 | 外部接口 | `GET /api/v2/market/data/stock-candlesticks/batch` |
-| 请求方式 | GET（query 参数） |
-| 适用场景 | 一次拉取股票 / ETF / 可转债 / 指数等多只标的的分/日/周/月/年 K 线。响应为嵌套数组 `[[symbol, K线数组], ...]`。通用语义，允许不同证券类别混合查询 |
+| 请求方式 | GET（query 参数，`symbols` 可重复传入） |
+| 适用场景 | 一次批量查询股票 / ETF / 可转债 / 指数等多只标的的历史 K 线（开高低收、成交量、成交额、换手率），支持日/周/月/年周期与前复权/后复权。通用语义，允许不同证券类别混合查询，不做类别校验 |
 
 ## 2. 请求参数
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| symbols | string[] | 是 | 标的代码列表 | 600519.SH,510300.SH,113027.SH,000300.SH | 逗号分隔；可混合股票/ETF/可转债/指数 |
-| interval_unit | string | 是 | 周期单位 | Day | Minute/Day/Week/Month/Year |
-| interval_value | int | 否 | 间隔数值 | 1 | 默认 1；Minute+5 表示 5 分钟 K 线 |
+| symbols | string[] | 是 | 标的代码列表，逗号分隔传给 CLI | 600519.SH,510300.SH,113027.SH,000300.SH | 可混合股票/ETF/可转债/指数；沪市 `.XSHG`/`.SH`、深市 `.XSHE`/`.SZ`、北交所 `.BJSE`/`.BJ`；接口侧以重复 query 参数发送 |
+| interval_unit | string | 是 | 周期单位 | Day | Day/Week/Month/Year，大小写不敏感；**不支持 Minute** |
 | adjust_kind | string | 否 | 复权类型 | Forward | None（默认）/Forward（前复权）/Backward（后复权） |
-| since_ts_millis | int | 否 | 开始时间戳（毫秒） | 1756700000000 | 分钟 K 线与 until 跨度 ≤3 天 |
+| since_ts_millis | int | 是 | 开始时间戳（毫秒） | 1756431000000 | 与 until 的跨度不得超过 12 个日历月；不得晚于 until |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1756791000000 | - |
-| limit | int | 否 | 每个标的返回条数上限 | 2 | 未传 since 和 limit 时每个标的默认最多返回 50 根 |
+| limit | int | 否 | 每个标的返回条数上限 | 3 | 不传时返回请求时间范围内的全部数据 |
 
 ## 3. 响应说明
 
-响应为二元数组列表，每项结构为 `[symbol, K线数组]`：
+外层固定为 `code`（成功 200）/ `message`（成功 `success`）/ `data`（失败时为 `null`）。`data` 为非分页嵌套数组，外层每项为 `[symbol, K线数组]`，每根 K 线字段：
 
-| 字段名 | 类型 | 说明 |
-|--------|------|------|
-| [0] | string | 标的代码；响应统一使用长市场后缀（`.XSHG`/`.XSHE`/`.BJSE`） |
-| [1] | array | 该标的的 K 线数组，字段同单只接口 |
+| 字段名 | 类型 | 说明 | 单位 |
+|--------|------|------|------|
+| symbol | string | 标的代码，响应统一使用 `.SH`、`.SZ`、`.BJ` 短后缀 | - |
+| open / high / low / close | number | 开/高/低/收盘价 | 元 |
+| ts_millis | string | 收盘时间戳 | 毫秒 |
+| ts_millis_open | string | 开盘时间戳 | 毫秒 |
+| turnover | number | 成交额 | 元 |
+| volume | integer | 成交量 | - |
+| turnover_rate | number | 换手率 | % |
 
-K 线单根字段同 `stock-candlesticks`：open / high / low / close / ts_millis / ts_millis_open / turnover / volume。
+注：`open/high/low/close`、`turnover` 在 JSON 中实际以字符串返回（避免精度丢失）；`ts_millis` 为数字。
 
 ## 4. 调用方式
 
 ```bash
-python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,000001.SZ --interval-unit Day --since-ts-millis 1756700000000 --until-ts-millis 1756791000000 --limit 2
-python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH,113027.SH --interval-unit Week --adjust-kind Forward --until-ts-millis 1756791000000 --limit 4
+python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,000001.SZ --interval-unit Day --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 2
+python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH,113027.SH --interval-unit Week --adjust-kind Forward --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 3
 ```
 
-`<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON，请求头已内置 `X-Client-Name: ft-claw`。
+`<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。
 
 ## 5. 注意事项
 
-- `symbols`、`interval_unit`、`until_ts_millis` 必填。
-- `symbols` 用逗号分隔；可混合不同证券类别，不做类别校验。
-- 响应中的 `symbol` 会规范化为长市场后缀。
-- 分钟 K 线（`interval_unit=Minute`）的 `since/until` 跨度硬限制 ≤3 天。
-- `interval_value` 仅在 `interval_unit=Minute` 时生效：不传或传 1 为 1 分钟 K，传 5/15/30/60/120 为对应多分钟 K；其他周期忽略该字段。
-- 多分钟 K 按北京时间的每个交易日分别聚合，不跨交易日；以 5 分钟 K 为例，首根为 09:30—09:35，开高低收取区间首根开盘价、最高价、最低价、末根收盘价，成交量和成交额按区间求和。
-- 默认不复权（None），`Forward` 前复权、`Backward` 后复权。
-- 价格字段 JSON 中为字符串以避免精度丢失。
-- 如仅需单类标的批量查询，推荐使用对应的专用批量接口（`etf-candlesticks-batch` / `convertible-bond-candlesticks-batch` / `index-candlesticks-batch`）。
+- `symbols`、`interval_unit`、`since_ts_millis`、`until_ts_millis` 必填；所有 `symbols` 使用相同周期。
+- 接口仅支持 GET；`symbols` 在查询参数中以重复参数形式发送（`symbols=600519.SH&symbols=000001.SZ`）。
+- 时间跨度最多 12 个日历月；需要更长历史时按窗口分段多次调用。
+- 不支持分钟 K 线；分钟数据请使用 `stock-minutes-batch` 子 skill。
+- 混合证券类别不做校验；换手率仅股票标的有值，ETF/可转债/指数标的当前为 `null`。
+- 输入 `.XSHG`/`.XSHE`/`.BJSE` 长后缀时，响应中的 symbol 会规范化为 `.SH`、`.SZ`、`.BJ` 短后缀。
+- 默认不复权（None）；仅使用历史日 K 数据计算，不含实时行情，实际起始日期以行情数据源覆盖为准。
