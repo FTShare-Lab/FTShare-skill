@@ -33,8 +33,16 @@ python <RUN_PY> etf-realtime-day-kline --symbols 510300.SH
 python <RUN_PY> index-minutes --symbol 000300.SH --since-ts-millis 1787189400000 --until-ts-millis 1787191200000
 python <RUN_PY> stock-reports --stock-code 600036.SH --page 1 --page-size 20
 python <RUN_PY> stock-announcements --stock-code 600000 --page 1 --page-size 20
-python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH --interval-unit Day --until-ts-millis 1787191200000
-python <RUN_PY> etf-minutes-batch --symbols 510300.SH,159915.SZ --since-ts-millis 1787189400000 --until-ts-millis 1787191200000
+python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
+python <RUN_PY> etf-candlesticks-batch --symbols 510300.XSHG,159915.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
+python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
+python <RUN_PY> futures-contract-kline --symbol A2605.DCE --interval daily --limit 5
+python <RUN_PY> etf-pcf-infos --symbol 510300.SH --trade-date 20260909
+python <RUN_PY> etf-net-value --etf-code 510300 --nav-date 20260909
+python <RUN_PY> etf-share --etf-code 510300 --page 1 --page-size 5
+python <RUN_PY> etf-announcements --etf-code 159915 --page 1 --page-size 5
+python <RUN_PY> etf-component-details --symbol 510300.SH
+python <RUN_PY> stock-dividends-effective --symbol 600519.XSHG --page 1 --page-size 20
 python <RUN_PY> executive-holdings-changes --stock-code 600519 --page 1 --page-size 20
 python <RUN_PY> eastmoney-shareholder-changes --symbol 股东增持 --page 1 --page-size 20
 python <RUN_PY> ashare-code-change --trade-code 001872.SZ

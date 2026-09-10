@@ -12,5 +12,5 @@ description: 查询 A 股公告列表。按 stock-code 或日期范围查询，p
 ## 调用示例
 
 ```bash
-python <RUN_PY> stock-announcements --start-date 20260828 --page 1 --page-size 5
+python <RUN_PY> stock-announcements --start-date 20260908 --page 1 --page-size 5
 ```

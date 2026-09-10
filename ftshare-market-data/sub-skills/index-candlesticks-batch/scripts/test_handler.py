@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Tests for stock-candlesticks-batch handler"""
+"""Tests for index-candlesticks-batch handler"""
 import json
 import os
 import sys
 import unittest
-import urllib.error
-from io import BytesIO, StringIO
+from io import StringIO
 from unittest.mock import patch
 import importlib.util
 
@@ -17,13 +16,13 @@ SINCE = "1756431000000"
 UNTIL = "1756791000000"
 
 
-class TestBuildBody(unittest.TestCase):
+class TestBuildQuery(unittest.TestCase):
     def setUp(self):
         spec.loader.exec_module(handler)
 
     def test_required_only(self):
-        body = handler.build_body(["600519.SH"], "Day", "None", 1756431000000, 1756791000000, None)
-        self.assertEqual(body["symbols"], ["600519.SH"])
+        body = handler.build_query(["000300.SH"], "Day", "None", 1756431000000, 1756791000000, None)
+        self.assertEqual(body["symbols"], ["000300.SH"])
         self.assertEqual(body["interval_unit"], "Day")
         self.assertEqual(body["since_ts_millis"], 1756431000000)
         self.assertNotIn("adjust_kind", body)
@@ -32,36 +31,11 @@ class TestBuildBody(unittest.TestCase):
 
     def test_minute_not_allowed(self):
         with self.assertRaises(SystemExit):
-            with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "000300.SH",
                                             "--interval-unit", "Minute",
                                             "--since-ts-millis", SINCE,
                                             "--until-ts-millis", UNTIL]):
                 handler.main()
-
-
-class TestFetch(unittest.TestCase):
-    def setUp(self):
-        spec.loader.exec_module(handler)
-
-    @patch.object(handler, "safe_urlopen")
-    def test_get_to_stock_batch_endpoint(self, mock_open):
-        mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch(["600519.SH", "000001.SZ"], "Day", "None",
-                      1756431000000, 1756791000000, 2)
-        req = mock_open.call_args[0][0]
-        self.assertEqual(req.get_method(), "GET")
-        self.assertIn("/api/v2/market/data/stock-candlesticks/batch", req.full_url)
-        self.assertIn("since_ts_millis=1756431000000", req.full_url)
-        self.assertIsNone(req.data)
-        self.assertEqual(req.headers.get("X-client-name"), "ft-claw")
-
-    @patch.object(handler, "safe_urlopen")
-    def test_http_error_exits(self, mock_open):
-        mock_open.side_effect = urllib.error.HTTPError(
-            "https://fake", 500, "Internal Error", {}, BytesIO(b"server error")
-        )
-        with self.assertRaises(SystemExit):
-            handler.fetch(["600519.SH"], "Day", "None", 1756431000000, 1756791000000, None)
 
 
 class TestMain(unittest.TestCase):
@@ -69,21 +43,26 @@ class TestMain(unittest.TestCase):
         spec.loader.exec_module(handler)
 
     @patch.object(handler, "safe_urlopen")
-    def test_main_emits_json(self, mock_open):
-        mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
+    def test_main_targets_index_route(self, mock_open):
+        mock_open.return_value.__enter__.return_value.read.return_value = (
+            b'{"code":200,"message":"success","data":[["000300.SH",[]]]}'
+        )
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
-            with patch.object(sys, "argv", [
-                "handler.py", "--symbols", "600519.SH,000001.SZ",
-                "--interval-unit", "Day",
-                "--since-ts-millis", SINCE, "--until-ts-millis", UNTIL
-            ]):
-                with patch("sys.stdout", new_callable=StringIO) as fake_out:
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "000300.SH,399001.SZ",
+                                            "--interval-unit", "Day",
+                                            "--since-ts-millis", SINCE,
+                                            "--until-ts-millis", UNTIL]):
+                with patch("sys.stdout", new_callable=StringIO) as out:
                     handler.main()
-                    self.assertEqual(json.loads(fake_out.getvalue()), [])
+                    data = json.loads(out.getvalue())
+                    self.assertEqual(data["data"][0][0], "000300.SH")
+        req = mock_open.call_args[0][0]
+        self.assertIn("/api/v2/market/data/index-candlesticks/batch", req.full_url)
+        self.assertIn("since_ts_millis=1756431000000", req.full_url)
 
     def test_main_requires_since(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
-            with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "000300.SH",
                                             "--interval-unit", "Day",
                                             "--until-ts-millis", UNTIL]):
                 with self.assertRaises(SystemExit):
@@ -91,7 +70,7 @@ class TestMain(unittest.TestCase):
 
     def test_main_rejects_since_after_until(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
-            with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "000300.SH",
                                             "--interval-unit", "Day",
                                             "--since-ts-millis", UNTIL,
                                             "--until-ts-millis", SINCE]):
@@ -102,13 +81,22 @@ class TestMain(unittest.TestCase):
     def test_interval_unit_case_insensitive(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"{}"
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
-            with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "000300.SH",
                                             "--interval-unit", "day",
                                             "--since-ts-millis", SINCE,
                                             "--until-ts-millis", UNTIL]):
                 handler.main()
         req = mock_open.call_args[0][0]
         self.assertIn("interval_unit=Day", req.full_url)
+
+    def test_main_rejects_empty_symbols(self):
+        with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
+            with patch.object(sys, "argv", ["handler.py", "--symbols", " , ",
+                                            "--interval-unit", "Day",
+                                            "--since-ts-millis", SINCE,
+                                            "--until-ts-millis", UNTIL]):
+                with self.assertRaises(SystemExit):
+                    handler.main()
 
 
 if __name__ == "__main__":

@@ -130,18 +130,18 @@ python run.py stock-ipos --all
 | **A 股行情 / 基础** | `stock-list-all-stocks`、`stock-description-all`、`stock-quotes-list`、`stock-ipos`、`eastmoney-all-board-daily-ohlc`、`block-trades`、`margin-trading-details`、`continuous-auction-volume`、`intraday-auction-volume` |
 | **A 股财报 / 业绩** | `stock-income-*`、`stock-balance-*`、`stock-cashflow-*`、`stock-performance-express-*`、`stock-performance-forecast-*` |
 | **A 股股东 / 质押 / 增减持** | `stock-holder-ten`、`stock-holder-ften`、`stock-holder-nums`、`pledge-summary`、`pledge-detail`、`stock-share-chg`、`executive-holdings-changes`、`eastmoney-shareholder-changes` |
-| **A 股公司行动 / 代码与状态** | `shareholder-meeting`、`major-contract-by-date`、`major-contract-by-symbol`、`major-contract-summary`、`ashare-code-change`、`ashare-status-change` |
+| **A 股公司行动 / 代码与状态** | `shareholder-meeting`、`stock-dividends`、`stock-dividends-effective`、`major-contract-by-date`、`major-contract-by-symbol`、`major-contract-summary`、`ashare-code-change`、`ashare-status-change` |
 | **A 股估值 / 千股千评 / 热度 / 资金流** | `eastmoney-stock-valuation`、`eastmoney-market-valuation`、`stock-comment-index/score/org-participate/desire/focus`、`stock-rank-xueqiu`、`stock-rank-eastmoney`、`stock-capital-flows` |
 | **A 股涨跌停** | `limit-up-pool`、`limit-up-pool-yesterday`、`limit-down-pool` |
 | **A 股商誉** | `stock-goodwill-detail`、`stock-goodwill-impairment`、`stock-goodwill-industry`、`stock-goodwill-market-overview`、`stock-goodwill-predict` |
 | **可转债** | `cb-lists`、`cb-base-data` |
-| **ETF** | `etf-description-all`、`etf-components-all`、`etf-pre-single`、`etf-pcfs`、`etf-adjust-factor`、`etf-minutes`、`etf-minutes-batch`、`etf-realtime-minute-kline`、`etf-realtime-day-kline` |
+| **ETF** | `etf-description-all`、`etf-components-all`、`etf-component-details`、`etf-pre-single`、`etf-pcfs`、`etf-pcf-infos`、`etf-share`、`etf-net-value`、`etf-announcements`、`etf-adjust-factor`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-minutes`、`etf-minutes-batch`、`etf-realtime-minute-kline`、`etf-realtime-day-kline` |
 | **基金** | `fund-basicinfo-single-fund`、`fund-cal-return-...`、`fund-nav-single-fund-paginated`、`fund-overview-all-funds-paginated`、`fund-support-symbols-all-funds-paginated` |
-| **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all/paginated/download`、`index-weight-summary/list/download` |
+| **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-candlesticks`、`index-candlesticks-batch`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all/paginated/download`、`index-weight-summary/list/download` |
 | **板块（东财 / 同花顺）** | `eastmoney-concept-boards`、`eastmoney-board-constituents/daily-ohlc/latest-ohlc`、`10jqk-board-list/kline/all-kline`、`ths-industry-constituents` |
 | **港股** | `company-hk`、`hk-candlesticks`、`northbound`、`southbound`、`eastmoney-hk-index-daily-kline`、`hsi-daily-weight` |
 | **美股** | `eastmoney-us-stock-list`、`eastmoney-us-stock-daily-ohlc`、`us-basic` |
-| **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
+| **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`futures-contract-kline`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
 | **宏观经济（中国 + 美国）** | `economic-china-gdp/cpi/ppi/pmi/lpr/...-monthly`（15 项）、`economic-us-economic-by-type`（16 类，按 `--type`） |
 
 ## 名称 → 代码映射

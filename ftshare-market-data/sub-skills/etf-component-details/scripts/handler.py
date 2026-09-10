@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""东方财富板块资金流（GET /api/v1/market/data/eastmoney-sector-flow）"""
+"""ETF 成分证券明细（GET /api/v2/market/data/etf-component-details）"""
 import argparse
 import json
 import sys
@@ -20,9 +20,7 @@ SAFE_URLOPENER = urllib.request.build_opener()
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
-ENDPOINT = "/api/v1/market/data/eastmoney-sector-flow"
-
-BOARD_TYPES = ("industry", "concept", "regional")
+ENDPOINT = "/api/v2/market/data/etf-component-details"
 
 HEADERS = {
     "X-Client-Name": "ft-claw",
@@ -51,30 +49,16 @@ def safe_urlopen(req_or_url):
 
 
 def build_params(args):
-    params = {}
-    if args.board_code is not None:
-        params["board_code"] = args.board_code
-    if args.board_type is not None:
-        params["board_type"] = args.board_type
-    if args.board_level is not None:
-        params["board_level"] = args.board_level
+    params = {"symbol": args.symbol}
     if args.trade_date is not None:
         params["trade_date"] = args.trade_date
-    if args.start_date is not None:
-        params["start_date"] = args.start_date
-    if args.end_date is not None:
-        params["end_date"] = args.end_date
-    if args.page is not None:
-        params["page"] = args.page
-    if args.page_size is not None:
-        params["page_size"] = args.page_size
     return params
 
 
 def fetch(params):
-    query = ("?" + urllib.parse.urlencode(params)) if params else ""
+    query = urllib.parse.urlencode(params)
     req = urllib.request.Request(
-        f"{BASE_URL}{ENDPOINT}{query}",
+        f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
         method="GET",
     )
@@ -91,19 +75,11 @@ def fetch(params):
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="东方财富板块（行业/概念/地域）日资金流")
-    parser.add_argument("--board-code", dest="board_code", default=None,
-                        help="板块代码，如 BK0488")
-    parser.add_argument("--board-type", dest="board_type", default=None, choices=BOARD_TYPES,
-                        help="板块类型：industry（行业）/concept（概念）/regional（地域）")
-    parser.add_argument("--board-level", dest="board_level", type=int, default=None,
-                        help="行业层级：1=一级、2=二级、3=三级；不传返回全部层级，仅匹配 industry")
-    parser.add_argument("--trade-date", dest="trade_date", default=None, help="交易日 YYYYMMDD")
-    parser.add_argument("--start-date", dest="start_date", default=None, help="区间起始日 YYYYMMDD")
-    parser.add_argument("--end-date", dest="end_date", default=None, help="区间结束日 YYYYMMDD")
-    parser.add_argument("--page", type=int, default=None, help="页码，从 1 开始，默认 1")
-    parser.add_argument("--page-size", dest="page_size", type=int, default=None,
-                        help="每页条数，默认 50，最大 500")
+    parser = argparse.ArgumentParser(description="按 ETF 和交易日查询申赎清单全部成分证券及数量")
+    parser.add_argument("--symbol", required=True,
+                        help="ETF 代码，如 510300.SH、159915.SZ")
+    parser.add_argument("--trade-date", dest="trade_date", type=int, default=None,
+                        help="交易日 YYYYMMDD；不传时查询该 ETF 最新可用交易日")
     args = parser.parse_args()
 
     print(json.dumps(fetch(build_params(args)), ensure_ascii=False, indent=2))
