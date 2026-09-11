@@ -130,7 +130,7 @@ python run.py stock-ipos --all
 | **A 股行情 / 基础** | `stock-list-all-stocks`、`stock-description-all`、`stock-quotes-list`、`stock-ipos`、`eastmoney-all-board-daily-ohlc`、`block-trades`、`margin-trading-details`、`continuous-auction-volume`、`intraday-auction-volume` |
 | **A 股财报 / 业绩** | `stock-income-*`、`stock-balance-*`、`stock-cashflow-*`、`stock-performance-express-*`、`stock-performance-forecast-*` |
 | **A 股股东 / 质押 / 增减持** | `stock-holder-ten`、`stock-holder-ften`、`stock-holder-nums`、`pledge-summary`、`pledge-detail`、`stock-share-chg`、`executive-holdings-changes`、`eastmoney-shareholder-changes` |
-| **A 股公司行动 / 代码与状态** | `shareholder-meeting`、`stock-dividends`、`stock-dividends-effective`、`major-contract-by-date`、`major-contract-by-symbol`、`major-contract-summary`、`ashare-code-change`、`ashare-status-change` |
+| **A 股公司行动 / 代码与状态** | `shareholder-meeting`、`stock-dividends`、`stock-dividends-effective`、`major-contract-by-date`、`major-contract-by-symbol`、`major-contract-summary`、`ashare-code-change`、`ashare-status-change`、`stock-st-history` |
 | **A 股估值 / 千股千评 / 热度 / 资金流** | `eastmoney-stock-valuation`、`eastmoney-market-valuation`、`stock-comment-index/score/org-participate/desire/focus`、`stock-rank-xueqiu`、`stock-rank-eastmoney`、`stock-capital-flows` |
 | **A 股涨跌停** | `limit-up-pool`、`limit-up-pool-yesterday`、`limit-down-pool` |
 | **A 股商誉** | `stock-goodwill-detail`、`stock-goodwill-impairment`、`stock-goodwill-industry`、`stock-goodwill-market-overview`、`stock-goodwill-predict` |
