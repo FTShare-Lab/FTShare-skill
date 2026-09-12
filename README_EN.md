@@ -138,7 +138,7 @@ The A-share section includes capital flows, financial statements, reference data
 
 For current interfaces, parameters, fields, entitlements, and update status, use:
 
-**[Latest FTShare data documentation](https://market.ft.tech/gateway/doc/p/zdxwn9lx)**
+**[Latest FTShare data documentation](https://market.ft.tech/gateway/doc)**
 
 Each repository sub-skill documents its own contract at:
 

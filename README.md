@@ -138,7 +138,7 @@ python3 ftshare-market-data/run.py
 
 最新接口、参数、字段、数据权限和更新状态，请查看：
 
-**[FTShare 最新数据接口文档](https://market.ft.tech/gateway/doc/p/zdxwn9lx)**
+**[FTShare 最新数据接口文档](https://market.ft.tech/gateway/doc)**
 
 仓库内每个子 Skill 的说明位于：
 
