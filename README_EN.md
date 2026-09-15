@@ -134,7 +134,7 @@ All three connect to the same FTShare financial-data service. Use the SDK for di
 
 The current Skill covers spot data, macroeconomics, LLM corpora, A-share data, US equities, public funds, ETFs, Hong Kong equities, futures, bonds, and indices.
 
-The A-share section includes capital flows, financial statements, reference data, market data, limit-up topics, margin and securities lending, characteristic data, and basic data. Characteristic data includes A-share news sentiment factors, related-company Top-K, K-line pattern annotations, supply-chain relationships, and the latest signal snapshots.
+The A-share section includes capital flows, financial statements, reference data, market data, limit-up topics, margin and securities lending, characteristic data, and basic data. Characteristic data includes A-share news sentiment factors, related-company Top-K, K-line pattern annotations, supply-chain relationships, the latest signal snapshots, and news-volume-price resonance.
 
 For current interfaces, parameters, fields, entitlements, and update status, use:
 

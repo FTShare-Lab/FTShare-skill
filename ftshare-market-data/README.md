@@ -126,7 +126,7 @@ python run.py stock-ipos --all
 
 | 域 | 代表子 skill |
 |---|---|
-| **交易日 / 财经日历 / 新闻公告研报** | `nth-trade-date`、`trading-calendar`、`financial-calendar`、`semantic-search-news`、`stock-announcements`、`stock-reports` |
+| **交易日 / 财经日历 / 新闻公告研报** | `nth-trade-date`、`trading-calendar`、`financial-calendar`、`semantic-search-news`、`news-reaction-snapshot`、`stock-announcements`、`stock-reports` |
 | **A 股行情 / 基础** | `stock-list-all-stocks`、`stock-description-all`、`stock-quotes-list`、`stock-ipos`、`eastmoney-all-board-daily-ohlc`、`block-trades`、`margin-trading-details`、`continuous-auction-volume`、`intraday-auction-volume` |
 | **A 股财报 / 业绩** | `stock-income-*`、`stock-balance-*`、`stock-cashflow-*`、`stock-performance-express-*`、`stock-performance-forecast-*` |
 | **A 股股东 / 质押 / 增减持** | `stock-holder-ten`、`stock-holder-ften`、`stock-holder-nums`、`pledge-summary`、`pledge-detail`、`stock-share-chg`、`executive-holdings-changes`、`eastmoney-shareholder-changes` |

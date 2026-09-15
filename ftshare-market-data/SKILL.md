@@ -50,6 +50,7 @@ python <RUN_PY> ashare-status-change --trade-code 600848.SH --change-type 上市
 python <RUN_PY> stock-st-history --symbol 600735.SH,000004.SZ
 python <RUN_PY> nth-trade-date --n 5
 python <RUN_PY> continuous-auction-volume --trade-date 20260620 --page 1 --page-size 50
+python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 --end-date 20260828 --lookback-hours 48 --page 1 --page-size 5
 python <RUN_PY> semantic-search-news --query 人工智能
 ```
 
