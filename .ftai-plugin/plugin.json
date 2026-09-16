@@ -1,0 +1,40 @@
+{
+  "name": "ftshare",
+  "displayName": "FTShare",
+  "version": "1.0.0",
+  "description": "FTShare financial data skill: A-share, HK and US stock quotes, candlesticks, funds, ETFs, indexes, convertible bonds, macro data and financial news.",
+  "author": {
+    "name": "FTShare Lab"
+  },
+  "homepage": "https://github.com/FTShare-Lab/FTShare-skill",
+  "repository": "https://github.com/FTShare-Lab/FTShare-skill",
+  "license": "MIT",
+  "skills": [
+    "./ftshare-market-data"
+  ],
+  "locales": {
+    "zh-CN": {
+      "displayName": "FTShare 金融数据",
+      "description": "非凸科技金融数据技能集：A 股/港股/美股行情与 K 线、基金与 ETF、指数权重、可转债、宏观经济、财经新闻语义检索等投研数据查询。",
+      "tags": [
+        "金融数据",
+        "行情",
+        "A股",
+        "基金",
+        "ETF",
+        "投研"
+      ]
+    },
+    "en-US": {
+      "displayName": "FTShare",
+      "description": "FTShare financial data skill: A-share, HK and US stock quotes, candlesticks, funds, ETFs, indexes, convertible bonds, macro data and financial news.",
+      "tags": [
+        "finance",
+        "market-data",
+        "stocks",
+        "funds",
+        "etf"
+      ]
+    }
+  }
+}
