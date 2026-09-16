@@ -1,6 +1,6 @@
 ---
 name: fund-classification-single-fund
-description: "查询基金在多套分类标准下的分类。当用户需要查询基金按证监会/晨星/银河证券/Gangtise 等标准的分类，可按 classify_std 过滤时使用。"
+description: "查询基金在多套分类标准下的分类。当用户需要查询基金按证监会/晨星/银河证券等标准的分类，可按 classify_std 过滤时使用。"
 ---
 
 # 基金分类
@@ -18,7 +18,7 @@ description: "查询基金在多套分类标准下的分类。当用户需要查
 | 参数名 | 类型 | 是否必填 | 描述 |
 |--------|------|----------|------|
 | `--fund_code` | string | 是 | 基金代码（trade_code 形式，如 000001 或 000001.OF） |
-| `--classify_std` | string | 否 | 分类标准：证监会基金分类/晨星基金分类/银河证券分类2017版/Gangtise基金分类/Gangtise基金概念分类，缺省全部 |
+| `--classify_std` | string | 否 | 分类标准：证监会基金分类/晨星基金分类/银河证券分类2017版，缺省全部 |
 
 ## 执行方式
 

@@ -13,7 +13,7 @@ description: 查询恒生系列指数成份股权重（HSI 恒生指数 / HSCEI 
 | 接口列表 | `hsi-daily-weight` |
 | 外部接口 | GET /api/v1/market/data/hk/hsi-daily-weight |
 | 请求方式 | GET |
-| 适用场景 | 查询恒生系列指数成份股的权重数据，支持按交易日、日期范围、指数代码、股票代码过滤。数据来源 MySQL `xz02.base_data.hsi_daily_weight`。 |
+| 适用场景 | 查询恒生系列指数成份股的权重数据，支持按交易日、日期范围、指数代码、股票代码过滤。 |
 
 ## 请求参数
 
@@ -84,7 +84,7 @@ python scripts/handler.py --start_date 20260501 --end_date 20260529 --index_slug
 - `index_slug` 大小写不敏感，响应中始终返回小写。
 - `trade_date` 与 `start_date`/`end_date` 互斥；`start_date`/`end_date` 必须成对且 `start_date ≤ end_date`。
 - 排序：`trade_date DESC, index_slug, stock_code`。
-- HTTP 恒为 200，业务错误通过 `code`/`message` 携带（非 0 为错误）；数据来自 MySQL 实时读取，高频调用建议用 `trade_date` 精确过滤。
+- HTTP 恒为 200，业务错误通过 `code`/`message` 携带（非 0 为错误）；高频调用建议用 `trade_date` 精确过滤。
 
 ## 调用示例
 

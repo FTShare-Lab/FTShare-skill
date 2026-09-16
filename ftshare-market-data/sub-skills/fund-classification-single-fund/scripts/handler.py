@@ -64,7 +64,7 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="基金分类")
     parser.add_argument("--fund_code", required=True, help="基金代码（trade_code 形式，如 000001 或 000001.OF）")
-    parser.add_argument("--classify_std", required=False, help="分类标准：证监会基金分类/晨星基金分类/银河证券分类2017版/Gangtise基金分类/Gangtise基金概念分类，缺省全部")
+    parser.add_argument("--classify_std", required=False, help="分类标准：证监会基金分类/晨星基金分类/银河证券分类2017版，缺省全部")
     args = parser.parse_args()
 
     result = fetch(args)

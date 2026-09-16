@@ -1,6 +1,6 @@
 ---
 name: hk-candlesticks
-description: 按港股代码查询日/月/季/年 K 线（market.ft.tech，hkshareeodprices）。用户问港股 K 线、日 K / 月 K / 季 K / 年 K、00700 历史行情、港股开高低收、OHLC、成交量成交额、前复权不复权港股时使用。必填 trade_code、interval_unit、until_date；可选 since_date、adjust_kind、limit。
+description: 按港股代码查询日/月/季/年 K 线。用户问港股 K 线、日 K / 月 K / 季 K / 年 K、00700 历史行情、港股开高低收、OHLC、成交量成交额、前复权不复权港股时使用。必填 trade_code、interval_unit、until_date；可选 since_date、adjust_kind、limit。
 ---
 
 # 查询港股 K 线（hk-candlesticks）
@@ -12,7 +12,7 @@ description: 按港股代码查询日/月/季/年 K 线（market.ft.tech，hksha
 | 接口名称 | 查询港股 K 线 |
 | 外部接口 | `/api/v2/market/data/hk/hk-candlesticks` |
 | 请求方式 | GET |
-| 适用场景 | 按港股代码查询日/月/季/年 K 线（来源：`hkshareeodprices`）；请求与响应中的代码均为 **5 位数字 + `.HK`**，服务端会转换为库内 4 位 Wind 代码查询 |
+| 适用场景 | 按港股代码查询日/月/季/年 K 线；请求与响应中的代码均为 **5 位数字 + `.HK`** |
 
 ## 2. 请求参数
 
