@@ -126,15 +126,15 @@ python run.py stock-ipos --all
 
 | 域 | 代表子 skill |
 |---|---|
-| **交易日 / 财经日历 / 新闻公告研报** | `nth-trade-date`、`trading-calendar`、`financial-calendar`、`semantic-search-news`、`news-reaction-snapshot`、`stock-announcements`、`stock-reports` |
-| **A 股行情 / 基础** | `stock-list-all-stocks`、`stock-description-all`、`stock-quotes-list`、`stock-ipos`、`eastmoney-all-board-daily-ohlc`、`block-trades`、`margin-trading-details`、`continuous-auction-volume`、`intraday-auction-volume` |
+| **交易日 / 财经日历 / 新闻公告研报** | `nth-trade-date`、`trading-calendar`、`financial-calendar`、`semantic-search-news`、`news-reaction-snapshot`、`stock-announcements`、`stock-reports`、`stock-prospectuses` |
+| **A 股行情 / 基础** | `stock-list-all-stocks`、`stock-description-all`、`stock-quotes-list`、`stock-ipos`、`stock-intraday`、`eastmoney-all-board-daily-ohlc`、`block-trades`、`margin-trading-details`、`continuous-auction-volume`、`intraday-auction-volume` |
 | **A 股财报 / 业绩** | `stock-income-*`、`stock-balance-*`、`stock-cashflow-*`、`stock-performance-express-*`、`stock-performance-forecast-*` |
 | **A 股股东 / 质押 / 增减持** | `stock-holder-ten`、`stock-holder-ften`、`stock-holder-nums`、`pledge-summary`、`pledge-detail`、`stock-share-chg`、`executive-holdings-changes`、`eastmoney-shareholder-changes` |
 | **A 股公司行动 / 代码与状态** | `shareholder-meeting`、`stock-dividends`、`stock-dividends-effective`、`major-contract-by-date`、`major-contract-by-symbol`、`major-contract-summary`、`ashare-code-change`、`ashare-status-change`、`stock-st-history` |
 | **A 股估值 / 千股千评 / 热度 / 资金流** | `eastmoney-stock-valuation`、`eastmoney-market-valuation`、`stock-comment-index/score/org-participate/desire/focus`、`stock-rank-xueqiu`、`stock-rank-eastmoney`、`stock-capital-flows` |
 | **A 股涨跌停** | `limit-up-pool`、`limit-up-pool-yesterday`、`limit-down-pool` |
 | **A 股商誉** | `stock-goodwill-detail`、`stock-goodwill-impairment`、`stock-goodwill-industry`、`stock-goodwill-market-overview`、`stock-goodwill-predict` |
-| **可转债** | `cb-lists`、`cb-base-data` |
+| **可转债** | `cb-lists`、`cb-base-data`、`convertible-bond-candlesticks`、`convertible-bond-candlesticks-batch`、`convertible-bond-minutes`、`convertible-bond-realtime-day-kline`、`convertible-bond-realtime-minute-kline`、`convertible-bond-szse-matching-trades` 等深交所成交明细 |
 | **ETF** | `etf-description-all`、`etf-components-all`、`etf-component-details`、`etf-pre-single`、`etf-pcfs`、`etf-pcf-infos`、`etf-share`、`etf-net-value`、`etf-announcements`、`etf-adjust-factor`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-minutes`、`etf-minutes-batch`、`etf-realtime-minute-kline`、`etf-realtime-day-kline` |
 | **基金** | `fund-basicinfo-single-fund`、`fund-cal-return-...`、`fund-nav-single-fund-paginated`、`fund-overview-all-funds-paginated`、`fund-support-symbols-all-funds-paginated` |
 | **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-candlesticks`、`index-candlesticks-batch`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all/paginated/download`、`index-weight-summary/list/download` |
