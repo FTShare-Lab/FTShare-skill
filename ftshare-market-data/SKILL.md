@@ -33,6 +33,7 @@ python <RUN_PY> etf-realtime-day-kline --symbols 510300.SH
 python <RUN_PY> index-minutes --symbol 000300.SH --since-ts-millis 1787189400000 --until-ts-millis 1787191200000
 python <RUN_PY> stock-reports --stock-code 600036.SH --page 1 --page-size 20
 python <RUN_PY> stock-announcements --stock-code 600000 --page 1 --page-size 20
+python <RUN_PY> stock-prospectuses --stock-code 600000.SH --page 1 --page-size 20
 python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> etf-candlesticks-batch --symbols 510300.XSHG,159915.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000

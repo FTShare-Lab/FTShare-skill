@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""查询单只可转债历史日/周/月/年 K 线（GET /api/v1/market/data/convertible-bond-candlesticks）"""
+"""查询单只或批量可转债历史分钟 K 线（GET /api/v2/market/data/convertible-bond-minute-candlesticks）"""
 import argparse
 import json
 import sys
@@ -20,10 +20,15 @@ SAFE_URLOPENER = urllib.request.build_opener()
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
-ENDPOINT = "/api/v1/market/data/convertible-bond-candlesticks"
+ENDPOINT = "/api/v2/market/data/convertible-bond-minute-candlesticks"
 
-INTERVAL_UNITS = ("Day", "Week", "Month", "Year")
-ADJUST_KINDS = ("None", "Forward", "Backward")
+INTERVAL_VALUES = (1, 5, 15)
+MAX_SYMBOLS = 20
+
+HEADERS = {
+    "X-Client-Name": "ft-claw",
+    "Content-Type": "application/json",
+}
 
 
 def safe_urlopen(req_or_url):
@@ -46,38 +51,37 @@ def safe_urlopen(req_or_url):
     return SAFE_URLOPENER.open(req_or_url)
 
 
-HEADERS = {
-    "X-Client-Name": "ft-claw",
-    "Content-Type": "application/json",
-}
+def parse_symbols(raw):
+    syms = [s.strip() for s in raw.split(",") if s.strip()]
+    if not syms:
+        print("--symbols 不能为空", file=sys.stderr)
+        sys.exit(1)
+    if len(syms) > MAX_SYMBOLS:
+        print(f"--symbols 最多 {MAX_SYMBOLS} 个标的，当前 {len(syms)} 个", file=sys.stderr)
+        sys.exit(1)
+    return syms
 
 
-def build_body(symbol, interval_unit, interval_value, adjust_kind,
-               since_ts_millis, until_ts_millis, limit):
-    body = {
-        "symbol": symbol,
-        "interval_unit": interval_unit,
-        "since_ts_millis": since_ts_millis,
-        "until_ts_millis": until_ts_millis,
-    }
+def build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit):
+    body = {}
+    if symbol is not None:
+        body["symbol"] = symbol
+    if symbols is not None:
+        body["symbols"] = symbols
     if interval_value is not None:
         body["interval_value"] = interval_value
-    if adjust_kind and adjust_kind != "None":
-        body["adjust_kind"] = adjust_kind
+    body["since_ts_millis"] = since_ts_millis
+    body["until_ts_millis"] = until_ts_millis
     if limit is not None:
         body["limit"] = limit
     return body
 
 
-def fetch(
-symbol, interval_unit, interval_value, adjust_kind,
-          since_ts_millis, until_ts_millis, limit):
-    body = build_body(symbol, interval_unit, interval_value, adjust_kind,
-                      since_ts_millis, until_ts_millis, limit)
+def fetch(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit):
+    body = build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit)
     query = urllib.parse.urlencode(body, doseq=True)
-    url = f"{BASE_URL}{ENDPOINT}?{query}"
     req = urllib.request.Request(
-        url,
+        f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
         method="GET",
     )
@@ -85,8 +89,7 @@ symbol, interval_unit, interval_value, adjust_kind,
         with safe_urlopen(req) as resp:
             return json.loads(resp.read().decode())
     except urllib.error.HTTPError as e:
-        msg = e.read().decode()
-        print(f"HTTP {e.code}: {msg}", file=sys.stderr)
+        print(f"HTTP {e.code}: {e.read().decode()}", file=sys.stderr)
         sys.exit(1)
     except urllib.error.URLError as e:
         print(f"Request failed: {e}", file=sys.stderr)
@@ -95,28 +98,30 @@ symbol, interval_unit, interval_value, adjust_kind,
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询单只可转债历史日/周/月/年 K 线（GET 查询参数，不支持分钟周期）")
-    parser.add_argument("--symbol", required=True, help="可转债代码，如 113042.SH、123107.SZ")
-    parser.add_argument("--interval-unit", dest="interval_unit", required=True, type=str.capitalize,
-                        choices=INTERVAL_UNITS, help="K 线周期：Day/Week/Month/Year（大小写不敏感，不支持 Minute）")
+    parser = argparse.ArgumentParser(description="查询单只或批量可转债历史分钟 K 线（GET 查询参数）")
+    target = parser.add_mutually_exclusive_group(required=True)
+    target.add_argument("--symbol", help="单只可转债代码，如 113042.SH")
+    target.add_argument("--symbols", help="可转债代码列表，逗号分隔，1～20 只，如 113042.SH,123107.SZ")
     parser.add_argument("--interval-value", dest="interval_value", type=int, default=None,
-                        help="间隔数值，周期查询无需设置")
-    parser.add_argument("--adjust-kind", dest="adjust_kind", default="None",
-                        choices=ADJUST_KINDS, help="复权：None（默认）/Forward/Backward")
+                        choices=INTERVAL_VALUES, help="分钟周期：1/5/15，默认 1")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
-                        help="开始时间戳（毫秒）；与结束时间跨度不得超过 12 个自然月")
+                        help="起始时间戳（毫秒）；与结束时间相差不超过 3 个北京时间自然日")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
                         help="结束时间戳（毫秒）")
     parser.add_argument("--limit", type=int, default=None,
-                        help="返回条数上限；省略时返回窗口内全部记录")
+                        help="每只标的聚合后返回条数上限，范围 1～1000；省略返回窗口内全部记录")
     args = parser.parse_args()
 
     if args.since_ts_millis > args.until_ts_millis:
         print("--since-ts-millis 不能晚于 --until-ts-millis", file=sys.stderr)
         raise SystemExit(2)
+    if args.limit is not None and not 1 <= args.limit <= 1000:
+        print("--limit 须在 1～1000 之间", file=sys.stderr)
+        raise SystemExit(2)
 
-    data = fetch(args.symbol, args.interval_unit, args.interval_value,
-                 args.adjust_kind, args.since_ts_millis, args.until_ts_millis, args.limit)
+    symbols = parse_symbols(args.symbols) if args.symbols is not None else None
+    data = fetch(args.symbol, symbols, args.interval_value,
+                 args.since_ts_millis, args.until_ts_millis, args.limit)
     print(json.dumps(data, ensure_ascii=False, indent=2))
 
 
