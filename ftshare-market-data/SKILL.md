@@ -55,6 +55,18 @@ python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 
 python <RUN_PY> semantic-search-news --query 人工智能
 ```
 
+下载类：
+
+```bash
+# 公告正文 PDF：先查列表拿 url_hash，再下载
+python <RUN_PY> stock-announcements --url-hash d8d54544...cf574adf --output ./ann.pdf
+python <RUN_PY> etf-announcements --url-hash d8d54544...cf574adf
+
+# 年度分K归档包：先看清单，再下载
+python <RUN_PY> kline-archives
+python <RUN_PY> kline-archives --year 2023 --output ./archives/2023.zst --retries 5
+```
+
 ## 能力范围
 
 当前子 skill 仅覆盖《FTShare 四档套餐全量接口表》中的接口；接口详细参数、响应字段和限制以对应子目录的 `SKILL.md` 及 `ftshare-doc/api-doc/` 活动源文档为准。`api-doc/已下线` 和 `api-doc/未发布` 不属于当前范围。
@@ -64,7 +76,9 @@ python <RUN_PY> semantic-search-news --query 人工智能
 - 成功响应以格式化 JSON 输出到 stdout。
 - HTTP、网络、参数和认证诊断输出到 stderr。
 - 请求失败时返回非零退出状态。
-- 下载类子 skill 只允许将文件写入当前工作目录及其子目录。
+- 下载类子 skill 只允许将文件写入当前工作目录及其子目录，越界以非零状态退出。
+- 下载完成只向 stdout 输出落盘后的文件路径（不打印 JSON）。
+- 支持断点续传的子 skill 把半成品写在 `<目标文件>.part` 与 `<目标文件>.part.meta`；中断后重跑同一条命令即可续传，来源不明的 `.part` 会被丢弃重下。归档包这类大文件下载完成后会按清单的 `sha256` 校验，不一致则删除半成品并非零退出。
 
 ## 运行时发现
 

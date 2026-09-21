@@ -137,12 +137,13 @@ python run.py stock-ipos --all
 | **可转债** | `cb-lists`、`cb-base-data`、`convertible-bond-candlesticks`、`convertible-bond-candlesticks-batch`、`convertible-bond-minutes`、`convertible-bond-realtime-day-kline`、`convertible-bond-realtime-minute-kline`、`convertible-bond-szse-matching-trades` 等深交所成交明细 |
 | **ETF** | `etf-description-all`、`etf-components-all`、`etf-component-details`、`etf-pre-single`、`etf-pcfs`、`etf-pcf-infos`、`etf-share`、`etf-net-value`、`etf-announcements`、`etf-adjust-factor`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-minutes`、`etf-minutes-batch`、`etf-realtime-minute-kline`、`etf-realtime-day-kline` |
 | **基金** | `fund-basicinfo-single-fund`、`fund-cal-return-...`、`fund-nav-single-fund-paginated`、`fund-overview-all-funds-paginated`、`fund-support-symbols-all-funds-paginated` |
-| **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-candlesticks`、`index-candlesticks-batch`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all/paginated/download`、`index-weight-summary/list/download` |
+| **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-candlesticks`、`index-candlesticks-batch`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all`、`index-description-paginated`、`index-weight-list`、`index-weight-summary` |
 | **板块（东财 / 同花顺）** | `eastmoney-concept-boards`、`eastmoney-board-constituents/daily-ohlc/latest-ohlc`、`10jqk-board-list/kline/all-kline`、`ths-industry-constituents` |
 | **港股** | `company-hk`、`hk-candlesticks`、`northbound`、`southbound`、`eastmoney-hk-index-daily-kline`、`hsi-daily-weight` |
 | **美股** | `eastmoney-us-stock-list`、`eastmoney-us-stock-daily-ohlc`、`us-basic` |
 | **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`futures-contract-kline`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
 | **宏观经济（中国 + 美国）** | `economic-china-gdp/cpi/ppi/pmi/lpr/...-monthly`（15 项）、`economic-us-economic-by-type`（16 类，按 `--type`） |
+| **行情归档** | `kline-archives`（年度全市场分钟K线归档包：清单 + 断点续传下载） |
 
 ## 名称 → 代码映射
 
@@ -183,8 +184,9 @@ FTSHARE_BASE_URL=http://127.0.0.1:8000/gateway/ python <RUN_PY> stock-list-all-s
 
 - **域名白名单**：使用 `safe_urlopen` 的 handler 会校验请求协议和主机匹配当前基础地址；设置 `FTSHARE_BASE_URL` 后按该地址校验。
 - **子 skill 白名单**：`run.py` 仅允许 `sub-skills/<名称>/scripts/handler.py` 形态的子 skill，防止路径遍历。
-- **下载落盘限制**：含 `--output` 的下载类接口仅允许写入**当前工作目录**下的路径。
-- **依赖前序接口的参数**：下载类接口的 `url_hash` / `filename` 须先由对应的列表接口取得，勿硬编码。
+- **下载落盘限制**：含 `--output` 的下载类接口仅允许写入**当前工作目录**下的路径；越界直接非零退出。`run.py` 不再切换进程工作目录，故「当前工作目录」即发起命令的 shell 目录。
+- **断点续传**：支持续传的接口把半成品写在 `<目标文件>.part`，旁边 `<目标文件>.part.meta` 记录来源 URL 与服务端 ETag。续传带 `If-Range`，服务端若已重新生成该文件（ETag 变化）会退回 200，此时截断重写而非追加，避免拼出坏包。来源不明的 `.part` 一律丢弃重下。
+- **依赖前序接口的参数**：下载类接口的 `url_hash` / `year` 须先由对应的列表接口取得，勿硬编码。
 
 ## 项目结构
 
