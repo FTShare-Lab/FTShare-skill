@@ -27,7 +27,7 @@ def safe_urlopen(req_or_url):
 
 def main():
     parser = argparse.ArgumentParser(description="查询东方财富期货龙虎榜面板")
-    parser.add_argument("--exchange", required=True, help="交易所代码：shfe/dce/czce/cffex/ine/gfe")
+    parser.add_argument("--exchange", required=True, help="交易所代码：shfe/dce/czce/cffex/ine/gfex")
     parser.add_argument("--variety", required=True, help="品种名称，如 多晶硅")
     parser.add_argument("--contract", required=True, help="合约代码，如 ps2609")
     parser.add_argument("--trade_date", required=True, help="交易日 YYYYMMDD")

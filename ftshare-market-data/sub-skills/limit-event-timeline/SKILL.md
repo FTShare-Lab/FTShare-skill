@@ -12,5 +12,5 @@ description: 查询涨跌停事件时间线。接口：GET /api/v2/market/data/l
 ## 调用示例
 
 ```bash
-python <RUN_PY> limit-event-timeline --symbol 600519.SH --limit_down_enter 5 --limit_down_break 5
+python <RUN_PY> limit-event-timeline --symbol 600519.SH --page 1 --page_size 50
 ```

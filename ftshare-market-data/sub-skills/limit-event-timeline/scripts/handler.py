@@ -20,40 +20,16 @@ def safe_urlopen(request, timeout=30):
     return SAFE_URLOPENER.open(request, timeout=timeout)
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='涨跌停事件时间线')
-    parser.add_argument("--symbol")
-    parser.add_argument("--trade_date")
-    parser.add_argument("--ready", required=False)
-    parser.add_argument("--status", required=False)
-    parser.add_argument("--limit_up_price", required=False)
-    parser.add_argument("--limit_down_price", required=False)
-    parser.add_argument("--limit_up_enter", required=False)
-    parser.add_argument("--limit_up_break", required=False)
-    parser.add_argument("--limit_down_enter", required=True)
-    parser.add_argument("--limit_down_break", required=True)
-    parser.add_argument("--first_limit_up_time", required=False)
-    parser.add_argument("--limit_up_break_count", required=False)
-    parser.add_argument("--last_limit_down_time", required=False)
-    parser.add_argument("--limit_down_break_count", required=False)
-    parser.add_argument("--limit_down_seal_value", required=False)
+    parser.add_argument("--symbol", help="标的代码，如 000001.XSHE；不传返回全市场")
+    parser.add_argument("--trade_date", help="交易日期 YYYYMMDD；不传或传当日时查询实时数据")
+    parser.add_argument("--page", help="页码，从 1 开始，默认 1")
+    parser.add_argument("--page_size", help="每页条数，默认 50，最大 200")
     args = parser.parse_args()
     params = {}
     if args.symbol is not None: params["symbol"] = args.symbol
     if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.symbol is not None: params["symbol"] = args.symbol
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.ready is not None: params["ready"] = args.ready
-    if args.status is not None: params["status"] = args.status
-    if args.limit_up_price is not None: params["limit_up_price"] = args.limit_up_price
-    if args.limit_down_price is not None: params["limit_down_price"] = args.limit_down_price
-    if args.limit_up_enter is not None: params["limit_up_enter"] = args.limit_up_enter
-    if args.limit_up_break is not None: params["limit_up_break"] = args.limit_up_break
-    if args.limit_down_enter is not None: params["limit_down_enter"] = args.limit_down_enter
-    if args.limit_down_break is not None: params["limit_down_break"] = args.limit_down_break
-    if args.first_limit_up_time is not None: params["first_limit_up_time"] = args.first_limit_up_time
-    if args.limit_up_break_count is not None: params["limit_up_break_count"] = args.limit_up_break_count
-    if args.last_limit_down_time is not None: params["last_limit_down_time"] = args.last_limit_down_time
-    if args.limit_down_break_count is not None: params["limit_down_break_count"] = args.limit_down_break_count
-    if args.limit_down_seal_value is not None: params["limit_down_seal_value"] = args.limit_down_seal_value
+    if args.page is not None: params["page"] = args.page
+    if args.page_size is not None: params["page_size"] = args.page_size
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:
