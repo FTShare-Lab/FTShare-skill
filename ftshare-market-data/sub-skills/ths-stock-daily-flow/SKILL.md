@@ -12,5 +12,5 @@ description: 查询同花顺个股资金流日度。接口：GET /api/v1/market/
 ## 调用示例
 
 ```bash
-python <RUN_PY> ths-stock-daily-flow --start_date 20260828 --end_date 20260828 --page 1 --trade_date 20260828
+python <RUN_PY> ths-stock-daily-flow --start_date 20260828 --end_date 20260828 --page 1
 ```

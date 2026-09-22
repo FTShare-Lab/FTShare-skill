@@ -12,5 +12,5 @@ description: 查询申万行业日度指标。接口：GET /api/v1/market/data/s
 ## 调用示例
 
 ```bash
-python <RUN_PY> sw-industry-daily-metrics --start_date 20260828 --end_date 20260828 --industry_code 银行 --page 1
+python <RUN_PY> sw-industry-daily-metrics --start_date 20260828 --end_date 20260828 --industry_code 801010.SI --page 1
 ```

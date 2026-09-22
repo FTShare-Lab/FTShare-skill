@@ -21,8 +21,8 @@ description: 语义搜索新闻（market.ft.tech）。用户问语义搜新闻�
 | query | string | 是 | 搜索文字 | 人工智能 | - |
 | limit | int | 否 | 返回条数 | 10 | 默认 10 |
 | year | int | 否 | 年份 | 2026 | 仅支持**当年**；数据仅保留最近半个月，用于限定搜索范围 |
-| start_time | string | 否 | 开始时间（含） | 2026-03-01T00:00:00+08:00 | ISO 8601 格式，用于限定搜索时间范围；无时区时按东八区解释 |
-| end_time | string | 否 | 结束时间（含） | 2026-03-15T23:59:59+08:00 | ISO 8601 格式，用于限定搜索时间范围；无时区时按东八区解释 |
+| start_time | string | 否 | 开始时间（含） | 2026-09-20T00:00:00+08:00 | ISO 8601 格式，用于限定搜索时间范围；无时区时按东八区解释；与 `end_time` 的跨度不得超过 3 天 |
+| end_time | string | 否 | 结束时间（含） | 2026-09-22T23:59:59+08:00 | ISO 8601 格式，用于限定搜索时间范围；无时区时按东八区解释；与 `start_time` 的跨度不得超过 3 天 |
 
 ## 3. 响应说明
 
@@ -71,7 +71,7 @@ description: 语义搜索新闻（market.ft.tech）。用户问语义搜新闻�
 ```bash
 python <RUN_PY> semantic-search-news --query 人工智能
 python <RUN_PY> semantic-search-news --query 人工智能 --limit 10 --year 2026
-python <RUN_PY> semantic-search-news --query 人工智能 --limit 10 --year 2026 --start_time 2026-03-01T00:00:00+08:00 --end_time 2026-03-15T23:59:59+08:00
+python <RUN_PY> semantic-search-news --query 人工智能 --limit 10 --year 2026 --start_time 2026-09-20T00:00:00+08:00 --end_time 2026-09-22T23:59:59+08:00
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。脚本输出 JSON；本接口无需额外请求头。
@@ -79,13 +79,13 @@ python <RUN_PY> semantic-search-news --query 人工智能 --limit 10 --year 2026
 ## 5. 请求示例
 
 ```
-GET /api/v1/market/data/semantic-search-news?query=人工智能&limit=10&year=2026&start_time=2026-03-01T00:00:00%2B08:00&end_time=2026-03-15T23:59:59%2B08:00
+GET /api/v3/market/data/semantic-search-news?query=人工智能&limit=10&year=2026&start_time=2026-09-20T00:00:00%2B08:00&end_time=2026-09-22T23:59:59%2B08:00
 ```
 
 ## 6. 数据范围与更新
 
 - 数据仅支持**当年**、**最近半个月**内的新闻；`year` 用于限定搜索范围，仅支持当年。
-- `start_time`、`end_time` 用于进一步限定检索时间窗口，推荐与 `year` 搭配使用；时间格式需为 ISO 8601。
+- `start_time`、`end_time` 用于进一步限定检索时间窗口，推荐与 `year` 搭配使用；时间格式需为 ISO 8601；两者跨度不得超过 3 天，超出返回 `code=400`「时间范围不能超过3天」。
 - 时区处理与 K 线脚本一致：无时区输入默认按东八区（UTC+8）解释；带时区输入会统一转换为东八区再请求。
 - 具体可查时间范围与更新频率以接口返回为准。
 

@@ -12,5 +12,5 @@ description: 查询通达信板块成分股最新快照。接口：GET /api/v1/m
 ## 调用示例
 
 ```bash
-python <RUN_PY> tdx-board-members --page 1 --trade_date 20260828
+python <RUN_PY> tdx-board-members --page 1
 ```

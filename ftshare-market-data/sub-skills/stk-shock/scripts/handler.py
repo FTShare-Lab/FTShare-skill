@@ -26,16 +26,6 @@ def main():
     parser.add_argument("--end_date")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--order_book_id", required=True)
-    parser.add_argument("--date", required=True)
-    parser.add_argument("--side", required=False)
-    parser.add_argument("--rank", required=True)
-    parser.add_argument("--agency", required=False)
-    parser.add_argument("--buy_value", required=False)
-    parser.add_argument("--sell_value", required=False)
-    parser.add_argument("--type", required=True)
-    parser.add_argument("--reason", required=False)
     args = parser.parse_args()
     params = {}
     if args.ts_code is not None: params["ts_code"] = args.ts_code
@@ -44,16 +34,6 @@ def main():
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.order_book_id is not None: params["order_book_id"] = args.order_book_id
-    if args.date is not None: params["date"] = args.date
-    if args.side is not None: params["side"] = args.side
-    if args.rank is not None: params["rank"] = args.rank
-    if args.agency is not None: params["agency"] = args.agency
-    if args.buy_value is not None: params["buy_value"] = args.buy_value
-    if args.sell_value is not None: params["sell_value"] = args.sell_value
-    if args.type is not None: params["type"] = args.type
-    if args.reason is not None: params["reason"] = args.reason
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

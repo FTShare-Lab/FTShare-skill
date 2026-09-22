@@ -12,5 +12,5 @@ description: 查询交易所重点提示证券。接口：GET /api/v2/market/dat
 ## 调用示例
 
 ```bash
-python <RUN_PY> stk-alert-broker --page 1 --name 1 --type stock
+python <RUN_PY> stk-alert-broker --page 1
 ```

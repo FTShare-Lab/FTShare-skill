@@ -14,18 +14,18 @@ description: 根据公告 ID 查询单条报告公告的摘要、标题、证券
 | 请求方式 | GET |
 | 适用场景 | 根据公告 ID 查询单条报告公告的摘要、标题、证券信息和处理状态 |
 
-> 同一处理逻辑的兼容入口还包括 `/api/v1/market/data/report-announcement/summary`。
+> 同一处理逻辑的兼容入口还包括 `/api/v2/market/data/report-announcement/summary`。
 
 ## 请求参数
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| announcement_id | string | 是 | 公告 ID | `AN202607140001` | 由「报告公告列表」接口返回 |
+| announcement_id | string | 是 | 公告 ID | `1225521898` | 由「报告公告列表」接口返回；为数字字符串 |
 
 ## 执行方式
 
 ```bash
-python <RUN_PY> report-announcement-summary --announcement_id AN202607140001
+python <RUN_PY> report-announcement-summary --announcement_id 1225521898
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。
@@ -39,13 +39,13 @@ python <RUN_PY> report-announcement-summary --announcement_id AN202607140001
   "code": 200,
   "message": "success",
   "data": {
-    "announcement_id": "AN202607140001",
+    "announcement_id": "1225521898",
     "sec_code": "600000",
     "sec_name": "浦发银行",
-    "announcement_title": "公告标题",
+    "announcement_title": "上海浦东发展银行股份有限公司2026年半年度报告",
     "summary": "公告摘要",
     "status": "summarized",
-    "announcement_time": "2026-07-14 09:30:00"
+    "announcement_time": "2026-08-28 08:00:00"
   }
 }
 ```

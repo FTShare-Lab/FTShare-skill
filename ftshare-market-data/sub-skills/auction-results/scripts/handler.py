@@ -26,15 +26,6 @@ def main():
     parser.add_argument("--end_date")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--symbol", required=True)
-    parser.add_argument("--close", required=False)
-    parser.add_argument("--open", required=False)
-    parser.add_argument("--high", required=False)
-    parser.add_argument("--low", required=False)
-    parser.add_argument("--volume", required=False)
-    parser.add_argument("--amount", required=False)
-    parser.add_argument("--vwap", required=False)
     args = parser.parse_args()
     params = {}
     if args.ts_code is not None: params["ts_code"] = args.ts_code
@@ -43,15 +34,6 @@ def main():
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.symbol is not None: params["symbol"] = args.symbol
-    if args.close is not None: params["close"] = args.close
-    if args.open is not None: params["open"] = args.open
-    if args.high is not None: params["high"] = args.high
-    if args.low is not None: params["low"] = args.low
-    if args.volume is not None: params["volume"] = args.volume
-    if args.amount is not None: params["amount"] = args.amount
-    if args.vwap is not None: params["vwap"] = args.vwap
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

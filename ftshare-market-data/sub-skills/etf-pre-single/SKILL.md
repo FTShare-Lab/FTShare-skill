@@ -10,7 +10,7 @@ description: 查询单只 ETF 盘前数据。用户问某只 ETF 盘前、申购
 | 项目 | 说明 |
 |------|------|
 | 接口名称 | 查询单只 ETF 盘前数据 |
-| 外部接口 | `GET /api/v1/market/data/etf-pre-single` |
+| 外部接口 | `GET /api/v2/market/data/etf-pre-single` |
 | 请求方式 | GET |
 | 适用场景 | 根据标的代码查询单只 ETF 的盘前信息（申购赎回单位、净值、现金差额等）；不传 date 时使用当日（CST）；未找到或报错时接口返回相应错误信息 |
 
@@ -82,13 +82,13 @@ python <RUN_PY> etf-pre-single --symbol 510300.XSHG --date 20260316
 当日：
 
 ```
-GET /api/v1/market/data/etf-pre-single?symbol=510300.XSHG
+GET /api/v2/market/data/etf-pre-single?symbol=510300.XSHG
 ```
 
 指定日期：
 
 ```
-GET /api/v1/market/data/etf-pre-single?symbol=510300.XSHG&date=20260316
+GET /api/v2/market/data/etf-pre-single?symbol=510300.XSHG&date=20260316
 ```
 
 ## 6. 数据更新时间与注意事项

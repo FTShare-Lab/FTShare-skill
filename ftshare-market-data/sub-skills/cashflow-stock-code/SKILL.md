@@ -12,5 +12,5 @@ description: 查询现金流支持股票代码。接口：GET /api/v2/market/dat
 ## 调用示例
 
 ```bash
-python <RUN_PY> cashflow-stock-code --stock_code 600519 --stock_name 1
+python <RUN_PY> cashflow-stock-code
 ```

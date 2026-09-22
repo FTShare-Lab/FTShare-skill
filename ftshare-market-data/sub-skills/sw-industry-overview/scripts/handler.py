@@ -24,39 +24,13 @@ def main():
     parser.add_argument("--level")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--industry-code", required=True)
-    parser.add_argument("--industry-name", required=True)
-    parser.add_argument("--parent-industry-name")
-    parser.add_argument("--constituent-count")
-    parser.add_argument("--trade-date")
-    parser.add_argument("--lyr-pe")
-    parser.add_argument("--lyr-pe-percentile")
-    parser.add_argument("--ttm-pe")
-    parser.add_argument("--ttm-pe-percentile")
-    parser.add_argument("--pb")
-    parser.add_argument("--pb-percentile")
-    parser.add_argument("--dv-ratio")
-    parser.add_argument("--dv-ratio-percentile")
     args = parser.parse_args()
     params = {}
     if args.date is not None: params["date"] = args.date
     if args.level is not None: params["level"] = args.level
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.industry_code is not None: params["industry_code"] = args.industry_code
-    if args.industry_name is not None: params["industry_name"] = args.industry_name
     if args.level is not None: params["level"] = args.level
-    if args.parent_industry_name is not None: params["parent_industry_name"] = args.parent_industry_name
-    if args.constituent_count is not None: params["constituent_count"] = args.constituent_count
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.lyr_pe is not None: params["lyr_pe"] = args.lyr_pe
-    if args.lyr_pe_percentile is not None: params["lyr_pe_percentile"] = args.lyr_pe_percentile
-    if args.ttm_pe is not None: params["ttm_pe"] = args.ttm_pe
-    if args.ttm_pe_percentile is not None: params["ttm_pe_percentile"] = args.ttm_pe_percentile
-    if args.pb is not None: params["pb"] = args.pb
-    if args.pb_percentile is not None: params["pb_percentile"] = args.pb_percentile
-    if args.dv_ratio is not None: params["dv_ratio"] = args.dv_ratio
-    if args.dv_ratio_percentile is not None: params["dv_ratio_percentile"] = args.dv_ratio_percentile
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

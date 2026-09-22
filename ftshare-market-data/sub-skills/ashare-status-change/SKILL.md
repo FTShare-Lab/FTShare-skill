@@ -10,7 +10,7 @@ description: 查询 A 股状态变更记录。Use when user asks about 上市、
 ```bash
 python <RUN_PY> ashare-status-change --trade-code 600848.SH
 python <RUN_PY> ashare-status-change --trade-code 600848.SH --change-type 上市
-python <RUN_PY> ashare-status-change --change-date 20240101
+python <RUN_PY> ashare-status-change --change-date 20260922
 ```
 
 - `--trade-code`：可选，支持逗号分隔多个 `.SZ`/`.SH` 代码。

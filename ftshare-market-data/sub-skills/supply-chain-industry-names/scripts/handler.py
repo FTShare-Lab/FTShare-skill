@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse, json, os, sys, urllib.error, urllib.parse, urllib.request
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
-ENDPOINT = '/api/v2/market/data/price/get-price-change'
+ENDPOINT = '/api/v3/market/data/supply-chain/industry-names'
 SAFE_URLOPENER = urllib.request.build_opener()
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
 def _require_api_key():
@@ -19,19 +19,9 @@ def safe_urlopen(request, timeout=30):
     request.add_unredirected_header("Content-Type", "application/json")
     return SAFE_URLOPENER.open(request, timeout=timeout)
 def main():
-    key = _require_api_key(); parser = argparse.ArgumentParser(description='价格变动')
-    parser.add_argument("--stock_code", required=True)
-    parser.add_argument("--base_date", required=True)
-    parser.add_argument("--n", required=True)
-    parser.add_argument("--direction", required=True)
-    args = parser.parse_args()
-    params = {}
-    if args.stock_code is not None: params["stock_code"] = args.stock_code
-    if args.base_date is not None: params["base_date"] = args.base_date
-    if args.n is not None: params["n"] = args.n
-    if args.direction is not None: params["direction"] = args.direction
-    query = ("?" + urllib.parse.urlencode(params)) if params else ""
-    request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
+    key = _require_api_key(); parser = argparse.ArgumentParser(description='供应链行业名称')
+    parser.parse_args()
+    request = urllib.request.Request(BASE_URL + ENDPOINT, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:
         with safe_urlopen(request) as response: payload = json.loads(response.read().decode())
         print(json.dumps(payload, ensure_ascii=False, indent=2))

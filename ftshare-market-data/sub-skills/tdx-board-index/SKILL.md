@@ -12,5 +12,5 @@ description: 查询通达信板块指数最新快照。接口：GET /api/v1/mark
 ## 调用示例
 
 ```bash
-python <RUN_PY> tdx-board-index --page 1 --trade_date 20260828 --lead_rise_speed 1 --lead_pre_close 1
+python <RUN_PY> tdx-board-index --page 1
 ```

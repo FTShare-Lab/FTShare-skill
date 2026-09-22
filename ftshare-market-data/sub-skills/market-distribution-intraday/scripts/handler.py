@@ -20,14 +20,8 @@ def safe_urlopen(request, timeout=30):
     return SAFE_URLOPENER.open(request, timeout=timeout)
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='市场涨跌分布分时')
-    parser.add_argument("--ts_millis", required=True)
-    parser.add_argument("--up_limited", required=True)
-    parser.add_argument("--down_limited", required=True)
     args = parser.parse_args()
     params = {}
-    if args.ts_millis is not None: params["ts_millis"] = args.ts_millis
-    if args.up_limited is not None: params["up_limited"] = args.up_limited
-    if args.down_limited is not None: params["down_limited"] = args.down_limited
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

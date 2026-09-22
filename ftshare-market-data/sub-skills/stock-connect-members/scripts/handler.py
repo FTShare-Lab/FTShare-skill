@@ -24,16 +24,12 @@ def main():
     parser.add_argument("--channel", required=True)
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total")
-    parser.add_argument("--symbol")
     args = parser.parse_args()
     params = {}
     if args.direction is not None: params["direction"] = args.direction
     if args.channel is not None: params["channel"] = args.channel
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.symbol is not None: params["symbol"] = args.symbol
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

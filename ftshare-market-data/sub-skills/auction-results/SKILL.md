@@ -12,5 +12,5 @@ description: 查询集合竞价结果。接口：GET /api/v2/market/data/auction
 ## 调用示例
 
 ```bash
-python <RUN_PY> auction-results --page 1 --symbol 600519.SH
+python <RUN_PY> auction-results --ts_code 600519.SH --page 1
 ```

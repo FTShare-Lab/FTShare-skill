@@ -10,7 +10,7 @@ description: 查询董监高持股变动明细。用户询问董监高、高管�
 ## 调用示例
 
 ```bash
-python <RUN_PY> executive-holdings-changes --stock-code 600001 --change-direction 增持 --start-date 20260101 --end-date 20260601 --page 1 --page-size 20
+python <RUN_PY> executive-holdings-changes --change-direction 增持 --start-date 20260101 --end-date 20260918 --page 1 --page-size 20
 python <RUN_PY> executive-holdings-changes --stock-code 600519 --all
 ```
 

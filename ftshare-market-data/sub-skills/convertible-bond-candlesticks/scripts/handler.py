@@ -22,8 +22,8 @@ BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
 ENDPOINT = "/api/v1/market/data/convertible-bond-candlesticks"
 
-INTERVAL_UNITS = ("Day", "Week", "Month", "Year")
-ADJUST_KINDS = ("None", "Forward", "Backward")
+INTERVAL_UNITS = ("day", "week", "month", "year")
+ADJUST_KINDS = ("none", "forward", "backward")
 
 
 def safe_urlopen(req_or_url):
@@ -52,27 +52,25 @@ HEADERS = {
 }
 
 
-def build_body(symbol, interval_unit, interval_value, adjust_kind,
+def build_body(symbol, interval_unit, adjust_kind,
                since_ts_millis, until_ts_millis, limit):
     body = {
         "symbol": symbol,
-        "interval_unit": interval_unit,
+        "interval_unit": interval_unit.lower(),
         "since_ts_millis": since_ts_millis,
         "until_ts_millis": until_ts_millis,
     }
-    if interval_value is not None:
-        body["interval_value"] = interval_value
-    if adjust_kind and adjust_kind != "None":
-        body["adjust_kind"] = adjust_kind
+    if adjust_kind and adjust_kind.lower() != "none":
+        body["adjust_kind"] = adjust_kind.lower()
     if limit is not None:
         body["limit"] = limit
     return body
 
 
 def fetch(
-symbol, interval_unit, interval_value, adjust_kind,
+symbol, interval_unit, adjust_kind,
           since_ts_millis, until_ts_millis, limit):
-    body = build_body(symbol, interval_unit, interval_value, adjust_kind,
+    body = build_body(symbol, interval_unit, adjust_kind,
                       since_ts_millis, until_ts_millis, limit)
     query = urllib.parse.urlencode(body, doseq=True)
     url = f"{BASE_URL}{ENDPOINT}?{query}"
@@ -95,14 +93,12 @@ symbol, interval_unit, interval_value, adjust_kind,
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询单只可转债历史日/周/月/年 K 线（GET 查询参数，不支持分钟周期）")
+    parser = argparse.ArgumentParser(description="查询单只可转债历史 K 线（GET 查询参数）")
     parser.add_argument("--symbol", required=True, help="可转债代码，如 113042.SH、123107.SZ")
-    parser.add_argument("--interval-unit", dest="interval_unit", required=True, type=str.capitalize,
-                        choices=INTERVAL_UNITS, help="K 线周期：Day/Week/Month/Year（大小写不敏感，不支持 Minute）")
-    parser.add_argument("--interval-value", dest="interval_value", type=int, default=None,
-                        help="间隔数值，周期查询无需设置")
-    parser.add_argument("--adjust-kind", dest="adjust_kind", default="None",
-                        choices=ADJUST_KINDS, help="复权：None（默认）/Forward/Backward")
+    parser.add_argument("--interval-unit", dest="interval_unit", required=True,
+                        type=str.lower, choices=INTERVAL_UNITS, help="K 线周期：day/week/month/year（不支持分钟，分钟数据请用 convertible-bond-minutes 子 skill）")
+    parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
+                        type=str.lower, choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
                         help="开始时间戳（毫秒）；与结束时间跨度不得超过 12 个自然月")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
@@ -115,7 +111,7 @@ def main():
         print("--since-ts-millis 不能晚于 --until-ts-millis", file=sys.stderr)
         raise SystemExit(2)
 
-    data = fetch(args.symbol, args.interval_unit, args.interval_value,
+    data = fetch(args.symbol, args.interval_unit,
                  args.adjust_kind, args.since_ts_millis, args.until_ts_millis, args.limit)
     print(json.dumps(data, ensure_ascii=False, indent=2))
 

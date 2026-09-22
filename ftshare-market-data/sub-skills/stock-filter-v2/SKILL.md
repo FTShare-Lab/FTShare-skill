@@ -12,5 +12,5 @@ description: 查询股票筛选。接口：GET /api/v2/market/data/stock-list/fi
 ## 调用示例
 
 ```bash
-python <RUN_PY> stock-filter-v2 --symbol 600519.SH --page 1 --type stock --symbol_id 1 --symbol_name 1
+python <RUN_PY> stock-filter-v2 --symbol 600519.SH --page 1
 ```

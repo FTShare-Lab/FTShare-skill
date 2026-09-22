@@ -42,11 +42,13 @@ def _allowed_subskills():
 
 
 def _execute_handler(handler: str, handler_args: list) -> int:
-    """在当前进程执行 handler.py，避免 subprocess 告警。"""
-    old_cwd = os.getcwd()
+    """在当前进程执行 handler.py，避免 subprocess 告警。
+
+    不改变进程工作目录：handler 路径已是绝对路径，而下载类 handler 需要
+    以调用方的工作目录为落盘根目录。
+    """
     old_argv = sys.argv[:]
     try:
-        os.chdir(SKILL_ROOT)
         sys.argv = [handler] + handler_args
         runpy.run_path(handler, run_name="__main__")
         return 0
@@ -57,7 +59,6 @@ def _execute_handler(handler: str, handler_args: list) -> int:
         return 1 if code else 0
     finally:
         sys.argv = old_argv
-        os.chdir(old_cwd)
 
 def main():
     sub_skills_dir = os.path.join(SKILL_ROOT, "sub-skills")

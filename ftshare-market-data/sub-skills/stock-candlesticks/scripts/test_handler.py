@@ -19,17 +19,17 @@ class TestBuildBody(unittest.TestCase):
         spec.loader.exec_module(handler)
 
     def test_required_fields(self):
-        b = handler.build_body("600519.SH", "Day", 1, "None", None, 1756791000000, None)
+        b = handler.build_body("600519.SH", "day", "none", None, 1756791000000, None)
         self.assertEqual(b["symbol"], "600519.SH")
-        self.assertEqual(b["interval_unit"], "Day")
+        self.assertEqual(b["interval_unit"], "day")
         self.assertEqual(b["until_ts_millis"], 1756791000000)
         self.assertNotIn("interval_value", b)
 
     def test_optional_fields(self):
-        b = handler.build_body("000001.SZ", "Minute", 5, "Forward",
+        b = handler.build_body("000001.SZ", "day", "Forward",
                                1756700000000, 1756791000000, 100)
-        self.assertEqual(b["interval_value"], 5)
-        self.assertEqual(b["adjust_kind"], "Forward")
+        self.assertNotIn("interval_value", b)
+        self.assertEqual(b["adjust_kind"], "forward")
         self.assertEqual(b["limit"], 100)
 
 
@@ -40,7 +40,7 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_get_to_stock_endpoint(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch("600519.SH", "Day", 1, "None", None, 1756791000000, 5)
+        handler.fetch("600519.SH", "day", "none", None, 1756791000000, 5)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v1/market/data/stock-candlesticks", req.full_url)
@@ -54,7 +54,7 @@ class TestFetch(unittest.TestCase):
             "https://fake", 500, "Internal Error", {}, BytesIO(b"server error")
         )
         with self.assertRaises(SystemExit):
-            handler.fetch("600519.SH", "Day", 1, "None", None, 1756791000000, None)
+            handler.fetch("600519.SH", "day", "none", None, 1756791000000, None)
 
 
 class TestMain(unittest.TestCase):
@@ -69,7 +69,7 @@ class TestMain(unittest.TestCase):
             b'"turnover":"100","volume":1000}]'
         )
         with patch.object(sys, "argv", [
-            "handler.py", "--symbol", "600519.SH", "--interval-unit", "Day",
+            "handler.py", "--symbol", "600519.SH", "--interval-unit", "day",
             "--until-ts-millis", "1756791000000"
         ]):
             with patch("sys.stdout", new_callable=StringIO) as fake_out:

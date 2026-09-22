@@ -19,9 +19,9 @@ description: 批量查询多个指数的历史 K 线（index_candlesticks_batch�
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | symbols | string[] | 是 | 指数代码列表，逗号分隔传给 CLI | 000300.SH,399001.SZ | 沪市支持 `.XSHG`/`.SH`，深市支持 `.XSHE`/`.SZ`；接口侧以重复 query 参数发送 |
-| interval_unit | string | 是 | 周期单位 | Day | Day/Week/Month/Year，大小写不敏感；**不支持 Minute** |
-| adjust_kind | string | 否 | 复权类型 | Forward | None（默认）/Forward（前复权）/Backward（后复权） |
-| since_ts_millis | int | 是 | 开始时间戳（毫秒） | 1756431000000 | 与 until 的跨度不得超过 12 个日历月；不得晚于 until |
+| interval_unit | string | 是 | 周期单位 | day | day/week/month/year（大小写不敏感）；**不支持 minute** |
+| adjust_kind | string | 否 | 复权类型 | forward | none（默认，不复权）/forward（前复权）/backward（后复权） |
+| since_ts_millis | int | 否 | 开始时间戳（毫秒） | 1756431000000 | 与 limit 至少填一个；与 until 的跨度不得超过 12 个自然月，且不得晚于 until |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1756791000000 | - |
 | limit | int | 否 | 每个标的返回条数上限 | 2 | 不传时返回请求时间范围内的全部数据 |
 
@@ -44,18 +44,18 @@ description: 批量查询多个指数的历史 K 线（index_candlesticks_batch�
 ## 4. 调用方式
 
 ```bash
-python <RUN_PY> index-candlesticks-batch --symbols 000300.SH,399001.SZ --interval-unit Day --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 2
-python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Week --adjust-kind Forward --since-ts-millis 1754092800000 --until-ts-millis 1756791000000
+python <RUN_PY> index-candlesticks-batch --symbols 000300.SH,399001.SZ --interval-unit day --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 2
+python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit week --adjust-kind forward --since-ts-millis 1754092800000 --until-ts-millis 1756791000000
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。
 
 ## 5. 注意事项
 
-- `symbols`、`interval_unit`、`since_ts_millis`、`until_ts_millis` 必填；所有 `symbols` 使用相同周期。
+- `symbols`、`interval_unit`、`until_ts_millis` 必填；`since_ts_millis` 与 `limit` 至少填一个；所有 `symbols` 使用相同周期。
 - 接口仅支持 GET；`symbols` 在查询参数中以重复参数形式发送（`symbols=000300.SH&symbols=399001.SZ`）。
-- 时间跨度最多 12 个日历月；需要更长历史时按窗口分段多次调用。
-- 不支持分钟 K 线；分钟数据请使用 `index-minutes-batch` 子 skill。
+- 时间跨度最多 12 个自然月；需要更长历史时按窗口分段多次调用。
+- 不支持分钟 K 线；分钟数据请使用 `index-minutes-batch` 子 skill（`interval_unit=minute` 会返回参数错误）。
 - `symbols` 中每项必须是指数标的：若混入非指数（如 ETF、股票），整个批量请求失败，不静默过滤（当前返回系统错误）。
 - 输入 `.XSHG`/`.XSHE` 长后缀时，响应中的 symbol 会规范化为 `.SH`、`.SZ` 短后缀。
-- 默认不复权（None）；仅使用历史日 K 数据计算，不含实时行情，实际起始日期以行情数据源覆盖为准。
+- 默认不复权（`none`）；仅使用历史日 K 数据计算，不含实时行情，实际起始日期以行情数据源覆盖为准。

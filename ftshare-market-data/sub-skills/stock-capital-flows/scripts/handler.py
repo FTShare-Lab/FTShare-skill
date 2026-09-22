@@ -61,36 +61,43 @@ def fetch_page(page: int, page_size: int, date: str = None, time_slice: str = No
         sys.exit(1)
 
 
-def find_symbol(symbol: str, page_size: int, date: str = None, time_slice: str = None) -> dict:
+SCAN_PAGE_SIZE = 200  # 服务端 page_size 上限；定位时用大页以最少请求覆盖全市场
+
+
+def unwrap(env: dict) -> tuple:
+    """从响应信封取出 (records, pages, total)。"""
+    data = env.get("data") or {}
+    return data.get("records") or [], data.get("pages", 0) or 0, data.get("total", 0) or 0
+
+
+def find_symbol(symbol: str, date: str = None, time_slice: str = None) -> dict:
     """定位单只标的。先扫第 1 页与最后 1 页（覆盖排名头部/尾部），命中即返回；
     否则从前向后补扫中间页。返回其在全市场中的排名与记录。"""
     target = symbol.strip().upper()
 
-    def match(data, page_no):
-        for i, it in enumerate(data.get("items", [])):
+    def match(records, page_no):
+        for i, it in enumerate(records):
             if (it.get("symbol") or "").strip().upper() == target:
-                rank = (page_no - 1) * page_size + i + 1
-                return rank, it
+                return (page_no - 1) * SCAN_PAGE_SIZE + i + 1, it
         return None, None
 
-    first = fetch_page(1, page_size, date, time_slice)
-    total_pages = first.get("total_pages", 1)
-    total_items = first.get("total_items", 0)
+    records, total_pages, total_items = unwrap(fetch_page(1, SCAN_PAGE_SIZE, date, time_slice))
 
-    rank, rec = match(first, 1)
+    rank, rec = match(records, 1)
     if rec is not None:
         return {"found": True, "symbol": symbol, "rank": rank,
                 "total_items": total_items, "record": rec}
 
     if total_pages > 1:
-        last = fetch_page(total_pages, page_size, date, time_slice)
-        rank, rec = match(last, total_pages)
+        records, _, _ = unwrap(fetch_page(total_pages, SCAN_PAGE_SIZE, date, time_slice))
+        rank, rec = match(records, total_pages)
         if rec is not None:
             return {"found": True, "symbol": symbol, "rank": rank,
                     "total_items": total_items, "record": rec}
 
     for p in range(2, total_pages):
-        rank, rec = match(fetch_page(p, page_size, date, time_slice), p)
+        records, _, _ = unwrap(fetch_page(p, SCAN_PAGE_SIZE, date, time_slice))
+        rank, rec = match(records, p)
         if rec is not None:
             return {"found": True, "symbol": symbol, "rank": rank,
                     "total_items": total_items, "record": rec}
@@ -125,7 +132,7 @@ def main():
 
     # 单股定位（优先级最高；与 --all 互斥时以 --symbol 为准）
     if args.symbol:
-        result = find_symbol(args.symbol, args.page_size, args.date, time_slice)
+        result = find_symbol(args.symbol, args.date, time_slice)
     elif args.fetch_all:
         first = fetch_page(1, args.page_size, args.date, time_slice)
         all_items = list(first.get("items", []))

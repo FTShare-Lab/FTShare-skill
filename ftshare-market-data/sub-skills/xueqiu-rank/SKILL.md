@@ -12,5 +12,5 @@ description: 查询雪球股票排名。接口：GET /api/v1/market/data/xueqiu-
 ## 调用示例
 
 ```bash
-python <RUN_PY> xueqiu-rank --page 1 --display_name 1 --metric_name 1 --rank_no 1 --stock_name 1 --metric_value 1
+python <RUN_PY> xueqiu-rank --page 1
 ```

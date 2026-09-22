@@ -12,5 +12,5 @@ description: 查询个股严重异常波动。接口：GET /api/v2/market/data/s
 ## 调用示例
 
 ```bash
-python <RUN_PY> stk-surv --page 1 --name 1 --trade_market A
+python <RUN_PY> stk-surv --page 1 --trade_date 20260828
 ```

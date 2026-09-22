@@ -29,7 +29,7 @@ description: "按基金代码分页查询基金份额变动。当用户需要查
 通过根目录的 `run.py` 调用（推荐）：
 
 ```bash
-python <RUN_PY> fund-share-single-fund-paginated --fund_code 000001 --stati_perd 日 --start_date 20260101 --end_date 20260717 --page 1 --page_size 50
+python <RUN_PY> fund-share-single-fund-paginated --fund_code 000001 --stati_perd 全部 --page 1 --page_size 5
 ```
 
 > `<RUN_PY>` 为主 `SKILL.md` 同级的 `run.py` 绝对路径。

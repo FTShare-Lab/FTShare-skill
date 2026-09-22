@@ -12,5 +12,5 @@ description: 查询价格变动。接口：GET /api/v2/market/data/price/get-pri
 ## 调用示例
 
 ```bash
-python <RUN_PY> price-change --stock_code 600519 --base_date 20260828 --n 5 --direction forward --stock_name 1 --start_date 20260828 --end_date 20260828 --actual_trading_days 1 --start_price 1 --end_price 1 --price_change 1
+python <RUN_PY> price-change --stock_code 600519 --base_date 20260828 --n 5 --direction forward
 ```

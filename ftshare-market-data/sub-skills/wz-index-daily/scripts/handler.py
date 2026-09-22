@@ -24,24 +24,12 @@ def main():
     parser.add_argument("--end_date", required=True)
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--date", required=True)
-    parser.add_argument("--comp_rate", required=False)
-    parser.add_argument("--center_rate", required=False)
-    parser.add_argument("--micro_rate", required=False)
-    parser.add_argument("--sdb_rate", required=False)
-    parser.add_argument("--long_rate", required=False)
     args = parser.parse_args()
     params = {}
     if args.start_date is not None: params["start_date"] = args.start_date
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.date is not None: params["date"] = args.date
-    if args.comp_rate is not None: params["comp_rate"] = args.comp_rate
-    if args.center_rate is not None: params["center_rate"] = args.center_rate
-    if args.micro_rate is not None: params["micro_rate"] = args.micro_rate
-    if args.sdb_rate is not None: params["sdb_rate"] = args.sdb_rate
-    if args.long_rate is not None: params["long_rate"] = args.long_rate
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

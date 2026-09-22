@@ -12,5 +12,5 @@ description: 查询一致行动人明细。接口：GET /api/v1/market/data/yzxd
 ## 调用示例
 
 ```bash
-python <RUN_PY> yzxdr-detail --year 2025 --quarter 4 --page 1 --id 1 --stock_name 1
+python <RUN_PY> yzxdr-detail --year 2026 --quarter 2 --page 1 --stock_code 000001
 ```

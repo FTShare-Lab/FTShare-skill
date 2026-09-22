@@ -20,14 +20,8 @@ def safe_urlopen(request, timeout=30):
     return SAFE_URLOPENER.open(request, timeout=timeout)
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='现金流支持股票代码')
-    parser.add_argument("--items", required=False)
-    parser.add_argument("--stock_code", required=True)
-    parser.add_argument("--stock_name", required=True)
     args = parser.parse_args()
     params = {}
-    if args.items is not None: params["items"] = args.items
-    if args.stock_code is not None: params["stock_code"] = args.stock_code
-    if args.stock_name is not None: params["stock_name"] = args.stock_name
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

@@ -13,4 +13,7 @@ description: 查询涨跌停价。接口：GET /api/v1/market/data/stk-limit。�
 
 ```bash
 python <RUN_PY> stock-limit --symbol 600519.SH --page 1
+python <RUN_PY> stock-limit --trade_date 20260911 --page 1 --page_size 100
 ```
+
+`--symbol` 可选：不传标的参数时按 `--trade_date` 返回全市场当日涨跌停截面（配合分页）；传入 `--symbol` 时查单标的单日或历史区间。

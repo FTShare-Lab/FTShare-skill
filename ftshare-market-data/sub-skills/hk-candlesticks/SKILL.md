@@ -19,10 +19,10 @@ description: 按港股代码查询日/月/季/年 K 线。用户问港股 K 线�
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | trade_code | string | 是 | 港股代码 | 00700.HK | 支持 `700` 或 `00700.HK`，响应中统一为 5 位 + `.HK` |
-| interval_unit | string | 是 | K 线间隔单位 | day | 取值：`day`、`month`、`quarter`、`year`（kebab-case 序列化） |
+| interval_unit | string | 是 | K 线间隔单位 | day | `day`/`month`/`quarter`/`year`（大小写不敏感）；**不支持 `week`** |
 | until_date | string | 是 | 结束日期 | 2026-03-24 | 格式 `YYYY-MM-DD` |
 | since_date | string | 否 | 开始日期 | 2026-01-01 | 不传则从库中最早数据起至 `until_date` |
-| adjust_kind | string | 否 | 复权类型 | forward | 默认 `forward`（前复权）；`none` 为不复权 |
+| adjust_kind | string | 否 | 复权类型 | forward | 默认 `forward`（前复权）；`none` 为不复权；取值大小写不敏感 |
 | interval_value | int | 否 | 间隔数值 | 1 | 当前仅支持 `1`，其它值会报错 |
 | limit | int | 否 | 返回条数上限 | 100 | 日 K 在 SQL 层下推；月/季/年在聚合后截取最近 N 根 |
 

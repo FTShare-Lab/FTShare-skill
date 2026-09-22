@@ -25,10 +25,6 @@ def main():
     parser.add_argument("--bank")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--trade_date", required=True)
-    parser.add_argument("--bank_en", required=True)
-    parser.add_argument("--on_rate", required=False)
-    parser.add_argument("--y1", required=True)
     args = parser.parse_args()
     params = {}
     if args.start_date is not None: params["start_date"] = args.start_date
@@ -36,11 +32,7 @@ def main():
     if args.bank is not None: params["bank"] = args.bank
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
     if args.bank is not None: params["bank"] = args.bank
-    if args.bank_en is not None: params["bank_en"] = args.bank_en
-    if args.on_rate is not None: params["on_rate"] = args.on_rate
-    if args.y1 is not None: params["y1"] = args.y1
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

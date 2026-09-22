@@ -32,9 +32,9 @@ python <RUN_PY> stock-minutes --symbol 600519.SH --since-ts-millis 1787189400000
 python <RUN_PY> etf-realtime-day-kline --symbols 510300.SH
 python <RUN_PY> index-minutes --symbol 000300.SH --since-ts-millis 1787189400000 --until-ts-millis 1787191200000
 python <RUN_PY> stock-reports --stock-code 600036.SH --page 1 --page-size 20
-python <RUN_PY> stock-announcements --stock-code 600000 --page 1 --page-size 20
+python <RUN_PY> stock-announcements --stock-code 600000.SH --page 1 --page-size 20
 python <RUN_PY> stock-prospectuses --stock-code 600000.SH --page 1 --page-size 20
-python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
+python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,600036.SH --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> etf-candlesticks-batch --symbols 510300.XSHG,159915.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> futures-contract-kline --symbol A2605.DCE --interval daily --limit 5
@@ -50,9 +50,17 @@ python <RUN_PY> ashare-code-change --trade-code 001872.SZ
 python <RUN_PY> ashare-status-change --trade-code 600848.SH --change-type 上市
 python <RUN_PY> stock-st-history --symbol 600735.SH,000004.SZ
 python <RUN_PY> nth-trade-date --n 5
-python <RUN_PY> continuous-auction-volume --trade-date 20260620 --page 1 --page-size 50
+python <RUN_PY> continuous-auction-volume --trade-date 20260918 --page 1 --page-size 50
 python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 --end-date 20260828 --lookback-hours 48 --page 1 --page-size 5
 python <RUN_PY> semantic-search-news --query 人工智能
+```
+
+下载类：
+
+```bash
+# 公告正文 PDF：先查列表拿 url_hash，再下载
+python <RUN_PY> stock-announcements --url-hash d8d54544...cf574adf --output ./ann.pdf
+python <RUN_PY> etf-announcements --url-hash d8d54544...cf574adf
 ```
 
 ## 能力范围
@@ -64,7 +72,8 @@ python <RUN_PY> semantic-search-news --query 人工智能
 - 成功响应以格式化 JSON 输出到 stdout。
 - HTTP、网络、参数和认证诊断输出到 stderr。
 - 请求失败时返回非零退出状态。
-- 下载类子 skill 只允许将文件写入当前工作目录及其子目录。
+- 下载类子 skill 只允许将文件写入当前工作目录及其子目录，越界以非零状态退出。
+- 下载完成只向 stdout 输出落盘后的文件路径（不打印 JSON）。
 
 ## 运行时发现
 

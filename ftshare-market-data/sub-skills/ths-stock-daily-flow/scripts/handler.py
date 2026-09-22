@@ -25,15 +25,6 @@ def main():
     parser.add_argument("--name")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--trade_date", required=True)
-    parser.add_argument("--close_price", required=False)
-    parser.add_argument("--change_pct", required=False)
-    parser.add_argument("--turnover_pct", required=False)
-    parser.add_argument("--inflow", required=False)
-    parser.add_argument("--outflow", required=False)
-    parser.add_argument("--net_amount", required=False)
-    parser.add_argument("--turnover_amount", required=False)
     args = parser.parse_args()
     params = {}
     if args.start_date is not None: params["start_date"] = args.start_date
@@ -41,16 +32,7 @@ def main():
     if args.name is not None: params["name"] = args.name
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
     if args.name is not None: params["name"] = args.name
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.close_price is not None: params["close_price"] = args.close_price
-    if args.change_pct is not None: params["change_pct"] = args.change_pct
-    if args.turnover_pct is not None: params["turnover_pct"] = args.turnover_pct
-    if args.inflow is not None: params["inflow"] = args.inflow
-    if args.outflow is not None: params["outflow"] = args.outflow
-    if args.net_amount is not None: params["net_amount"] = args.net_amount
-    if args.turnover_amount is not None: params["turnover_amount"] = args.turnover_amount
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

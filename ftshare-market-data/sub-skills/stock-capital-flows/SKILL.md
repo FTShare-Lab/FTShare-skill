@@ -45,22 +45,30 @@ python scripts/handler.py --symbol 601138.SH
 
 ```json
 {
-  "items": [
-    {
-      "net_inflow_extra_large": "123456789.0000",
-      "net_inflow_large": "98765432.1000",
-      "net_inflow_main": "222222221.1000",
-      "net_inflow_medium": "-50000000.0000",
-      "net_inflow_small": "-172222221.1000",
-      "symbol": "600000.SH",
-      "symbol_name": "浦发银行",
-      "ts_nanos": 1747037400000000000
-    }
-  ],
-  "total_pages": 100,
-  "total_items": 5000
+  "code": 200,
+  "message": "success",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 50,
+    "total": 5209,
+    "pages": 105,
+    "records": [
+      {
+        "net_inflow_extra_large": "123456789.0000",
+        "net_inflow_large": "98765432.1000",
+        "net_inflow_main": "222222221.1000",
+        "net_inflow_medium": "-50000000.0000",
+        "net_inflow_small": "-172222221.1000",
+        "symbol": "600000.SH",
+        "symbol_name": "浦发银行",
+        "ts_nanos": 1747037400000000000
+      }
+    ]
+  }
 }
 ```
+
+`--symbol` 模式输出为定位结果：`{"found": bool, "symbol": str, "rank": int|null, "total_items": int, "record": {...}}`。
 
 ### 字段说明（CapitalFlowResponse）
 
@@ -88,5 +96,5 @@ python scripts/handler.py --symbol 601138.SH
 ## 调用示例
 
 ```bash
-python <RUN_PY> stock-capital-flows --symbol 600519.SH --page 1 --page-size 5
+python <RUN_PY> stock-capital-flows --symbol 600519.SH
 ```

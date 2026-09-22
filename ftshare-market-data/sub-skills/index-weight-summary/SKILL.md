@@ -20,7 +20,7 @@ description: 分页查询指数权重汇总（market.ft.tech）。可按 index_c
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| index_code | string | 否 | 指数代码 | 000300 | 不传则分页返回全部指数 |
+| index_code | string | 是 | 指数代码 | 000300 | 必填，缺失时服务端返回 `code=400`「index_code 不能为空」 |
 | page | int | 否 | 页码 | 1 | 默认 1 |
 | page_size | int | 否 | 每页条数 | 20 | 默认 20，最大 100 |
 
@@ -50,6 +50,7 @@ description: 分页查询指数权重汇总（market.ft.tech）。可按 index_c
 |--------|------|------------|------|------|
 | date | String | 否 | 权重日期；文档示例为 `YYYYMMDD`，线上也可能为 `YYYY-MM-DD`，以实际返回为准 | - |
 | url_hash | String | 否 | 该期权重文件的哈希 | - |
+| components | array | 否 | 该期成份股明细，元素含 `component_code`、`component_name`、`weight` | - |
 
 ## 4. 调用方式
 
@@ -57,7 +58,6 @@ description: 分页查询指数权重汇总（market.ft.tech）。可按 index_c
 
 ```bash
 python <RUN_PY> index-weight-summary --index-code 000300 --page 1 --page-size 20
-python <RUN_PY> index-weight-summary --page 1 --page-size 20
 ```
 
 其中 `<RUN_PY>` 为 `FTShare-index-data/run.py` 的绝对路径。
@@ -65,7 +65,6 @@ python <RUN_PY> index-weight-summary --page 1 --page-size 20
 ### 直接执行 handler（调试）
 
 ```bash
-python scripts/handler.py --page 1 --page-size 20
 python scripts/handler.py --index-code 000300 --page 1 --page-size 20
 ```
 

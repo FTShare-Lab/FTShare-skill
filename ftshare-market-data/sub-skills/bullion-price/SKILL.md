@@ -12,5 +12,5 @@ description: 查询贵金属价格。接口：GET /api/v1/market/data/bullion/pr
 ## 调用示例
 
 ```bash
-python <RUN_PY> bullion-price --symbol 600519.SH --start_date 20260828 --end_date 20260828 --page 1 --page_size 5 --date 20260828
+python <RUN_PY> bullion-price --symbol XAUUSD --start_date 20260615 --end_date 20260617 --page 1 --page_size 10
 ```
