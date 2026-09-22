@@ -20,7 +20,7 @@ description: 批量查询多个指数的历史 K 线（index_candlesticks_batch�
 |--------|------|----------|------|----------|------|
 | symbols | string[] | 是 | 指数代码列表，逗号分隔传给 CLI | 000300.SH,399001.SZ | 沪市支持 `.XSHG`/`.SH`，深市支持 `.XSHE`/`.SZ`；接口侧以重复 query 参数发送 |
 | interval_unit | string | 是 | 周期单位 | Day | Day/Week/Month/Year，大小写不敏感；**不支持 Minute** |
-| adjust_kind | string | 否 | 复权类型 | Forward | None（默认）/Forward（前复权）/Backward（后复权） |
+| adjust_kind | string | 否 | 复权类型 | forward | none（默认，不复权）/forward（前复权）/backward（后复权） |
 | since_ts_millis | int | 是 | 开始时间戳（毫秒） | 1756431000000 | 与 until 的跨度不得超过 12 个日历月；不得晚于 until |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1756791000000 | - |
 | limit | int | 否 | 每个标的返回条数上限 | 2 | 不传时返回请求时间范围内的全部数据 |
@@ -45,7 +45,7 @@ description: 批量查询多个指数的历史 K 线（index_candlesticks_batch�
 
 ```bash
 python <RUN_PY> index-candlesticks-batch --symbols 000300.SH,399001.SZ --interval-unit Day --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 2
-python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Week --adjust-kind Forward --since-ts-millis 1754092800000 --until-ts-millis 1756791000000
+python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Week --adjust-kind forward --since-ts-millis 1754092800000 --until-ts-millis 1756791000000
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。

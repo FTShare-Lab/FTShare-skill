@@ -23,7 +23,7 @@ _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-T
 ENDPOINT = "/api/v1/market/data/index-candlesticks"
 
 INTERVAL_UNITS = ("Minute", "Day", "Week", "Month", "Year")
-ADJUST_KINDS = ("None", "Forward", "Backward")
+ADJUST_KINDS = ("none", "forward", "backward", "None", "Forward", "Backward")
 
 
 def safe_urlopen(req_or_url):
@@ -61,8 +61,8 @@ def build_body(symbol, interval_unit, interval_value, adjust_kind,
     }
     if interval_value is not None and interval_value != 1:
         body["interval_value"] = interval_value
-    if adjust_kind and adjust_kind != "None":
-        body["adjust_kind"] = adjust_kind
+    if adjust_kind and adjust_kind.lower() != "none":
+        body["adjust_kind"] = adjust_kind.lower()
     if since_ts_millis is not None:
         body["since_ts_millis"] = since_ts_millis
     if limit is not None:
@@ -102,8 +102,8 @@ def main():
                         choices=INTERVAL_UNITS, help="K 线周期：Minute/Day/Week/Month/Year")
     parser.add_argument("--interval-value", dest="interval_value", type=int, default=1,
                         help="间隔数值，默认 1（Minute+5 表示 5 分钟 K）")
-    parser.add_argument("--adjust-kind", dest="adjust_kind", default="None",
-                        choices=ADJUST_KINDS, help="复权：None（默认）/Forward/Backward")
+    parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
+                        choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", type=int, default=None,
                         help="开始时间戳（毫秒）；分钟 K 与 until 跨度 ≤3 天")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,

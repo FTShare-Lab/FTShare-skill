@@ -23,7 +23,7 @@ description: 批量查询多只可转债历史日/周/月/年 K 线（convertibl
 | symbols | string[] | 是 | 可转债代码列表，逗号分隔传给 CLI | 113042.SH,123107.SZ | 1～20 只；也接受 `.XSHG`/`.SH`、`.XSHE`/`.SZ`；接口侧以重复参数发送 |
 | interval_unit | string | 是 | 周期单位 | Day | Day/Week/Month/Year，大小写不敏感；**不支持 Minute** |
 | interval_value | int | 否 | 间隔数值 | 可省略 | 周期查询无需设置 |
-| adjust_kind | string | 否 | 复权类型 | Forward | None（默认）/Forward（前复权）/Backward（后复权） |
+| adjust_kind | string | 否 | 复权类型 | forward | none（默认，不复权）/forward（前复权）/backward（后复权） |
 | since_ts_millis | int | 是 | 开始时间戳（毫秒） | 1786291200000 | 不得晚于 `until_ts_millis` |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1786377599999 | 与起始时间相差不超过 12 个自然月 |
 | limit | int | 否 | **每个标的**返回条数上限 | 1 | 省略时返回窗口内全部记录 |
@@ -46,7 +46,7 @@ description: 批量查询多只可转债历史日/周/月/年 K 线（convertibl
 
 ```bash
 python <RUN_PY> convertible-bond-candlesticks-batch --symbols 113042.SH,123107.SZ --interval-unit Day --since-ts-millis 1786291200000 --until-ts-millis 1786377599999 --limit 1
-python <RUN_PY> convertible-bond-candlesticks-batch --symbols 113042.XSHG,123107.XSHE --interval-unit Week --adjust-kind Forward --since-ts-millis 1783000000000 --until-ts-millis 1786377599999
+python <RUN_PY> convertible-bond-candlesticks-batch --symbols 113042.XSHG,123107.XSHE --interval-unit Week --adjust-kind forward --since-ts-millis 1783000000000 --until-ts-millis 1786377599999
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。

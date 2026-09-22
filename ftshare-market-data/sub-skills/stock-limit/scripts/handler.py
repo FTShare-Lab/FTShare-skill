@@ -21,7 +21,7 @@ def safe_urlopen(request, timeout=30):
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='涨跌停价')
     parser.add_argument("--instrument_type")
-    parser.add_argument("--symbol", required=True)
+    parser.add_argument("--symbol")
     parser.add_argument("--trade_date")
     parser.add_argument("--start_date")
     parser.add_argument("--end_date")

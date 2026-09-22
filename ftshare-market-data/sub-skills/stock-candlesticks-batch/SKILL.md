@@ -20,7 +20,7 @@ description: 批量获取多只股票/ETF/可转债/指数 K 线 GET 接口（ma
 |--------|------|----------|------|----------|------|
 | symbols | string[] | 是 | 标的代码列表，逗号分隔传给 CLI | 600519.SH,510300.SH,113027.SH,000300.SH | 可混合股票/ETF/可转债/指数；沪市 `.XSHG`/`.SH`、深市 `.XSHE`/`.SZ`、北交所 `.BJSE`/`.BJ`；接口侧以重复 query 参数发送 |
 | interval_unit | string | 是 | 周期单位 | Day | Day/Week/Month/Year，大小写不敏感；**不支持 Minute** |
-| adjust_kind | string | 否 | 复权类型 | Forward | None（默认）/Forward（前复权）/Backward（后复权） |
+| adjust_kind | string | 否 | 复权类型 | forward | none（默认，不复权）/forward（前复权）/backward（后复权） |
 | since_ts_millis | int | 是 | 开始时间戳（毫秒） | 1756431000000 | 与 until 的跨度不得超过 12 个日历月；不得晚于 until |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1756791000000 | - |
 | limit | int | 否 | 每个标的返回条数上限 | 3 | 不传时返回请求时间范围内的全部数据 |
@@ -45,7 +45,7 @@ description: 批量获取多只股票/ETF/可转债/指数 K 线 GET 接口（ma
 
 ```bash
 python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,000001.SZ --interval-unit Day --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 2
-python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH,113027.SH --interval-unit Week --adjust-kind Forward --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 3
+python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,510300.SH,113027.SH --interval-unit Week --adjust-kind forward --since-ts-millis 1756431000000 --until-ts-millis 1756791000000 --limit 3
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。

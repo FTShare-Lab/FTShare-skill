@@ -34,7 +34,7 @@ class TestBuildQuery(unittest.TestCase):
         body = handler.build_query(["113042.SH", "123107.SZ"], "Week", 1, "Forward",
                                    1786291200000, 1786377599999, 2)
         self.assertEqual(body["symbols"], ["113042.SH", "123107.SZ"])
-        self.assertEqual(body["adjust_kind"], "Forward")
+        self.assertEqual(body["adjust_kind"], "forward")
         self.assertEqual(body["interval_value"], 1)
         self.assertEqual(body["limit"], 2)
 

@@ -34,7 +34,7 @@ class TestBuildQuery(unittest.TestCase):
         body = handler.build_query(["510300.SH", "159915.SZ"], "Week", "Forward",
                                    1756700000000, 1756791000000, 5)
         self.assertEqual(body["symbols"], ["510300.SH", "159915.SZ"])
-        self.assertEqual(body["adjust_kind"], "Forward")
+        self.assertEqual(body["adjust_kind"], "forward")
         self.assertEqual(body["limit"], 5)
 
     def test_minute_not_allowed(self):

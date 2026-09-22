@@ -23,7 +23,7 @@ description: 单只股票/ETF/指数/可转债历史 K 线 GET 接口（market.f
 | symbol | string | 是 | 标的代码（带市场后缀） | 600519.SH、000001.SZ、510300.XSHG | 长短后缀均支持；`.XSHG`/`.SH`、`.XSHE`/`.SZ`、`.BJSE`/`.BJ` |
 | interval_unit | string | 是 | 周期单位 | Day | Minute/Day/Week/Month/Year |
 | interval_value | int | 否 | 间隔数值 | 1 | 默认 1；Minute+5 表示 5 分钟 K 线 |
-| adjust_kind | string | 否 | 复权类型 | Forward | None（默认）/Forward（前复权）/Backward（后复权） |
+| adjust_kind | string | 否 | 复权类型 | forward | none（默认，不复权）/forward（前复权）/backward（后复权） |
 | since_ts_millis | int | 否 | 开始时间戳（毫秒） | 1756700000000 | 分钟 K 线与 until 跨度 ≤3 天，其余周期不受 3 天限制 |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1756791000000 | - |
 | limit | int | 否 | 返回条数上限 | 5 | 未传 since 和 limit 时默认最多返回 50 根 |
@@ -48,7 +48,7 @@ description: 单只股票/ETF/指数/可转债历史 K 线 GET 接口（market.f
 
 ```bash
 python <RUN_PY> stock-candlesticks --symbol 600519.SH --interval-unit Day --since-ts-millis 1756431000000 --until-ts-millis 1756710000000 --limit 5
-python <RUN_PY> stock-candlesticks --symbol 000001.SZ --interval-unit Minute --interval-value 5 --adjust-kind Forward --since-ts-millis 1756700000000 --until-ts-millis 1756791000000
+python <RUN_PY> stock-candlesticks --symbol 000001.SZ --interval-unit Minute --interval-value 5 --adjust-kind forward --since-ts-millis 1756700000000 --until-ts-millis 1756791000000
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON，请求头已内置 `X-Client-Name: ft-claw`。
@@ -60,6 +60,6 @@ python <RUN_PY> stock-candlesticks --symbol 000001.SZ --interval-unit Minute --i
 - 分钟 K 线（`interval_unit=Minute`）的 `since/until` 跨度硬限制 ≤3 天，超过需分段调用。
 - `interval_value` 仅在 `interval_unit=Minute` 时生效：不传或传 1 为 1 分钟 K，传 5/15/30/60/120 为对应多分钟 K；其他周期忽略该字段。
 - 多分钟 K 按北京时间的每个交易日分别聚合，不跨交易日；以 5 分钟 K 为例，首根为 09:30—09:35，开高低收取区间首根开盘价、最高价、最低价、末根收盘价，成交量和成交额按区间求和。
-- 默认不复权（None），`Forward` 前复权、`Backward` 后复权。
+- 默认不复权（`none`），`forward` 前复权、`backward` 后复权（取值大小写不敏感，发送时统一转小写）。
 - 该接口不校验证券类别；查 ETF 推荐用 `etf-candlesticks`、查指数用 `index-candlesticks`、查可转债用 `convertible-bond-candlesticks`。
 - 价格字段 JSON 中为字符串以避免精度丢失。

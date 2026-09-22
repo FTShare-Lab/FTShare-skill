@@ -23,7 +23,7 @@ _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-T
 ENDPOINT = "/api/v2/market/data/convertible-bond-candlesticks/batch"
 
 INTERVAL_UNITS = ("Day", "Week", "Month", "Year")
-ADJUST_KINDS = ("None", "Forward", "Backward")
+ADJUST_KINDS = ("none", "forward", "backward", "None", "Forward", "Backward")
 MAX_SYMBOLS = 20
 
 HEADERS = {
@@ -73,8 +73,8 @@ def build_query(symbols, interval_unit, interval_value, adjust_kind,
     }
     if interval_value is not None:
         body["interval_value"] = interval_value
-    if adjust_kind and adjust_kind != "None":
-        body["adjust_kind"] = adjust_kind
+    if adjust_kind and adjust_kind.lower() != "none":
+        body["adjust_kind"] = adjust_kind.lower()
     if limit is not None:
         body["limit"] = limit
     return body
@@ -110,8 +110,8 @@ def main():
                         choices=INTERVAL_UNITS, help="K 线周期：Day/Week/Month/Year（大小写不敏感，不支持 Minute）")
     parser.add_argument("--interval-value", dest="interval_value", type=int, default=None,
                         help="间隔数值，周期查询无需设置")
-    parser.add_argument("--adjust-kind", dest="adjust_kind", default="None",
-                        choices=ADJUST_KINDS, help="复权：None（默认）/Forward/Backward")
+    parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
+                        choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
                         help="开始时间戳（毫秒）；与结束时间跨度不得超过 12 个自然月")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,

@@ -32,7 +32,7 @@ class TestBuildBody(unittest.TestCase):
         b = handler.build_body("510300.XSHG", "Minute", 5, "Forward",
                                1756700000000, 1756791000000, 100)
         self.assertEqual(b["interval_value"], 5)
-        self.assertEqual(b["adjust_kind"], "Forward")
+        self.assertEqual(b["adjust_kind"], "forward")
         self.assertEqual(b["since_ts_millis"], 1756700000000)
         self.assertEqual(b["limit"], 100)
 
