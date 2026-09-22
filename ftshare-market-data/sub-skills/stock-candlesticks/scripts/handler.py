@@ -101,7 +101,7 @@ def main():
     parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
                         type=str.lower, choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", type=int, default=None,
-                        help="开始时间戳（毫秒）；与 until 的跨度不得超过 12 个自然月")
+                        help="开始时间戳（毫秒）；与 limit 至少填一个；与 until 的跨度不得超过 12 个自然月")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
                         help="结束时间戳（毫秒）")
     parser.add_argument("--limit", type=int, default=None, help="返回条数上限")
