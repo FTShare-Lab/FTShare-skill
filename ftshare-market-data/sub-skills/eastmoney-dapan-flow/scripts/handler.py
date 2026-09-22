@@ -25,22 +25,6 @@ def main():
     parser.add_argument("--end_date")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--sh_close", required=False)
-    parser.add_argument("--sh_change_pct", required=False)
-    parser.add_argument("--sz_close", required=False)
-    parser.add_argument("--sz_change_pct", required=False)
-    parser.add_argument("--main_net", required=False)
-    parser.add_argument("--main_pct", required=False)
-    parser.add_argument("--xlarge_net", required=False)
-    parser.add_argument("--xlarge_pct", required=False)
-    parser.add_argument("--large_net", required=False)
-    parser.add_argument("--large_pct", required=False)
-    parser.add_argument("--mid_net", required=False)
-    parser.add_argument("--mid_pct", required=False)
-    parser.add_argument("--small_net", required=False)
-    parser.add_argument("--small_pct", required=False)
-    parser.add_argument("--name", required=True)
     args = parser.parse_args()
     params = {}
     if args.trade_date is not None: params["trade_date"] = args.trade_date
@@ -48,23 +32,7 @@ def main():
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
     if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.sh_close is not None: params["sh_close"] = args.sh_close
-    if args.sh_change_pct is not None: params["sh_change_pct"] = args.sh_change_pct
-    if args.sz_close is not None: params["sz_close"] = args.sz_close
-    if args.sz_change_pct is not None: params["sz_change_pct"] = args.sz_change_pct
-    if args.main_net is not None: params["main_net"] = args.main_net
-    if args.main_pct is not None: params["main_pct"] = args.main_pct
-    if args.xlarge_net is not None: params["xlarge_net"] = args.xlarge_net
-    if args.xlarge_pct is not None: params["xlarge_pct"] = args.xlarge_pct
-    if args.large_net is not None: params["large_net"] = args.large_net
-    if args.large_pct is not None: params["large_pct"] = args.large_pct
-    if args.mid_net is not None: params["mid_net"] = args.mid_net
-    if args.mid_pct is not None: params["mid_pct"] = args.mid_pct
-    if args.small_net is not None: params["small_net"] = args.small_net
-    if args.small_pct is not None: params["small_pct"] = args.small_pct
-    if args.name is not None: params["name"] = args.name
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

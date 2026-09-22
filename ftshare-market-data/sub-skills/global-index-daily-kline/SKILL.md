@@ -12,5 +12,5 @@ description: 查询全球指数日K线。接口：GET /api/v1/market/data/global
 ## 调用示例
 
 ```bash
-python <RUN_PY> global-index-daily-kline --secid 1 --limit 5 --name 1 --trade_date 20260828 --amplitude 1
+python <RUN_PY> global-index-daily-kline --secid 100.DJIA --limit 5
 ```

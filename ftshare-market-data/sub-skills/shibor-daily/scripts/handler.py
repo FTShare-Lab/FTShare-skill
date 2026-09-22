@@ -24,30 +24,12 @@ def main():
     parser.add_argument("--end_date", required=True)
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--trade_date", required=True)
-    parser.add_argument("--on_rate", required=False)
-    parser.add_argument("--w1", required=True)
-    parser.add_argument("--w2", required=True)
-    parser.add_argument("--m1", required=True)
-    parser.add_argument("--m3", required=True)
-    parser.add_argument("--m6", required=True)
-    parser.add_argument("--m9", required=True)
-    parser.add_argument("--y1", required=True)
     args = parser.parse_args()
     params = {}
     if args.start_date is not None: params["start_date"] = args.start_date
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.on_rate is not None: params["on_rate"] = args.on_rate
-    if args.w1 is not None: params["w1"] = args.w1
-    if args.w2 is not None: params["w2"] = args.w2
-    if args.m1 is not None: params["m1"] = args.m1
-    if args.m3 is not None: params["m3"] = args.m3
-    if args.m6 is not None: params["m6"] = args.m6
-    if args.m9 is not None: params["m9"] = args.m9
-    if args.y1 is not None: params["y1"] = args.y1
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

@@ -21,21 +21,9 @@ def safe_urlopen(request, timeout=30):
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='市场行情快照')
     parser.add_argument("--scope")
-    parser.add_argument("--status", required=False)
-    parser.add_argument("--change_rate", required=False)
-    parser.add_argument("--volume", required=False)
-    parser.add_argument("--turnover", required=False)
-    parser.add_argument("--prev_turnover")
-    parser.add_argument("--distribution", required=False)
     args = parser.parse_args()
     params = {}
     if args.scope is not None: params["scope"] = args.scope
-    if args.status is not None: params["status"] = args.status
-    if args.change_rate is not None: params["change_rate"] = args.change_rate
-    if args.volume is not None: params["volume"] = args.volume
-    if args.turnover is not None: params["turnover"] = args.turnover
-    if args.prev_turnover is not None: params["prev_turnover"] = args.prev_turnover
-    if args.distribution is not None: params["distribution"] = args.distribution
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

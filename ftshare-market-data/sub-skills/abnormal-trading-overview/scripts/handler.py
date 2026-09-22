@@ -23,23 +23,11 @@ def main():
     parser.add_argument("--date")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--symbol", required=True)
-    parser.add_argument("--symbol_name")
-    parser.add_argument("--change_rate", required=False)
-    parser.add_argument("--close", required=False)
-    parser.add_argument("--turnover", required=False)
     args = parser.parse_args()
     params = {}
     if args.date is not None: params["date"] = args.date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.symbol is not None: params["symbol"] = args.symbol
-    if args.symbol_name is not None: params["symbol_name"] = args.symbol_name
-    if args.change_rate is not None: params["change_rate"] = args.change_rate
-    if args.close is not None: params["close"] = args.close
-    if args.turnover is not None: params["turnover"] = args.turnover
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

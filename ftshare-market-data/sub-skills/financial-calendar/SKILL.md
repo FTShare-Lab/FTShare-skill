@@ -10,7 +10,7 @@ description: 按日期范围查询财经日历（market.ft.tech），含华尔�
 | 项目 | 说明 |
 |------|------|
 | 接口名称 | 查询财经日历 |
-| 外部接口 | `GET /api/v1/market/data/finance/financial-calendar` |
+| 外部接口 | `GET /api/v1/market/data/finance/financial-calendar/baidu` |
 | 请求方式 | GET |
 | 适用场景 | 按日期范围查询华尔街见闻与百度财经日历数据（宏观数据、IPO、财报时间、交易提醒等） |
 
@@ -18,8 +18,8 @@ description: 按日期范围查询财经日历（market.ft.tech），含华尔�
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| start_date | string | 是 | 开始日期 | 2026-05-01 | 格式 `YYYY-MM-DD` |
-| end_date | string | 是 | 结束日期 | 2026-05-07 | 格式 `YYYY-MM-DD` |
+| start_date | string | 是 | 开始日期 | 2026-09-17 | 格式 `YYYY-MM-DD` |
+| end_date | string | 是 | 结束日期 | 2026-09-18 | 格式 `YYYY-MM-DD`；起止跨度不得超过 3 天 |
 
 ## 3. 响应说明
 
@@ -69,7 +69,7 @@ description: 按日期范围查询财经日历（market.ft.tech），含华尔�
 通过主目录 `run.py` 调用（必填 `--start-date`、`--end-date`）：
 
 ```bash
-python <RUN_PY> financial-calendar --start-date 2026-05-01 --end-date 2026-05-03
+python <RUN_PY> financial-calendar --start-date 2026-09-17 --end-date 2026-09-18
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。
@@ -77,6 +77,7 @@ python <RUN_PY> financial-calendar --start-date 2026-05-01 --end-date 2026-05-03
 ## 5. 注意事项
 
 - 日期格式为 `YYYY-MM-DD`。
+- 起止日期跨度不得超过 3 天，超出返回 `code=400`「时间范围不能超过3天」。
 - 各 `items` 列表可能为空数组，表示该日期范围内无对应事件。
 - 百度侧 IPO、财报时间、交易提醒等条目中，类型字段 JSON 名为 `type`。
 - **多日范围查询可能因响应过大导致服务端截断**（服务端 HTTP/2 限制）。建议每次仅查询单日（`start_date` 与 `end_date` 相同），如需多日数据请逐日调用后合并。

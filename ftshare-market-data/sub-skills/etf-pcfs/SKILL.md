@@ -10,7 +10,7 @@ description: 指定日期 ETF PCF 列表（market.ft.tech）。用户问 ETF PCF
 | 项目 | 说明 |
 |------|------|
 | 接口名称 | 获取指定日期 ETF PCF 列表 |
-| 外部接口 | `GET /api/v1/market/data/etf-pcf/etf-pcfs` |
+| 外部接口 | `GET /api/v2/market/data/etf-pcf/etf-pcfs` |
 | 请求方式 | GET |
 | 适用场景 | 获取指定交易日 ETF 申购赎回清单（PCF）文件列表，支持分页，数据来自外部 PCF 服务 |
 
@@ -68,7 +68,7 @@ python <RUN_PY> etf-pcfs --date 20260309 --page 1 --page_size 20
 ## 5. 请求示例
 
 ```
-GET /api/v1/market/data/etf-pcf/etf-pcfs?date=20260309&page=1&page_size=20
+GET /api/v2/market/data/etf-pcf/etf-pcfs?date=20260309&page=1&page_size=20
 ```
 
 ## 6. 注意事项

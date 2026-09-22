@@ -82,6 +82,7 @@ def main():
         "--interval-unit",
         dest="interval_unit",
         required=True,
+        type=str.lower,
         choices=INTERVAL_UNITS,
         help="K 线间隔：day / month / quarter / year",
     )
@@ -101,6 +102,7 @@ def main():
         "--adjust-kind",
         dest="adjust_kind",
         default="forward",
+        type=str.lower,
         choices=ADJUST_KINDS,
         help="复权类型：forward（前复权，默认）或 none（不复权）",
     )

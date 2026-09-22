@@ -12,5 +12,5 @@ description: 查询温州民间融资综合利率指数日度。接口：GET /ap
 ## 调用示例
 
 ```bash
-python <RUN_PY> wz-index-daily --start_date 20260828 --end_date 20260828 --page 1 --date 20260828
+python <RUN_PY> wz-index-daily --start_date 20260828 --end_date 20260828 --page 1
 ```

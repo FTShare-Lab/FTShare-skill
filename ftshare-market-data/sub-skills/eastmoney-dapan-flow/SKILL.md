@@ -12,5 +12,5 @@ description: 查询东方财富大盘资金流。接口：GET /api/v1/market/dat
 ## 调用示例
 
 ```bash
-python <RUN_PY> eastmoney-dapan-flow --page 1 --name 1
+python <RUN_PY> eastmoney-dapan-flow --page 1 --trade_date 20260828
 ```

@@ -22,8 +22,8 @@ BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
 ENDPOINT = "/api/v2/market/data/stock-candlesticks/batch"
 
-INTERVAL_UNITS = ("Day", "Week", "Month", "Year")
-ADJUST_KINDS = ("none", "forward", "backward", "None", "Forward", "Backward")
+INTERVAL_UNITS = ("day", "week", "month", "year")
+ADJUST_KINDS = ("none", "forward", "backward")
 
 
 def safe_urlopen(req_or_url):
@@ -64,7 +64,7 @@ def build_body(symbols, interval_unit, adjust_kind,
                since_ts_millis, until_ts_millis, limit):
     body = {
         "symbols": symbols,
-        "interval_unit": interval_unit,
+        "interval_unit": interval_unit.lower(),
         "until_ts_millis": until_ts_millis,
     }
     if adjust_kind and adjust_kind.lower() != "none":
@@ -104,19 +104,19 @@ def main():
     parser = argparse.ArgumentParser(description="批量查询多只标的 K 线（GET 查询参数）")
     parser.add_argument("--symbols", required=True,
                         help="标的代码列表，逗号分隔，如 600519.SH,510300.SH,113027.SH,000300.SH；支持长短后缀混用")
-    parser.add_argument("--interval-unit", dest="interval_unit", required=True, type=str.capitalize,
-                        choices=INTERVAL_UNITS, help="K 线周期：Day/Week/Month/Year（大小写不敏感，不支持 Minute）")
+    parser.add_argument("--interval-unit", dest="interval_unit", required=True,
+                        type=str.lower, choices=INTERVAL_UNITS, help="K 线周期：day/week/month/year（不支持 minute）")
     parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
-                        choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
-    parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
-                        help="开始时间戳（毫秒）；与结束时间跨度不得超过 12 个日历月")
+                        type=str.lower, choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
+    parser.add_argument("--since-ts-millis", dest="since_ts_millis", type=int, default=None,
+                        help="开始时间戳（毫秒）；与 limit 至少填一个；与结束时间跨度不得超过 12 个自然月")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
                         help="结束时间戳（毫秒）")
     parser.add_argument("--limit", type=int, default=None,
                         help="每个标的返回条数上限；不传时返回请求时间范围内的全部数据")
     args = parser.parse_args()
 
-    if args.since_ts_millis > args.until_ts_millis:
+    if args.since_ts_millis is not None and args.since_ts_millis > args.until_ts_millis:
         print("--since-ts-millis 不能晚于 --until-ts-millis", file=sys.stderr)
         raise SystemExit(2)
 

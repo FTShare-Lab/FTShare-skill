@@ -21,9 +21,9 @@ class TestBuildQuery(unittest.TestCase):
         spec.loader.exec_module(handler)
 
     def test_required_only(self):
-        body = handler.build_query(["510300.SH"], "Day", "None", 1756431000000, 1756791000000, None)
+        body = handler.build_query(["510300.SH"], "day", "none", 1756431000000, 1756791000000, None)
         self.assertEqual(body["symbols"], ["510300.SH"])
-        self.assertEqual(body["interval_unit"], "Day")
+        self.assertEqual(body["interval_unit"], "day")
         self.assertEqual(body["since_ts_millis"], 1756431000000)
         self.assertEqual(body["until_ts_millis"], 1756791000000)
         self.assertNotIn("adjust_kind", body)
@@ -31,7 +31,7 @@ class TestBuildQuery(unittest.TestCase):
         self.assertNotIn("interval_value", body)
 
     def test_optional_fields(self):
-        body = handler.build_query(["510300.SH", "159915.SZ"], "Week", "Forward",
+        body = handler.build_query(["510300.SH", "159915.SZ"], "week", "Forward",
                                    1756700000000, 1756791000000, 5)
         self.assertEqual(body["symbols"], ["510300.SH", "159915.SZ"])
         self.assertEqual(body["adjust_kind"], "forward")
@@ -40,7 +40,7 @@ class TestBuildQuery(unittest.TestCase):
     def test_minute_not_allowed(self):
         with self.assertRaises(SystemExit):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "510300.SH",
-                                            "--interval-unit", "Minute",
+                                            "--interval-unit", "minute",
                                             "--since-ts-millis", SINCE,
                                             "--until-ts-millis", UNTIL]):
                 handler.main()
@@ -53,14 +53,14 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_query_string_expands_symbols(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch(["510300.SH", "159915.SZ"], "Day", "None", 1756431000000, 1756791000000, 2)
+        handler.fetch(["510300.SH", "159915.SZ"], "day", "none", 1756431000000, 1756791000000, 2)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v2/market/data/etf-candlesticks/batch", req.full_url)
         query = req.full_url.split("?", 1)[1]
         self.assertIn("symbols=510300.SH", query)
         self.assertIn("symbols=159915.SZ", query)
-        self.assertIn("interval_unit=Day", query)
+        self.assertIn("interval_unit=day", query)
         self.assertIn("since_ts_millis=1756431000000", query)
         self.assertEqual(req.headers.get("X-client-name"), "ft-claw")
 
@@ -77,7 +77,7 @@ class TestMain(unittest.TestCase):
         )
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "510300.SH",
-                                            "--interval-unit", "Day",
+                                            "--interval-unit", "day",
                                             "--since-ts-millis", SINCE,
                                             "--until-ts-millis", UNTIL, "--limit", "2"]):
                 with patch("sys.stdout", new_callable=StringIO) as out:
@@ -85,18 +85,23 @@ class TestMain(unittest.TestCase):
                     data = json.loads(out.getvalue())
                     self.assertEqual(data["data"][0][0], "510300.SH")
 
-    def test_main_requires_since(self):
+    @patch.object(handler, "safe_urlopen")
+    def test_main_allows_limit_without_since(self, mock_open):
+        mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "510300.SH",
-                                            "--interval-unit", "Day",
-                                            "--until-ts-millis", UNTIL]):
-                with self.assertRaises(SystemExit):
+                                            "--interval-unit", "day",
+                                            "--until-ts-millis", UNTIL, "--limit", "3"]):
+                with patch("sys.stdout", new_callable=StringIO):
                     handler.main()
+        query = mock_open.call_args[0][0].full_url.split("?", 1)[1]
+        self.assertNotIn("since_ts_millis", query)
+        self.assertIn("limit=3", query)
 
     def test_main_rejects_since_after_until(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "510300.SH",
-                                            "--interval-unit", "Day",
+                                            "--interval-unit", "day",
                                             "--since-ts-millis", UNTIL,
                                             "--until-ts-millis", SINCE]):
                 with self.assertRaises(SystemExit):
@@ -104,7 +109,7 @@ class TestMain(unittest.TestCase):
 
     def test_main_requires_symbols(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
-            with patch.object(sys, "argv", ["handler.py", "--interval-unit", "Day",
+            with patch.object(sys, "argv", ["handler.py", "--interval-unit", "day",
                                             "--since-ts-millis", SINCE,
                                             "--until-ts-millis", UNTIL]):
                 with self.assertRaises(SystemExit):

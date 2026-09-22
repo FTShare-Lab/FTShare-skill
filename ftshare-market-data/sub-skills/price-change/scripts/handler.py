@@ -24,28 +24,12 @@ def main():
     parser.add_argument("--base_date", required=True)
     parser.add_argument("--n", required=True)
     parser.add_argument("--direction", required=True)
-    parser.add_argument("--stock_name", required=True)
-    parser.add_argument("--start_date", required=True)
-    parser.add_argument("--end_date", required=True)
-    parser.add_argument("--actual_trading_days", required=True)
-    parser.add_argument("--start_price", required=True)
-    parser.add_argument("--end_price", required=True)
-    parser.add_argument("--price_change", required=True)
-    parser.add_argument("--change_pct", required=False)
     args = parser.parse_args()
     params = {}
     if args.stock_code is not None: params["stock_code"] = args.stock_code
     if args.base_date is not None: params["base_date"] = args.base_date
     if args.n is not None: params["n"] = args.n
     if args.direction is not None: params["direction"] = args.direction
-    if args.stock_name is not None: params["stock_name"] = args.stock_name
-    if args.start_date is not None: params["start_date"] = args.start_date
-    if args.end_date is not None: params["end_date"] = args.end_date
-    if args.actual_trading_days is not None: params["actual_trading_days"] = args.actual_trading_days
-    if args.start_price is not None: params["start_price"] = args.start_price
-    if args.end_price is not None: params["end_price"] = args.end_price
-    if args.price_change is not None: params["price_change"] = args.price_change
-    if args.change_pct is not None: params["change_pct"] = args.change_pct
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

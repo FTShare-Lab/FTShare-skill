@@ -12,5 +12,5 @@ description: 查询东方财富个股资金流。接口：GET /api/v1/market/dat
 ## 调用示例
 
 ```bash
-python <RUN_PY> eastmoney-stock-flow --symbol 600519.SH --page 1 --name 1 --market A --super_large_net 1 --super_large_pct 1 --medium_net 1 --medium_pct 1
+python <RUN_PY> eastmoney-stock-flow --symbol 600519.SH --page 1
 ```

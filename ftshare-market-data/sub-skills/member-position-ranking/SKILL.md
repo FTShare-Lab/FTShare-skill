@@ -19,7 +19,7 @@ description: 查询指定交易日/交易所/合约/方向的期货会员持仓�
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | exchange | string | 是 | 交易所代码 | `DCE` | `SHFE`/`DCE`/`CZCE` 等 |
-| instrument_id | string | 是 | 合约代码 | `a2605` | - |
+| instrument_id | string | 是 | 合约代码 | `a2609` | - |
 | trade_date | string | 是 | 交易日 | `20260721` | YYYYMMDD 或 YYYY-MM-DD |
 | direction | string | 是 | 查询方向 | `long` | `long` 或 `short`，也接受常见中文和缩写别名 |
 | page | int | 否 | 页码 | `1` | 默认 1 |
@@ -29,7 +29,7 @@ description: 查询指定交易日/交易所/合约/方向的期货会员持仓�
 
 ```bash
 # 查某合约某日多头会员排名
-python <RUN_PY> member-position-ranking --exchange DCE --instrument_id a2605 --trade_date 20260721 --direction long
+python <RUN_PY> member-position-ranking --exchange DCE --instrument_id a2609 --trade_date 20260721 --direction long
 # 查空头排名并翻全量
 python <RUN_PY> member-position-ranking --exchange SHFE --instrument_id rb2610 --trade_date 20260721 --direction short --all
 ```

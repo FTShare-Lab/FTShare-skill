@@ -12,5 +12,5 @@ description: 查询龙虎榜总览。接口：GET /api/v1/market/data/abnormal-t
 ## 调用示例
 
 ```bash
-python <RUN_PY> abnormal-trading-overview --page 1 --symbol 600519.SH
+python <RUN_PY> abnormal-trading-overview --page 1 --date 20260828
 ```

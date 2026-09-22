@@ -12,5 +12,5 @@ description: 中国期货基础数据。调用 /api/v1/market/data/futures/futur
 ## 调用示例
 
 ```bash
-python <RUN_PY> futures-base-data --symbol 600519.SH
+python <RUN_PY> futures-base-data --trade-date 20260918
 ```

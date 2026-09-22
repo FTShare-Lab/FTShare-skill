@@ -24,10 +24,6 @@ def main():
     parser.add_argument("--range")
     parser.add_argument("--days")
     parser.add_argument("--ts_ms")
-    parser.add_argument("--price", required=False)
-    parser.add_argument("--avg_price")
-    parser.add_argument("--volume", required=False)
-    parser.add_argument("--turnover", required=False)
     args = parser.parse_args()
     params = {}
     if args.symbol is not None: params["symbol"] = args.symbol
@@ -35,10 +31,6 @@ def main():
     if args.days is not None: params["days"] = args.days
     if args.ts_ms is not None: params["ts_ms"] = args.ts_ms
     if args.ts_ms is not None: params["ts_ms"] = args.ts_ms
-    if args.price is not None: params["price"] = args.price
-    if args.avg_price is not None: params["avg_price"] = args.avg_price
-    if args.volume is not None: params["volume"] = args.volume
-    if args.turnover is not None: params["turnover"] = args.turnover
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

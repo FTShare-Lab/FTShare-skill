@@ -12,5 +12,5 @@ description: 查询SHIBOR报价日度。接口：GET /api/v1/market/data/shibor-
 ## 调用示例
 
 ```bash
-python <RUN_PY> shibor-quote-daily --start_date 20260828 --end_date 20260828 --page 1 --trade_date 20260828 --bank_en 1 --y1 1
+python <RUN_PY> shibor-quote-daily --start_date 20260828 --end_date 20260828 --page 1 --bank 汇丰银行
 ```

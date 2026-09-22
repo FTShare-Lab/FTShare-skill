@@ -12,5 +12,5 @@ description: 查询市场涨跌分布分时。接口：GET /api/v2/market/data/m
 ## 调用示例
 
 ```bash
-python <RUN_PY> market-distribution-intraday --ts_millis 1787191200000 --up_limited 5 --down_limited 5
+python <RUN_PY> market-distribution-intraday
 ```

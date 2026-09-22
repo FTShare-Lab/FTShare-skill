@@ -12,5 +12,5 @@ description: 查询申万行业总览。接口：GET /api/v1/market/data/sw-indu
 ## 调用示例
 
 ```bash
-python <RUN_PY> sw-industry-overview --date 20260828 --page 1 --industry-code 银行 --industry-name 银行
+python <RUN_PY> sw-industry-overview --date 20260828 --page 1 --level 1
 ```

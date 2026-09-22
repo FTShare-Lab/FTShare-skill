@@ -12,5 +12,5 @@ description: 查询K线形态标注。接口：GET /api/v3/market/data/kline-pat
 ## 调用示例
 
 ```bash
-python <RUN_PY> kline-pattern-annotations --symbol 000002 --page 1
+python <RUN_PY> kline-pattern-annotations --date 20260918 --page 1
 ```

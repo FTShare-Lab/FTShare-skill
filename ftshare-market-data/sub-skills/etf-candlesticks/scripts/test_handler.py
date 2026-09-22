@@ -19,9 +19,9 @@ class TestBuildBody(unittest.TestCase):
         spec.loader.exec_module(handler)
 
     def test_required_fields(self):
-        b = handler.build_body("510300.XSHG", "Day", 1, "None", None, 1756791000000, None)
+        b = handler.build_body("510300.XSHG", "day", "none", None, 1756791000000, None)
         self.assertEqual(b["symbol"], "510300.XSHG")
-        self.assertEqual(b["interval_unit"], "Day")
+        self.assertEqual(b["interval_unit"], "day")
         self.assertEqual(b["until_ts_millis"], 1756791000000)
         self.assertNotIn("interval_value", b)
         self.assertNotIn("adjust_kind", b)
@@ -29,9 +29,9 @@ class TestBuildBody(unittest.TestCase):
         self.assertNotIn("limit", b)
 
     def test_optional_fields(self):
-        b = handler.build_body("510300.XSHG", "Minute", 5, "Forward",
+        b = handler.build_body("510300.XSHG", "day", "Forward",
                                1756700000000, 1756791000000, 100)
-        self.assertEqual(b["interval_value"], 5)
+        self.assertNotIn("interval_value", b)
         self.assertEqual(b["adjust_kind"], "forward")
         self.assertEqual(b["since_ts_millis"], 1756700000000)
         self.assertEqual(b["limit"], 100)
@@ -44,12 +44,12 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_post_body_sent(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch("510300.XSHG", "Day", 1, "None", None, 1756791000000, 5)
+        handler.fetch("510300.XSHG", "day", "none", None, 1756791000000, 5)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v1/market/data/etf-candlesticks", req.full_url)
         self.assertIsNone(req.data)
-        self.assertEqual(req.full_url.split("?", 1)[1], "symbol=510300.XSHG&interval_unit=Day&until_ts_millis=1756791000000&limit=5")
+        self.assertEqual(req.full_url.split("?", 1)[1], "symbol=510300.XSHG&interval_unit=day&until_ts_millis=1756791000000&limit=5")
         self.assertEqual(req.headers.get("X-client-name"), "ft-claw")
         self.assertEqual(req.headers.get("Content-type"), "application/json")
 
@@ -59,7 +59,7 @@ class TestFetch(unittest.TestCase):
             "https://fake", 500, "Internal Error", {}, BytesIO(b"server error")
         )
         with self.assertRaises(SystemExit):
-            handler.fetch("510300.XSHG", "Day", 1, "None", None, 1756791000000, None)
+            handler.fetch("510300.XSHG", "day", "none", None, 1756791000000, None)
 
 
 class TestMain(unittest.TestCase):
@@ -73,7 +73,8 @@ class TestMain(unittest.TestCase):
             b'"ts_millis_open":1756690200000,"turnover":"100","volume":1000}]'
         )
         with patch.object(sys, "argv", [
-            "handler.py", "--symbol", "510300.XSHG", "--interval-unit", "Day",
+            "handler.py", "--symbol", "510300.XSHG", "--interval-unit", "day",
+            "--since-ts-millis", "1756700000000",
             "--until-ts-millis", "1756791000000", "--limit", "5"
         ]):
             with patch("sys.stdout", new_callable=StringIO) as fake_out:
@@ -84,7 +85,7 @@ class TestMain(unittest.TestCase):
 
     def test_main_missing_until_exits(self):
         with patch.object(sys, "argv", [
-            "handler.py", "--symbol", "510300.XSHG", "--interval-unit", "Day"
+            "handler.py", "--symbol", "510300.XSHG", "--interval-unit", "day"
         ]):
             with self.assertRaises(SystemExit):
                 handler.main()

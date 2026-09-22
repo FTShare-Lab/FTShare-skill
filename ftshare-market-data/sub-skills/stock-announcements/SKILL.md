@@ -44,7 +44,7 @@ description: 查询 A 股公告列表，或按 url_hash 下载公告正文 PDF�
 
 ```bash
 # 列表
-python <RUN_PY> stock-announcements --start-date 20260908 --page 1 --page-size 5
+python <RUN_PY> stock-announcements --start-date 20260918 --end-date 20260918 --page 1 --page-size 5
 
 # 下载正文 PDF（默认落到当前目录的 <url_hash>.pdf）
 python <RUN_PY> stock-announcements --url-hash d8d54544...cf574adf

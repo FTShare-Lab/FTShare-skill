@@ -13,7 +13,6 @@ description: 查询申万行业成份股历史。接口：GET /api/v1/market/dat
 
 ```bash
 python <RUN_PY> sw-industry-constituent-history --industry_code 801780.SI
-python <RUN_PY> sw-industry-constituent-history --industry_code 801780.SI --stock-code 601009
 ```
 
-`industry_code` 必填，须为带 `.SI` 后缀的行业代码（如 `801780.SI`）；传行业名（如 `银行`）取不到数据。`--stock-code`、`--stock-name`、`--sw-level1-code`、`--sw-level1-name` 等均为可选筛选项。该接口无分页，一次返回符合条件的全部成份股。
+`industry_code` 必填，须为带 `.SI` 后缀的行业代码（如 `801780.SI`）；传行业名（如 `银行`）取不到数据。该接口无分页，一次返回符合条件的全部成份股。

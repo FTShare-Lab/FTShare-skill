@@ -12,5 +12,5 @@ description: 查询东方财富股票排名。接口：GET /api/v1/market/data/e
 ## 调用示例
 
 ```bash
-python <RUN_PY> eastmoney-rank --display_name 1 --metric_name 1 --rank_no 1 --stock_name 1
+python <RUN_PY> eastmoney-rank --rank_group hot --market A
 ```

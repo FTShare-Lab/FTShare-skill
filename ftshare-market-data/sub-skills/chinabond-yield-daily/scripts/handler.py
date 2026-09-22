@@ -25,7 +25,6 @@ def main():
     parser.add_argument("--curve_name")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--trade_date", required=True)
     args = parser.parse_args()
     params = {}
     if args.start_date is not None: params["start_date"] = args.start_date
@@ -34,7 +33,6 @@ def main():
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
     if args.curve_name is not None: params["curve_name"] = args.curve_name
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

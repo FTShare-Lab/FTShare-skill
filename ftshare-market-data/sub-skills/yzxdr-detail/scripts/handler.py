@@ -25,27 +25,6 @@ def main():
     parser.add_argument("--stock_code")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--id", required=True)
-    parser.add_argument("--data_date", required=False)
-    parser.add_argument("--stock_name", required=True)
-    parser.add_argument("--group_ratio")
-    parser.add_argument("--group_shares")
-    parser.add_argument("--row_no", required=False)
-    parser.add_argument("--holder_name", required=False)
-    parser.add_argument("--holder_rank", required=False)
-    parser.add_argument("--hold_shares")
-    parser.add_argument("--hold_value")
-    parser.add_argument("--tradable_shares")
-    parser.add_argument("--hold_ratio")
-    parser.add_argument("--shares_change")
-    parser.add_argument("--ratio_change")
-    parser.add_argument("--holder_type")
-    parser.add_argument("--share_type")
-    parser.add_argument("--is_controlling")
-    parser.add_argument("--notice_date")
-    parser.add_argument("--created_at", required=False)
-    parser.add_argument("--updated_at", required=False)
     args = parser.parse_args()
     params = {}
     if args.year is not None: params["year"] = args.year
@@ -53,28 +32,7 @@ def main():
     if args.stock_code is not None: params["stock_code"] = args.stock_code
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.id is not None: params["id"] = args.id
-    if args.data_date is not None: params["data_date"] = args.data_date
     if args.stock_code is not None: params["stock_code"] = args.stock_code
-    if args.stock_name is not None: params["stock_name"] = args.stock_name
-    if args.group_ratio is not None: params["group_ratio"] = args.group_ratio
-    if args.group_shares is not None: params["group_shares"] = args.group_shares
-    if args.row_no is not None: params["row_no"] = args.row_no
-    if args.holder_name is not None: params["holder_name"] = args.holder_name
-    if args.holder_rank is not None: params["holder_rank"] = args.holder_rank
-    if args.hold_shares is not None: params["hold_shares"] = args.hold_shares
-    if args.hold_value is not None: params["hold_value"] = args.hold_value
-    if args.tradable_shares is not None: params["tradable_shares"] = args.tradable_shares
-    if args.hold_ratio is not None: params["hold_ratio"] = args.hold_ratio
-    if args.shares_change is not None: params["shares_change"] = args.shares_change
-    if args.ratio_change is not None: params["ratio_change"] = args.ratio_change
-    if args.holder_type is not None: params["holder_type"] = args.holder_type
-    if args.share_type is not None: params["share_type"] = args.share_type
-    if args.is_controlling is not None: params["is_controlling"] = args.is_controlling
-    if args.notice_date is not None: params["notice_date"] = args.notice_date
-    if args.created_at is not None: params["created_at"] = args.created_at
-    if args.updated_at is not None: params["updated_at"] = args.updated_at
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

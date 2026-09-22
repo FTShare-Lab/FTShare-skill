@@ -18,10 +18,10 @@ description: 查询东方财富板块资金流（行业/概念/地域日资金�
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| board_code | string | 否 | 板块代码 | BK0488 | 东财板块代码，BK 开头 |
+| board_code | string | 否 | 板块代码 | BK0420 | 东财板块代码，BK 开头 |
 | board_type | string | 否 | 板块类型 | industry | industry（行业）/ concept（概念）/ regional（地域） |
 | board_level | int | 否 | 行业层级 | 2 | 1=一级、2=二级、3=三级；不传返回全部层级，仅匹配 industry |
-| trade_date | string | 否 | 交易日 | 20260623 | YYYYMMDD |
+| trade_date | string | 否 | 交易日 | 20260922 | YYYYMMDD |
 | start_date | string | 否 | 区间起始日 | 20260601 | YYYYMMDD |
 | end_date | string | 否 | 区间结束日 | 20260630 | YYYYMMDD |
 | page | int | 否 | 页码 | 1 | 从 1 开始，默认 1 |
@@ -37,7 +37,7 @@ records 元素核心字段：`board_code`、`board_name`、`board_type`（indust
 
 ```bash
 python <RUN_PY> eastmoney-sector-flow --board-type industry --board-level 2 --page 1 --page-size 5
-python <RUN_PY> eastmoney-sector-flow --board-code BK0488 --trade-date 20260623
+python <RUN_PY> eastmoney-sector-flow --board-code BK0420 --trade-date 20260922
 python <RUN_PY> eastmoney-sector-flow --board-type concept --start-date 20260601 --end-date 20260630
 ```
 

@@ -12,5 +12,5 @@ description: 查询个股异常波动。接口：GET /api/v2/market/data/stk-sho
 ## 调用示例
 
 ```bash
-python <RUN_PY> stk-shock --page 1 --order_book_id 1 --date 20260828 --rank 1 --type stock
+python <RUN_PY> stk-shock --page 1 --trade_date 20260828
 ```

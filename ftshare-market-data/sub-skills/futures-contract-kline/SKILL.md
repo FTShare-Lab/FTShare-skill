@@ -58,5 +58,5 @@ python <RUN_PY> futures-contract-kline --symbol A2605.DCE --start 1756431000000 
 
 - 周、月、季、年 K 线基于日 K 线按北京时间聚合。
 - `end` 不能单独传入，必须与 `start` 同时使用（handler 会本地校验并拒绝）；仅传 `start` 时查询 `start` 之后的数据。
-- 同时传入 `start` 和 `end` 时，跨度不得超过 12 个日历月。
+- 同时传入 `start` 和 `end` 时，跨度不得超过 12 个自然月。
 - 本接口查询的是具体合约 K 线；`dominant_contract` 和复权因子字段对合约 K 线不返回值。

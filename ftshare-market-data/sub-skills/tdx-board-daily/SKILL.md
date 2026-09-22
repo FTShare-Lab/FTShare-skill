@@ -12,5 +12,5 @@ description: 查询通达信板块日线。接口：GET /api/v1/market/data/tdx-
 ## 调用示例
 
 ```bash
-python <RUN_PY> tdx-board-daily --start_date 20260828 --end_date 20260828 --page 1 --trade_date 20260828
+python <RUN_PY> tdx-board-daily --start_date 20260828 --end_date 20260828 --page 1
 ```

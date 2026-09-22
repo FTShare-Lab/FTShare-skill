@@ -83,7 +83,8 @@ class TestModes(unittest.TestCase):
         _run(["--start-date", "20260831", "--page", "1", "--page-size", "5"])
         req = mock_open.call_args[0][0]
         self.assertIn("start_date=20260831", req.full_url)
-        self.assertNotIn("end_date", req.full_url)
+        # end_date 不填时默认等于 start_date（服务端按区间校验，缺省会退化成到今天的跨度而报错）
+        self.assertIn("end_date=20260831", req.full_url)
 
 
 class TestFetchAll(unittest.TestCase):

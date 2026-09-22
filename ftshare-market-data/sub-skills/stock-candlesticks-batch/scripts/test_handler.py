@@ -22,9 +22,9 @@ class TestBuildBody(unittest.TestCase):
         spec.loader.exec_module(handler)
 
     def test_required_only(self):
-        body = handler.build_body(["600519.SH"], "Day", "None", 1756431000000, 1756791000000, None)
+        body = handler.build_body(["600519.SH"], "day", "none", 1756431000000, 1756791000000, None)
         self.assertEqual(body["symbols"], ["600519.SH"])
-        self.assertEqual(body["interval_unit"], "Day")
+        self.assertEqual(body["interval_unit"], "day")
         self.assertEqual(body["since_ts_millis"], 1756431000000)
         self.assertNotIn("adjust_kind", body)
         self.assertNotIn("limit", body)
@@ -33,7 +33,7 @@ class TestBuildBody(unittest.TestCase):
     def test_minute_not_allowed(self):
         with self.assertRaises(SystemExit):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
-                                            "--interval-unit", "Minute",
+                                            "--interval-unit", "minute",
                                             "--since-ts-millis", SINCE,
                                             "--until-ts-millis", UNTIL]):
                 handler.main()
@@ -46,7 +46,7 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_get_to_stock_batch_endpoint(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch(["600519.SH", "000001.SZ"], "Day", "None",
+        handler.fetch(["600519.SH", "000001.SZ"], "day", "none",
                       1756431000000, 1756791000000, 2)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
@@ -61,7 +61,7 @@ class TestFetch(unittest.TestCase):
             "https://fake", 500, "Internal Error", {}, BytesIO(b"server error")
         )
         with self.assertRaises(SystemExit):
-            handler.fetch(["600519.SH"], "Day", "None", 1756431000000, 1756791000000, None)
+            handler.fetch(["600519.SH"], "day", "none", 1756431000000, 1756791000000, None)
 
 
 class TestMain(unittest.TestCase):
@@ -74,32 +74,37 @@ class TestMain(unittest.TestCase):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", [
                 "handler.py", "--symbols", "600519.SH,000001.SZ",
-                "--interval-unit", "Day",
+                "--interval-unit", "day",
                 "--since-ts-millis", SINCE, "--until-ts-millis", UNTIL
             ]):
                 with patch("sys.stdout", new_callable=StringIO) as fake_out:
                     handler.main()
                     self.assertEqual(json.loads(fake_out.getvalue()), [])
 
-    def test_main_requires_since(self):
+    @patch.object(handler, "safe_urlopen")
+    def test_main_allows_limit_without_since(self, mock_open):
+        mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
-                                            "--interval-unit", "Day",
-                                            "--until-ts-millis", UNTIL]):
-                with self.assertRaises(SystemExit):
+                                            "--interval-unit", "day",
+                                            "--until-ts-millis", UNTIL, "--limit", "3"]):
+                with patch("sys.stdout", new_callable=StringIO):
                     handler.main()
+        query = mock_open.call_args[0][0].full_url.split("?", 1)[1]
+        self.assertNotIn("since_ts_millis", query)
+        self.assertIn("limit=3", query)
 
     def test_main_rejects_since_after_until(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
-                                            "--interval-unit", "Day",
+                                            "--interval-unit", "day",
                                             "--since-ts-millis", UNTIL,
                                             "--until-ts-millis", SINCE]):
                 with self.assertRaises(SystemExit):
                     handler.main()
 
     @patch.object(handler, "safe_urlopen")
-    def test_interval_unit_case_insensitive(self, mock_open):
+    def test_interval_unit_lowercase_accepted(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"{}"
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
@@ -108,7 +113,28 @@ class TestMain(unittest.TestCase):
                                             "--until-ts-millis", UNTIL]):
                 handler.main()
         req = mock_open.call_args[0][0]
-        self.assertIn("interval_unit=Day", req.full_url)
+        self.assertIn("interval_unit=day", req.full_url)
+
+    @patch.object(handler, "safe_urlopen")
+    def test_interval_unit_case_insensitive(self, mock_open):
+        mock_open.return_value.__enter__.return_value.read.return_value = b"{}"
+        with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
+                                            "--interval-unit", "Week",
+                                            "--since-ts-millis", SINCE,
+                                            "--until-ts-millis", UNTIL]):
+                handler.main()
+        req = mock_open.call_args[0][0]
+        self.assertIn("interval_unit=week", req.full_url)
+
+    def test_interval_unit_rejects_unknown_value(self):
+        with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
+            with patch.object(sys, "argv", ["handler.py", "--symbols", "600519.SH",
+                                            "--interval-unit", "minute",
+                                            "--since-ts-millis", SINCE,
+                                            "--until-ts-millis", UNTIL]):
+                with self.assertRaises(SystemExit):
+                    handler.main()
 
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ python <RUN_PY> etf-description-all
 ## 5. 请求示例
 
 ```
-GET /api/v1/market/data/etf-description-all
+GET /api/v2/market/data/etf-description-all
 ```
 
 ## 6. 响应示例

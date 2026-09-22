@@ -19,8 +19,8 @@ description: "查询东财单板块历史 OHLC。当用户需要查询指定东�
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |---|---|---|---|---|---|
 | `board_code` | string | 是 | 板块代码 | `BK1024` | BK 前缀 |
-| `start_date` | string | 否 | 起始日期（含） | `2021-01-01` | 格式 `YYYY-MM-DD` 或 `YYYYMMDD`；不传则从最早开始 |
-| `end_date` | string | 否 | 截止日期（含） | `2021-12-31` | 格式 `YYYY-MM-DD` 或 `YYYYMMDD`；不传则到最晚为止 |
+| `start_date` | string | 否 | 起始日期（含） | `20260918` | 格式 `YYYYMMDD`；不传则从最早开始 |
+| `end_date` | string | 否 | 截止日期（含） | `20260921` | 格式 `YYYYMMDD`；不传则到最晚为止；与 `start_date` 跨度不得超过 3 天 |
 | `page` | int | 否 | 页码，从 1 开始 | `1` | 默认 1 |
 | `page_size` | int | 否 | 每页记录数 | `20` | 默认 50 |
 
@@ -33,7 +33,7 @@ description: "查询东财单板块历史 OHLC。当用户需要查询指定东�
 python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --page 1 --page_size 20
 
 # 指定日期范围
-python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --start_date 2021-01-01 --end_date 2021-12-31 --page 1 --page_size 20
+python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --start_date 20260918 --end_date 20260921 --page 1 --page_size 20
 
 # 自动翻页获取全量数据
 python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --all
@@ -45,26 +45,32 @@ python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --all
 
 ```json
 {
-    "items": [
-        {
-            "board_code": "BK1024",
-            "board_name": "绿色电力",
-            "market": "90",
-            "date": "2021-10-18",
-            "open": "1001.53",
-            "close": "1037.67",
-            "high": "1041.82",
-            "low": "1001.53",
-            "volume": "52669555",
-            "turnover": "43012845568",
-            "amplitude": "4.03",
-            "change_rate": "3.77",
-            "change": "37.67",
-            "turnover_rate": "1.03"
-        }
-    ],
-    "total_pages": 1,
-    "total_items": 1
+    "code": 200,
+    "message": "success",
+    "data": {
+        "pageNum": 1,
+        "pageSize": 2,
+        "total": 1200,
+        "pages": 600,
+        "records": [
+            {
+                "board_code": "BK1024",
+                "board_name": "绿色电力",
+                "market": "90",
+                "date": "2021-10-18",
+                "open": "1001.53",
+                "close": "1037.67",
+                "high": "1041.82",
+                "low": "1001.53",
+                "volume": "52669555",
+                "turnover": "43012845568",
+                "amplitude": "4.03",
+                "change_rate": "3.77",
+                "change": "37.67",
+                "turnover_rate": "1.02"
+            }
+        ]
+    }
 }
 ```
 
@@ -72,11 +78,15 @@ python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --all
 
 | 字段名 | 类型 | 是否可为空 | 说明 |
 |---|---|---|---|
-| `items` | Array | 否 | 当前页 OHLC 数据列表 |
-| `total_pages` | int | 否 | 总页数 |
-| `total_items` | int | 否 | 总记录数 |
+| `code` | int | 否 | 成功为 200 |
+| `message` | string | 否 | 成功为 `success` |
+| `data.pageNum` | int | 否 | 当前页码 |
+| `data.pageSize` | int | 否 | 每页条数 |
+| `data.total` | int | 否 | 总记录数 |
+| `data.pages` | int | 否 | 总页数 |
+| `data.records` | Array | 否 | 当前页 OHLC 数据列表 |
 
-### items 元素字段说明（BoardDailyOhlc）
+### records 元素字段说明（BoardDailyOhlc）
 
 | 字段名 | 类型 | 是否可为空 | 说明 | 单位 |
 |---|---|---|---|---|
@@ -100,3 +110,4 @@ python <RUN_PY> eastmoney-board-daily-ohlc --board_code BK1024 --all
 - `board_code` 为必填参数，可通过 `eastmoney-concept-boards` 获取板块代码
 - 历史 OHLC 中多数数值字段以字符串返回
 - 板块代码对行业板块和概念板块通用
+- `start_date`/`end_date` 只接受 `YYYYMMDD`，传 `YYYY-MM-DD` 返回 `code=400`；两者跨度不得超过 3 天，超出返回 `code=400`「date range exceeds 3 days」

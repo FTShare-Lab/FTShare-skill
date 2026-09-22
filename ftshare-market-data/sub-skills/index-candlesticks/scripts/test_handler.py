@@ -21,7 +21,7 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_get_to_index_endpoint(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch("000300.XSHG", "Day", 1, "None", None, 1756791000000, 5)
+        handler.fetch("000300.XSHG", "day", "none", None, 1756791000000, 5)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v1/market/data/index-candlesticks", req.full_url)
@@ -34,7 +34,7 @@ class TestFetch(unittest.TestCase):
             "https://fake", 500, "Internal Error", {}, BytesIO(b"server error")
         )
         with self.assertRaises(SystemExit):
-            handler.fetch("000300.XSHG", "Day", 1, "None", None, 1756791000000, None)
+            handler.fetch("000300.XSHG", "day", "none", None, 1756791000000, None)
 
 
 class TestMain(unittest.TestCase):
@@ -45,7 +45,8 @@ class TestMain(unittest.TestCase):
     def test_main_emits_json(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
         with patch.object(sys, "argv", [
-            "handler.py", "--symbol", "000300.XSHG", "--interval-unit", "Day",
+            "handler.py", "--symbol", "000300.XSHG", "--interval-unit", "day",
+            "--since-ts-millis", "1756700000000",
             "--until-ts-millis", "1756791000000"
         ]):
             with patch("sys.stdout", new_callable=StringIO) as fake_out:

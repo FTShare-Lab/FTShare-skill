@@ -117,7 +117,8 @@ def build_params(args):
         params["etf_code"] = args.etf_code
     if args.start_date is not None:
         params["start_date"] = args.start_date
-    if args.end_date is not None:
+        params["end_date"] = args.end_date or args.start_date
+    elif args.end_date is not None:
         params["end_date"] = args.end_date
     return params
 

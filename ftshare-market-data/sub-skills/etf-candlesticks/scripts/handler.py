@@ -22,8 +22,8 @@ BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
 ENDPOINT = "/api/v1/market/data/etf-candlesticks"
 
-INTERVAL_UNITS = ("Minute", "Day", "Week", "Month", "Year")
-ADJUST_KINDS = ("none", "forward", "backward", "None", "Forward", "Backward")
+INTERVAL_UNITS = ("day", "week", "month", "year")
+ADJUST_KINDS = ("none", "forward", "backward")
 
 
 def safe_urlopen(req_or_url):
@@ -52,15 +52,13 @@ HEADERS = {
 }
 
 
-def build_body(symbol, interval_unit, interval_value, adjust_kind,
+def build_body(symbol, interval_unit, adjust_kind,
                since_ts_millis, until_ts_millis, limit):
     body = {
         "symbol": symbol,
-        "interval_unit": interval_unit,
+        "interval_unit": interval_unit.lower(),
         "until_ts_millis": until_ts_millis,
     }
-    if interval_value is not None and interval_value != 1:
-        body["interval_value"] = interval_value
     if adjust_kind and adjust_kind.lower() != "none":
         body["adjust_kind"] = adjust_kind.lower()
     if since_ts_millis is not None:
@@ -71,9 +69,9 @@ def build_body(symbol, interval_unit, interval_value, adjust_kind,
 
 
 def fetch(
-symbol, interval_unit, interval_value, adjust_kind,
+symbol, interval_unit, adjust_kind,
           since_ts_millis, until_ts_millis, limit):
-    body = build_body(symbol, interval_unit, interval_value, adjust_kind,
+    body = build_body(symbol, interval_unit, adjust_kind,
                       since_ts_millis, until_ts_millis, limit)
     query = urllib.parse.urlencode(body, doseq=True)
     url = f"{BASE_URL}{ENDPOINT}?{query}"
@@ -99,19 +97,17 @@ def main():
     parser = argparse.ArgumentParser(description="查询单只 ETF 历史 K 线（GET 查询参数）")
     parser.add_argument("--symbol", required=True, help="ETF 代码，如 510300.XSHG、159915.XSHE")
     parser.add_argument("--interval-unit", dest="interval_unit", required=True,
-                        choices=INTERVAL_UNITS, help="K 线周期：Minute/Day/Week/Month/Year")
-    parser.add_argument("--interval-value", dest="interval_value", type=int, default=1,
-                        help="间隔数值，默认 1（Minute+5 表示 5 分钟 K）")
+                        type=str.lower, choices=INTERVAL_UNITS, help="K 线周期：day/week/month/year（不支持分钟，分钟数据请用 etf-minutes 子 skill）")
     parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
-                        choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
-    parser.add_argument("--since-ts-millis", dest="since_ts_millis", type=int, default=None,
-                        help="开始时间戳（毫秒）；分钟 K 与 until 跨度 ≤3 天")
+                        type=str.lower, choices=ADJUST_KINDS, help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
+    parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
+                        help="开始时间戳（毫秒）；与 until 的跨度不得超过 12 个自然月")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
                         help="结束时间戳（毫秒）")
     parser.add_argument("--limit", type=int, default=None, help="返回条数上限")
     args = parser.parse_args()
 
-    data = fetch(args.symbol, args.interval_unit, args.interval_value,
+    data = fetch(args.symbol, args.interval_unit,
                  args.adjust_kind, args.since_ts_millis, args.until_ts_millis, args.limit)
     print(json.dumps(data, ensure_ascii=False, indent=2))
 

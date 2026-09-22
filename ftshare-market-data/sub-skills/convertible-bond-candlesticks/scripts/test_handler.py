@@ -24,7 +24,7 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_get_to_cb_endpoint(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
-        handler.fetch("113042.SH", "Day", None, "None", SINCE, UNTIL, 1)
+        handler.fetch("113042.SH", "day", "none", SINCE, UNTIL, 1)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v1/market/data/convertible-bond-candlesticks", req.full_url)
@@ -39,7 +39,7 @@ class TestFetch(unittest.TestCase):
             "https://fake", 500, "Internal Error", {}, BytesIO(b"server error")
         )
         with self.assertRaises(SystemExit):
-            handler.fetch("113042.SH", "Day", None, "None", SINCE, UNTIL, None)
+            handler.fetch("113042.SH", "day", "none", SINCE, UNTIL, None)
 
 
 class TestMain(unittest.TestCase):
@@ -51,7 +51,7 @@ class TestMain(unittest.TestCase):
         mock_open.return_value.__enter__.return_value.read.return_value = b"[]"
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", [
-                "handler.py", "--symbol", "113042.SH", "--interval-unit", "Day",
+                "handler.py", "--symbol", "113042.SH", "--interval-unit", "day",
                 "--since-ts-millis", str(SINCE), "--until-ts-millis", str(UNTIL)
             ]):
                 with patch("sys.stdout", new_callable=StringIO) as fake_out:
@@ -61,7 +61,7 @@ class TestMain(unittest.TestCase):
     def test_main_requires_since(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", [
-                "handler.py", "--symbol", "113042.SH", "--interval-unit", "Day",
+                "handler.py", "--symbol", "113042.SH", "--interval-unit", "day",
                 "--until-ts-millis", str(UNTIL)
             ]):
                 with self.assertRaises(SystemExit):
@@ -70,7 +70,7 @@ class TestMain(unittest.TestCase):
     def test_main_rejects_minute_interval(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", [
-                "handler.py", "--symbol", "113042.SH", "--interval-unit", "Minute",
+                "handler.py", "--symbol", "113042.SH", "--interval-unit", "minute",
                 "--since-ts-millis", str(SINCE), "--until-ts-millis", str(UNTIL)
             ]):
                 with self.assertRaises(SystemExit):
@@ -79,7 +79,7 @@ class TestMain(unittest.TestCase):
     def test_main_rejects_since_after_until(self):
         with patch.dict(os.environ, {"FTSHARE_API_KEY": "test-key"}):
             with patch.object(sys, "argv", [
-                "handler.py", "--symbol", "113042.SH", "--interval-unit", "Day",
+                "handler.py", "--symbol", "113042.SH", "--interval-unit", "day",
                 "--since-ts-millis", str(UNTIL), "--until-ts-millis", str(SINCE)
             ]):
                 with self.assertRaises(SystemExit):

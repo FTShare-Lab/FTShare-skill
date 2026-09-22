@@ -12,7 +12,7 @@ ENDPOINT = "/api/v2/market/data/index_minutes"
 SAFE_URLOPENER = urllib.request.build_opener()
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
 
-ADJUST_KINDS = ("none", "forward", "backward", "None", "Forward", "Backward")
+ADJUST_KINDS = ("none", "forward", "backward")
 
 
 def _require_api_key():
@@ -41,6 +41,7 @@ def main():
     parser.add_argument("--symbol", required=True)
     parser.add_argument("--interval-value", dest="interval_value", type=int, default=1)
     parser.add_argument("--adjust-kind", dest="adjust_kind", default="none",
+                        type=str.lower,
                         choices=ADJUST_KINDS,
                         help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int)

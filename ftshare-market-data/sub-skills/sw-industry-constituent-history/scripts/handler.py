@@ -21,29 +21,9 @@ def safe_urlopen(request, timeout=30):
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='申万行业成份股历史')
     parser.add_argument("--industry_code", required=True)
-    parser.add_argument("--stock-code")
-    parser.add_argument("--stock-name")
-    parser.add_argument("--in-date")
-    parser.add_argument("--out-date")
-    parser.add_argument("--sw-level1-code")
-    parser.add_argument("--sw-level1-name")
-    parser.add_argument("--sw-level2-code")
-    parser.add_argument("--sw-level2-name")
-    parser.add_argument("--sw-level3-code")
-    parser.add_argument("--sw-level3-name")
     args = parser.parse_args()
     params = {}
     if args.industry_code is not None: params["industry_code"] = args.industry_code
-    if args.stock_code is not None: params["stock_code"] = args.stock_code
-    if args.stock_name is not None: params["stock_name"] = args.stock_name
-    if args.in_date is not None: params["in_date"] = args.in_date
-    if args.out_date is not None: params["out_date"] = args.out_date
-    if args.sw_level1_code is not None: params["sw_level1_code"] = args.sw_level1_code
-    if args.sw_level1_name is not None: params["sw_level1_name"] = args.sw_level1_name
-    if args.sw_level2_code is not None: params["sw_level2_code"] = args.sw_level2_code
-    if args.sw_level2_name is not None: params["sw_level2_name"] = args.sw_level2_name
-    if args.sw_level3_code is not None: params["sw_level3_code"] = args.sw_level3_code
-    if args.sw_level3_name is not None: params["sw_level3_name"] = args.sw_level3_name
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

@@ -12,5 +12,5 @@ description: 查询中债收益率曲线日度。接口：GET /api/v1/market/dat
 ## 调用示例
 
 ```bash
-python <RUN_PY> chinabond-yield-daily --start_date 20260828 --end_date 20260828 --page 1 --trade_date 20260828
+python <RUN_PY> chinabond-yield-daily --start_date 20260828 --end_date 20260828 --page 1
 ```

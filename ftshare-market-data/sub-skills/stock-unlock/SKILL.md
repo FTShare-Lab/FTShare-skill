@@ -12,5 +12,5 @@ description: 查询限售解禁。接口：GET /api/v1/market/data/unlock/stock_
 ## 调用示例
 
 ```bash
-python <RUN_PY> stock-unlock --page 1 --stock-code 600519 --stock-name 1
+python <RUN_PY> stock-unlock --stock-code 000001 --page 1 --page_size 10
 ```

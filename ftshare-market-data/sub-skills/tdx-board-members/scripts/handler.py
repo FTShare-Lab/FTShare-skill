@@ -29,8 +29,6 @@ def main():
     parser.add_argument("--market")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--trade_date", required=True)
     args = parser.parse_args()
     params = {}
     if args.ts_code is not None: params["ts_code"] = args.ts_code
@@ -42,8 +40,6 @@ def main():
     if args.market is not None: params["market"] = args.market
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.total is not None: params["total"] = args.total
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
     if args.ts_code is not None: params["ts_code"] = args.ts_code
     if args.board_name is not None: params["board_name"] = args.board_name
     if args.board_type is not None: params["board_type"] = args.board_type

@@ -24,40 +24,12 @@ def main():
     parser.add_argument("--start_date")
     parser.add_argument("--end_date")
     parser.add_argument("--limit")
-    parser.add_argument("--total", required=False)
-    parser.add_argument("--items", required=False)
-    parser.add_argument("--name", required=True)
-    parser.add_argument("--trade_date", required=True)
-    parser.add_argument("--open", required=False)
-    parser.add_argument("--close", required=False)
-    parser.add_argument("--high", required=False)
-    parser.add_argument("--low", required=False)
-    parser.add_argument("--volume", required=False)
-    parser.add_argument("--amount", required=False)
-    parser.add_argument("--amplitude", required=True)
-    parser.add_argument("--change_pct", required=False)
-    parser.add_argument("--change_amount", required=False)
-    parser.add_argument("--turnover", required=False)
     args = parser.parse_args()
     params = {}
     if args.secid is not None: params["secid"] = args.secid
     if args.start_date is not None: params["start_date"] = args.start_date
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.limit is not None: params["limit"] = args.limit
-    if args.total is not None: params["total"] = args.total
-    if args.items is not None: params["items"] = args.items
-    if args.name is not None: params["name"] = args.name
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.open is not None: params["open"] = args.open
-    if args.close is not None: params["close"] = args.close
-    if args.high is not None: params["high"] = args.high
-    if args.low is not None: params["low"] = args.low
-    if args.volume is not None: params["volume"] = args.volume
-    if args.amount is not None: params["amount"] = args.amount
-    if args.amplitude is not None: params["amplitude"] = args.amplitude
-    if args.change_pct is not None: params["change_pct"] = args.change_pct
-    if args.change_amount is not None: params["change_amount"] = args.change_amount
-    if args.turnover is not None: params["turnover"] = args.turnover
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

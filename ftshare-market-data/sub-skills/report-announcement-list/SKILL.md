@@ -20,7 +20,7 @@ description: 按公告日期分页查询报告公告列表，可选按证券代�
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| date | string | 是 | 公告日期 | `20260714` | YYYYMMDD 或 YYYY-MM-DD |
+| date | string | 是 | 公告日期 | `20260828` | YYYYMMDD 或 YYYY-MM-DD |
 | sec_code | string | 否 | 证券代码 | `600000` | 不传返回当天全部证券公告 |
 | page | int | 否 | 页码 | `1` | 从 1 开始，默认 1 |
 | page_size | int | 否 | 每页数量 | `50` | 默认 50，最大 200 |
@@ -29,9 +29,9 @@ description: 按公告日期分页查询报告公告列表，可选按证券代�
 
 ```bash
 # 某日某证券公告
-python <RUN_PY> report-announcement-list --date 20260714 --sec_code 600000 --page 1 --page_size 20
+python <RUN_PY> report-announcement-list --date 20260828 --sec_code 600000 --page 1 --page_size 20
 # 某日全部公告并翻全量
-python <RUN_PY> report-announcement-list --date 20260714 --all
+python <RUN_PY> report-announcement-list --date 20260828 --all
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。
@@ -49,7 +49,7 @@ python <RUN_PY> report-announcement-list --date 20260714 --all
     "records": [
       {
         "id": 12345,
-        "announcement_id": "AN202607140001",
+        "announcement_id": "1225521898",
         "url_hash": "...",
         "sec_code": "600000",
         "sec_name": "浦发银行",

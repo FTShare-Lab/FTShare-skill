@@ -18,7 +18,7 @@ description: 查询东方财富期货龙虎榜面板（成交量/持仓量多空
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| exchange | string | 是 | 交易所代码 | `dce` | `shfe`/`dce`/`czce`/`cffex`/`ine`/`gfex`（中金所为 `cffex`；广期所为 `gfex`，不是 `gfe`） |
+| exchange | string | 是 | 交易所代码 | `gfex` | `shfe`/`dce`/`czce`/`cffex`/`ine`/`gfex`（中金所为 `cffex`；广期所为 `gfex`，不是 `gfe`） |
 | variety | string | 是 | 品种名称 | `多晶硅` | 中文名称，URL 编码后传入 |
 | contract | string | 是 | 合约代码 | `ps2609` | 小写合约代码 |
 | trade_date | string | 是 | 交易日 | `20260721` | `YYYYMMDD` |
@@ -26,7 +26,7 @@ description: 查询东方财富期货龙虎榜面板（成交量/持仓量多空
 ## 执行方式
 
 ```bash
-python <RUN_PY> eastmoney-futures-strange --exchange dce --variety 多晶硅 --contract ps2609 --trade_date 20260721
+python <RUN_PY> eastmoney-futures-strange --exchange gfex --variety 多晶硅 --contract ps2609 --trade_date 20260721
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级的 `run.py` 绝对路径。
