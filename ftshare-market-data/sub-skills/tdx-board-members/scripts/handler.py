@@ -21,9 +21,9 @@ def safe_urlopen(request, timeout=30):
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='通达信板块成分股最新快照')
     parser.add_argument("--ts_code")
-    parser.add_argument("--idx_name")
-    parser.add_argument("--idx_type")
-    parser.add_argument("--idx_type_code")
+    parser.add_argument("--board_name")
+    parser.add_argument("--board_type")
+    parser.add_argument("--board_type_code")
     parser.add_argument("--con_code")
     parser.add_argument("--con_name")
     parser.add_argument("--market")
@@ -34,9 +34,9 @@ def main():
     args = parser.parse_args()
     params = {}
     if args.ts_code is not None: params["ts_code"] = args.ts_code
-    if args.idx_name is not None: params["idx_name"] = args.idx_name
-    if args.idx_type is not None: params["idx_type"] = args.idx_type
-    if args.idx_type_code is not None: params["idx_type_code"] = args.idx_type_code
+    if args.board_name is not None: params["board_name"] = args.board_name
+    if args.board_type is not None: params["board_type"] = args.board_type
+    if args.board_type_code is not None: params["board_type_code"] = args.board_type_code
     if args.con_code is not None: params["con_code"] = args.con_code
     if args.con_name is not None: params["con_name"] = args.con_name
     if args.market is not None: params["market"] = args.market
@@ -45,9 +45,9 @@ def main():
     if args.total is not None: params["total"] = args.total
     if args.trade_date is not None: params["trade_date"] = args.trade_date
     if args.ts_code is not None: params["ts_code"] = args.ts_code
-    if args.idx_name is not None: params["idx_name"] = args.idx_name
-    if args.idx_type is not None: params["idx_type"] = args.idx_type
-    if args.idx_type_code is not None: params["idx_type_code"] = args.idx_type_code
+    if args.board_name is not None: params["board_name"] = args.board_name
+    if args.board_type is not None: params["board_type"] = args.board_type
+    if args.board_type_code is not None: params["board_type_code"] = args.board_type_code
     if args.con_code is not None: params["con_code"] = args.con_code
     if args.con_name is not None: params["con_name"] = args.con_name
     if args.market is not None: params["market"] = args.market

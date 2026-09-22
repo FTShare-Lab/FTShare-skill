@@ -23,9 +23,9 @@ def main():
     parser.add_argument("--start_date", required=True)
     parser.add_argument("--end_date", required=True)
     parser.add_argument("--ts_code")
-    parser.add_argument("--idx_name")
-    parser.add_argument("--idx_type")
-    parser.add_argument("--idx_type_code")
+    parser.add_argument("--board_name")
+    parser.add_argument("--board_type")
+    parser.add_argument("--board_type_code")
     parser.add_argument("--market")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
@@ -43,18 +43,18 @@ def main():
     if args.start_date is not None: params["start_date"] = args.start_date
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.ts_code is not None: params["ts_code"] = args.ts_code
-    if args.idx_name is not None: params["idx_name"] = args.idx_name
-    if args.idx_type is not None: params["idx_type"] = args.idx_type
-    if args.idx_type_code is not None: params["idx_type_code"] = args.idx_type_code
+    if args.board_name is not None: params["board_name"] = args.board_name
+    if args.board_type is not None: params["board_type"] = args.board_type
+    if args.board_type_code is not None: params["board_type_code"] = args.board_type_code
     if args.market is not None: params["market"] = args.market
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
     if args.total is not None: params["total"] = args.total
     if args.trade_date is not None: params["trade_date"] = args.trade_date
     if args.ts_code is not None: params["ts_code"] = args.ts_code
-    if args.idx_name is not None: params["idx_name"] = args.idx_name
-    if args.idx_type is not None: params["idx_type"] = args.idx_type
-    if args.idx_type_code is not None: params["idx_type_code"] = args.idx_type_code
+    if args.board_name is not None: params["board_name"] = args.board_name
+    if args.board_type is not None: params["board_type"] = args.board_type
+    if args.board_type_code is not None: params["board_type_code"] = args.board_type_code
     if args.market is not None: params["market"] = args.market
     if args.open is not None: params["open"] = args.open
     if args.high is not None: params["high"] = args.high
