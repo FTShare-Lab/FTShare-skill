@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://ftai.chat/?tab=ft-share"><strong>FTShare</strong></a>
+  <a href="https://ftai.chat/ftshare"><strong>FTShare</strong></a>
   · <a href="https://ftai.chat/me/profile">Get an API key</a>
   · <a href="#get-started-in-three-steps">Get started</a>
   · <a href="https://github.com/FTShare-Lab/FTShare-skill/issues">Issues</a>
@@ -33,7 +33,7 @@
 FTShare Skill is FTShare's financial-data access method for agent runtimes. Load `ftshare-market-data` into Claude Code, Codex, OpenClaw, or another compatible runtime, then ask data questions in natural language. The agent handles interface selection, parameter construction, and result reading.
 
 <p align="center">
-  <a href="https://ftai.chat/?tab=ft-share"><img src="./docs/assets/readme/ftshare-website.png" width="100%" alt="FTShare product banner showing SDK, MCP, and Skills access"></a>
+  <a href="https://ftai.chat/ftshare"><img src="./docs/assets/readme/ftshare-website.png" width="100%" alt="FTShare product banner showing SDK, MCP, and Skills access"></a>
 </p>
 
 <p align="center"><sub>FTShare's public product page is currently in Chinese. Click the image to open it.</sub></p>
@@ -187,7 +187,7 @@ Contributions for new data sub-skills, interface adapters, tests, and documentat
 ## Community and support
 
 - Questions and feature requests: [GitHub Issues](https://github.com/FTShare-Lab/FTShare-skill/issues)
-- Product and plans: [FTShare](https://ftai.chat/?tab=ft-share)
+- Product and plans: [FTShare](https://ftai.chat/ftshare)
 - API key management: [Account center](https://ftai.chat/me/profile)
 - Python SDK: [FTShare-python-sdk](https://github.com/FTShare-Lab/FTShare-python-sdk)
 - MCP: [FTShare-MCP](https://github.com/FTShare-Lab/FTShare-MCP)
