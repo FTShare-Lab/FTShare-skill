@@ -42,13 +42,13 @@ ENDPOINT = "/api/v1/market/data/pledge/pledge-detail"
 
 
 def fetch(
-stock_code: str, page: int, page_size: int) -> dict:
-    params = urllib.parse.urlencode({
-        "stock_code": stock_code,
-        "page": page,
-        "page_size": page_size,
-    })
-    url = f"{BASE_URL}{ENDPOINT}?{params}"
+stock_code, is_last, page: int, page_size: int) -> dict:
+    params = {"page": page, "page_size": page_size}
+    if stock_code:
+        params["stock_code"] = stock_code
+    if is_last:
+        params["is_last"] = "true"
+    url = f"{BASE_URL}{ENDPOINT}?{urllib.parse.urlencode(params)}"
     try:
         with safe_urlopen(url) as resp:
             return json.loads(resp.read().decode())
@@ -60,11 +60,17 @@ stock_code: str, page: int, page_size: int) -> dict:
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询单只 A 股股票所有报告期的股权质押详细信息")
+    parser = argparse.ArgumentParser(description="查询 A 股股权质押详细信息")
     parser.add_argument(
         "--stock_code",
-        required=True,
-        help="股票代码，需携带市场后缀，如 603323.SH / 000001.SZ / 833171.BJ",
+        default=None,
+        help="股票代码，需携带市场后缀，如 603323.SH / 000001.SZ / 833171.BJ；不传时需配合 --is-last 查询全市场最新一期",
+    )
+    parser.add_argument(
+        "--is-last",
+        action="store_true",
+        dest="is_last",
+        help="仅获取最新一期（不传 --stock_code 时使用）",
     )
     parser.add_argument(
         "--page",
@@ -80,7 +86,10 @@ def main():
     )
     args = parser.parse_args()
 
-    result = fetch(args.stock_code, args.page, args.page_size)
+    if not args.stock_code and not args.is_last:
+        parser.error("必须传 --stock_code，或不传时配合 --is-last")
+
+    result = fetch(args.stock_code, args.is_last, args.page, args.page_size)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
