@@ -11,6 +11,16 @@ description: 查询限售解禁。接口：GET /api/v1/market/data/unlock/stock_
 
 ## 调用示例
 
+查询条件二选一：传 `--stock-code`，或同时传 `--start-date` 与 `--end-date`；两种模式不能混用。
+
+按证券代码查询单票解禁批次：
+
 ```bash
 python <RUN_PY> stock-unlock --stock-code 000001 --page 1 --page_size 10
+```
+
+按解禁日期区间查询全市场解禁日历：
+
+```bash
+python <RUN_PY> stock-unlock --start-date 20260901 --end-date 20260930 --page 1 --page_size 100
 ```

@@ -18,13 +18,13 @@ description: "查询 A 股行情列表（分页）。当用户需要获取 A 股
 
 ## 请求参数
 
-说明：`order_by`、`page_no`、`page_size` 为必填项；`filter`、`masks` 为可选项，用于筛选与字段控制。
+说明：`order_by`、`page_no`、`page_size` 均为可选项，不传时接口按默认排序 / 默认分页返回；`filter`、`masks` 同样可选，用于筛选与字段控制。
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |---|---|---|---|---|---|
-| order_by | string | 是 | 排序规则，格式为「字段 排序方向」 | change_rate desc | 常用：change_rate desc、change desc、latest desc、turnover desc、volume desc、market_cap_total desc、turnover_rate desc、change_rate_5d desc、amplitude desc；方向为 asc/desc |
-| page_no | int | 是 | 页码，从 1 开始 | 1 | 必须大于等于 1 |
-| page_size | int | 是 | 每页记录数 | 30 | 必须大于等于 1，建议不超过 100 |
+| order_by | string | 否 | 排序规则，格式为「字段 排序方向」 | change_rate desc | 常用：change_rate desc、change desc、latest desc、turnover desc、volume desc、market_cap_total desc、turnover_rate desc、change_rate_5d desc、amplitude desc；方向为 asc/desc。不传则按接口默认顺序 |
+| page_no | int | 否 | 页码，从 1 开始 | 1 | 默认 1，必须大于等于 1 |
+| page_size | int | 否 | 每页记录数 | 20 | 默认 20，必须大于等于 1，建议不超过 100 |
 | filter | string | 否 | 筛选条件表达式 | (ex_id = "XSHE" OR ex_id = "XSHG" OR ex_id = "BJSE") AND (latest != null) | 见下方「filter 常用取值」 |
 | masks | string | 否 | 返回字段掩码/控制 | - | 不传则返回默认字段集 |
 
@@ -47,10 +47,16 @@ description: "查询 A 股行情列表（分页）。当用户需要获取 A 股
 python <RUN_PY> stock-quotes-list --order_by "change_rate desc" --page_no 1 --page_size 30
 ```
 
-可选参数：`--filter`、`--masks`。示例（仅上交所）：
+可选参数：`--order_by`、`--page_no`、`--page_size`、`--filter`、`--masks`。示例（仅上交所）：
 
 ```bash
 python <RUN_PY> stock-quotes-list --order_by "change_rate desc" --page_no 1 --page_size 30 --filter 'ex_id = "XSHG" AND latest != null'
+```
+
+不传排序/分页参数时按接口默认返回：
+
+```bash
+python <RUN_PY> stock-quotes-list
 ```
 
 > `<RUN_PY>` 为主 `SKILL.md` 同级的 `run.py` 绝对路径，参见主 SKILL.md 的「调用方式」说明。

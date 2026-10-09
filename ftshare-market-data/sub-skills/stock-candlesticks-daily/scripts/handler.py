@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""查询单只 A 股股票所有报告期的股权质押详细信息"""
+"""查询指定交易日全部普通 A 股的日 K 快照"""
 import argparse
 import json
 import sys
@@ -38,17 +38,13 @@ def safe_urlopen(req_or_url):
         req_or_url = urllib.request.Request(str(req_or_url), headers=_REQUEST_HEADERS, method="GET")
     return SAFE_URLOPENER.open(req_or_url)
 
-ENDPOINT = "/api/v1/market/data/pledge/pledge-detail"
+ENDPOINT = "/api/v1/market/data/stock-candlesticks-daily"
 
 
-def fetch(
-stock_code, is_last, page: int, page_size: int) -> dict:
-    params = {"page": page, "page_size": page_size}
-    if stock_code:
-        params["stock_code"] = stock_code
-    if is_last:
-        params["is_last"] = "true"
-    url = f"{BASE_URL}{ENDPOINT}?{urllib.parse.urlencode(params)}"
+def fetch_page(trade_date: str, page: int, page_size: int) -> dict:
+    params = {"trade_date": trade_date, "page": page, "page_size": page_size}
+    qs = urllib.parse.urlencode(params)
+    url = f"{BASE_URL}{ENDPOINT}?{qs}"
     try:
         with safe_urlopen(url) as resp:
             return json.loads(resp.read().decode())
@@ -60,36 +56,29 @@ stock_code, is_last, page: int, page_size: int) -> dict:
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询 A 股股权质押详细信息")
-    parser.add_argument(
-        "--stock_code",
-        default=None,
-        help="股票代码，需携带市场后缀，如 603323.SH / 000001.SZ / 833171.BJ；不传时需配合 --is-last 查询全市场最新一期",
-    )
-    parser.add_argument(
-        "--is-last",
-        action="store_true",
-        dest="is_last",
-        help="仅获取最新一期（不传 --stock_code 时使用）",
-    )
-    parser.add_argument(
-        "--page",
-        type=int,
-        default=1,
-        help="页码，从 1 开始，默认 1",
-    )
-    parser.add_argument(
-        "--page_size",
-        type=int,
-        default=50,
-        help="每页记录数，默认 50",
-    )
+    parser = argparse.ArgumentParser(description="查询指定交易日全部普通 A 股的日 K 快照")
+    parser.add_argument("--trade_date", required=True, help="交易日 YYYYMMDD，且必须是交易日")
+    parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始（默认 1）")
+    parser.add_argument("--page_size", type=int, default=200, help="每页数量，默认 200，最大 500")
+    parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取当日全部日 K")
     args = parser.parse_args()
 
-    if not args.stock_code and not args.is_last:
-        parser.error("必须传 --stock_code，或不传时配合 --is-last")
+    if args.fetch_all:
+        first = fetch_page(args.trade_date, 1, args.page_size)
+        data = first.get("data") or {}
+        records = list(data.get("records", []))
+        total_pages = data.get("pages") or 1
+        for page in range(2, total_pages + 1):
+            page_data = fetch_page(args.trade_date, page, args.page_size)
+            records.extend((page_data.get("data") or {}).get("records", []))
+        result = {
+            "records": records,
+            "pages": total_pages,
+            "total": data.get("total", len(records)),
+        }
+    else:
+        result = fetch_page(args.trade_date, args.page, args.page_size)
 
-    result = fetch(args.stock_code, args.is_last, args.page, args.page_size)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

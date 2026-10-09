@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""查询东财板块成分股，支持截至日期与分页"""
+"""查询同花顺板块成分股，支持按名称/代码/类型与截至日期检索"""
 import argparse
 import json
 import sys
@@ -38,13 +38,22 @@ def safe_urlopen(req_or_url):
         req_or_url = urllib.request.Request(str(req_or_url), headers=_REQUEST_HEADERS, method="GET")
     return SAFE_URLOPENER.open(req_or_url)
 
-ENDPOINT = "/api/v1/market/data/eastmoney-board-constituents"
+ENDPOINT = "/api/v1/market/data/ths-board-constituents"
 
 
-def fetch_page(board_code: str, page: int, page_size: int, date: str = None) -> dict:
-    params = {"board_code": board_code, "page": page, "page_size": page_size}
-    if date:
-        params["date"] = date
+def build_params(args) -> dict:
+    params = {
+        "board_code": args.board_code,
+        "board_name": args.board_name,
+        "board_type": args.board_type,
+        "date": args.date,
+        "page": args.page,
+        "page_size": args.page_size,
+    }
+    return {key: value for key, value in params.items() if value is not None}
+
+
+def fetch_page(params: dict) -> dict:
     qs = urllib.parse.urlencode(params)
     url = f"{BASE_URL}{ENDPOINT}?{qs}"
     try:
@@ -58,21 +67,28 @@ def fetch_page(board_code: str, page: int, page_size: int, date: str = None) -> 
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询东财板块成分股")
-    parser.add_argument("--board_code", required=True, help="板块代码（BK 前缀），如 BK0475、BK0490、BK0153")
-    parser.add_argument("--date", default=None, help="查询日期 YYYYMMDD；不传返回当前仍在板块内的成分股")
+    parser = argparse.ArgumentParser(description="查询同花顺板块成分股")
+    parser.add_argument("--board-code", dest="board_code", default=None, help="板块代码，如 300082（概念）、881101（行业）、882001（地域）、A（csrc）")
+    parser.add_argument("--board-name", dest="board_name", default=None, help="板块名称，如 军工；概念板块建议用名称")
+    parser.add_argument("--board-type", dest="board_type", default=None, help="板块类型：industry / concept / region / csrc，用于同名消歧")
+    parser.add_argument("--date", default=None, help="查询日期 YYYYMMDD；不传返回当前成分股")
     parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始（默认 1）")
-    parser.add_argument("--page_size", type=int, default=200, help="每页数量，默认 200，最大 500")
+    parser.add_argument("--page-size", dest="page_size", type=int, default=100, help="每页数量，默认 100，最大 1000")
     parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取全部成分股")
     args = parser.parse_args()
 
+    if args.board_code is None and args.board_name is None:
+        print("必须提供 --board-code 或 --board-name 至少一个", file=sys.stderr)
+        raise SystemExit(2)
+
+    params = build_params(args)
     if args.fetch_all:
-        first = fetch_page(args.board_code, 1, args.page_size, args.date)
+        first = fetch_page({**params, "page": 1})
         data = first.get("data") or {}
         records = list(data.get("records", []))
         total_pages = data.get("pages") or 1
         for page in range(2, total_pages + 1):
-            page_data = fetch_page(args.board_code, page, args.page_size, args.date)
+            page_data = fetch_page({**params, "page": page})
             records.extend((page_data.get("data") or {}).get("records", []))
         result = {
             "records": records,
@@ -80,7 +96,7 @@ def main():
             "total": data.get("total", len(records)),
         }
     else:
-        result = fetch_page(args.board_code, args.page, args.page_size, args.date)
+        result = fetch_page(params)
 
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
