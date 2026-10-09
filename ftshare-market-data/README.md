@@ -23,17 +23,19 @@ Claude Code / Codex / OpenClaw   # Agent 运行时加载本 Skill
 
 ## 作为 Skill 加载
 
-本目录已包含标准 Skill 描述文件 `SKILL.md`（带 `name` / `description` frontmatter），把它作为一个 Skill 放进你的 Agent 运行时即可，无需安装任何包。
-
-**Claude Code**：将本目录放入 skills 路径——项目级 `.claude/skills/ftshare-market-data/`，或用户级 `~/.claude/skills/ftshare-market-data/`。Claude Code 会自动读取 `SKILL.md`，在用户提问匹配到行情 / 财报 / 宏观等数据需求时触发。
-
-**Codex / OpenClaw**：同样将本目录作为一个 Skill 加载，运行时读取 `SKILL.md` 的 frontmatter 完成路由（各家具体加载命令请以对应运行时文档为准）。
-
-获取仓库：
+本目录已包含标准 Skill 描述文件 `SKILL.md`（带 `name` / `description` frontmatter），推荐使用 [`skills`](https://github.com/vercel-labs/skills) CLI 安装：
 
 ```bash
-git clone https://github.com/ftshare-lab/ftshare-skills.git
+npx skills add FTShare-Lab/FTShare-skill
 ```
+
+CLI 会自动检测本机 Agent（Claude Code、Codex、OpenCode、OpenClaw、Cursor 等），并把本目录完整安装到对应的 skills 路径。非交互安装示例：
+
+```bash
+npx skills add FTShare-Lab/FTShare-skill --skill ftshare-market-data -g -a claude-code -y
+```
+
+也可以手动把本目录放进 Agent 的 skills 路径，例如 Claude Code 项目级 `.claude/skills/ftshare-market-data/` 或用户级 `~/.claude/skills/ftshare-market-data/`。
 
 运行时只需要 Python 3：子 skill 仅使用标准库 `urllib`、`json`，**零第三方依赖**，不需要 `pandas`、`requests`。
 
