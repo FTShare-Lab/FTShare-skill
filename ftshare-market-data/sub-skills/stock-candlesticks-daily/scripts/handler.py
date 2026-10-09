@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""查询东财板块成分股，支持截至日期与分页"""
+"""查询指定交易日全部普通 A 股的日 K 快照"""
 import argparse
 import json
 import sys
@@ -38,13 +38,11 @@ def safe_urlopen(req_or_url):
         req_or_url = urllib.request.Request(str(req_or_url), headers=_REQUEST_HEADERS, method="GET")
     return SAFE_URLOPENER.open(req_or_url)
 
-ENDPOINT = "/api/v1/market/data/eastmoney-board-constituents"
+ENDPOINT = "/api/v1/market/data/stock-candlesticks-daily"
 
 
-def fetch_page(board_code: str, page: int, page_size: int, date: str = None) -> dict:
-    params = {"board_code": board_code, "page": page, "page_size": page_size}
-    if date:
-        params["date"] = date
+def fetch_page(trade_date: str, page: int, page_size: int) -> dict:
+    params = {"trade_date": trade_date, "page": page, "page_size": page_size}
     qs = urllib.parse.urlencode(params)
     url = f"{BASE_URL}{ENDPOINT}?{qs}"
     try:
@@ -58,21 +56,20 @@ def fetch_page(board_code: str, page: int, page_size: int, date: str = None) -> 
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询东财板块成分股")
-    parser.add_argument("--board_code", required=True, help="板块代码（BK 前缀），如 BK0475、BK0490、BK0153")
-    parser.add_argument("--date", default=None, help="查询日期 YYYYMMDD；不传返回当前仍在板块内的成分股")
+    parser = argparse.ArgumentParser(description="查询指定交易日全部普通 A 股的日 K 快照")
+    parser.add_argument("--trade_date", required=True, help="交易日 YYYYMMDD，且必须是交易日")
     parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始（默认 1）")
     parser.add_argument("--page_size", type=int, default=200, help="每页数量，默认 200，最大 500")
-    parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取全部成分股")
+    parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取当日全部日 K")
     args = parser.parse_args()
 
     if args.fetch_all:
-        first = fetch_page(args.board_code, 1, args.page_size, args.date)
+        first = fetch_page(args.trade_date, 1, args.page_size)
         data = first.get("data") or {}
         records = list(data.get("records", []))
         total_pages = data.get("pages") or 1
         for page in range(2, total_pages + 1):
-            page_data = fetch_page(args.board_code, page, args.page_size, args.date)
+            page_data = fetch_page(args.trade_date, page, args.page_size)
             records.extend((page_data.get("data") or {}).get("records", []))
         result = {
             "records": records,
@@ -80,7 +77,7 @@ def main():
             "total": data.get("total", len(records)),
         }
     else:
-        result = fetch_page(args.board_code, args.page, args.page_size, args.date)
+        result = fetch_page(args.trade_date, args.page, args.page_size)
 
     print(json.dumps(result, ensure_ascii=False, indent=2))
 

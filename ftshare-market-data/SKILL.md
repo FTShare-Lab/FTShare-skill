@@ -54,6 +54,8 @@ python <RUN_PY> nth-trade-date --n 5
 python <RUN_PY> continuous-auction-volume --trade-date 20260918 --page 1 --page-size 50
 python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 --end-date 20260828 --lookback-hours 48 --page 1 --page-size 5
 python <RUN_PY> semantic-search-news --query 人工智能
+python <RUN_PY> stock-candlesticks-daily --trade-date 20261008 --page 1 --page-size 500
+python <RUN_PY> ths-board-constituents --board-name 军工 --page 1 --page-size 100
 ```
 
 下载类：
