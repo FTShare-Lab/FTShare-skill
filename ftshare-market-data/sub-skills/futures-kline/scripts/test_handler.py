@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for futures-contract-kline handler"""
+"""Tests for futures-kline handler"""
 import os
 import sys
 import unittest

@@ -142,7 +142,7 @@ python run.py stock-ipos --all
 | **板块（东财 / 同花顺）** | `eastmoney-concept-boards`、`eastmoney-board-constituents/daily-ohlc/latest-ohlc`、`10jqk-board-list/kline/all-kline`、`ths-industry-constituents`、`ths-board-constituents` |
 | **港股** | `company-hk`、`hk-candlesticks`、`northbound`、`southbound`、`eastmoney-hk-index-daily-kline`、`hsi-daily-weight` |
 | **美股** | `eastmoney-us-stock-list`、`eastmoney-us-stock-daily-ohlc`、`us-basic` |
-| **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`futures-contract-kline`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
+| **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`futures-kline`、`futures-kline-batch`、`futures-minutes`、`futures-realtime-minute-kline`、`futures-realtime-day-kline`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
 | **宏观经济（中国 + 美国）** | `economic-china-gdp/cpi/ppi/pmi/lpr/...-monthly`（15 项）、`economic-us-economic-by-type`（16 类，按 `--type`） |
 
 ## 名称 → 代码映射
