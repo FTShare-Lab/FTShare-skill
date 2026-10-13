@@ -51,6 +51,7 @@ python <RUN_PY> stock-dividends-effective --symbol 600519.XSHG --page 1 --page-s
 python <RUN_PY> executive-holdings-changes --stock-code 600519 --page 1 --page-size 20
 python <RUN_PY> eastmoney-shareholder-changes --symbol 股东增持 --page 1 --page-size 20
 python <RUN_PY> ashare-code-change --trade-code 001872.SZ
+python <RUN_PY> ashare-code-change-timeline
 python <RUN_PY> ashare-status-change --trade-code 600848.SH --change-type 上市
 python <RUN_PY> stock-st-history --symbol 600735.SH,000004.SZ
 python <RUN_PY> nth-trade-date --n 5
@@ -59,6 +60,7 @@ python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 
 python <RUN_PY> semantic-search-news --query 人工智能
 python <RUN_PY> stock-candlesticks-daily --trade-date 20261008 --page 1 --page-size 500
 python <RUN_PY> ths-board-constituents --board-name 军工 --page 1 --page-size 100
+python <RUN_PY> stock-tech-factor --symbol 000001.SZ --trade-date 20261012 --category trend
 ```
 
 下载类：
