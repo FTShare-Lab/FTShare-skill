@@ -50,9 +50,11 @@ def safe_urlopen(req_or_url):
     return SAFE_URLOPENER.open(req_or_url)
 
 
-def _fetch_page(stock_code: str, start_date: str = None, end_date: str = None,
+def _fetch_page(stock_code: str = None, start_date: str = None, end_date: str = None,
                 page: int = 1, page_size: int = 100) -> dict:
-    params = {"stock_code": stock_code, "page": page, "page_size": page_size}
+    params = {"page": page, "page_size": page_size}
+    if stock_code:
+        params["stock_code"] = stock_code
     if start_date:
         params["start_date"] = start_date
     if end_date:
@@ -136,7 +138,7 @@ def fetch_by_windows(stock_code: str, start_date: str, end_date: str) -> list:
 def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询东财美股历史日K线（3天窗口分批）")
-    parser.add_argument("--stock_code", required=True, help="股票代码，如 AAL")
+    parser.add_argument("--stock_code", default=None, help="股票代码，如 AAL；不传则查询全市场")
     parser.add_argument("--start_date", default=None, help="起始日期（含），格式 YYYY-MM-DD 或 YYYYMMDD")
     parser.add_argument("--end_date", default=None, help="截止日期（含），格式 YYYY-MM-DD 或 YYYYMMDD")
     parser.add_argument("--page", type=int, default=1, help="页码（从 1 开始，默认 1）")

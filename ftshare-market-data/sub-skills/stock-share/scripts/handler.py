@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""获取单票指定日期股本信息。stock_code 与 date 均必填，date 格式 YYYYMMDD。"""
+"""查询股票股本信息。
+
+- 传 stock_code：返回该标的截至 date 的最新股本记录（单标的模式，page/page_size 被忽略）。
+- 不传 stock_code：返回 date 当日全市场股本记录，分页返回。
+- date 在所有模式下均必填，格式 YYYYMMDD；缺少 date 返回 HTTP 400。
+"""
 import argparse
 import json
 import sys
@@ -41,10 +46,21 @@ def safe_urlopen(req_or_url):
 ENDPOINT = "/api/v2/market/data/share/get-stock-share"
 
 
-def fetch(
-stock_code, date):
-    params = urllib.parse.urlencode({"stock_code": stock_code, "date": date})
-    url = f"{BASE_URL}{ENDPOINT}?{params}"
+def build_params(args, page=None):
+    params = {"date": args.date}
+    if args.stock_code is not None:
+        params["stock_code"] = args.stock_code
+    if args.date_type is not None:
+        params["date_type"] = args.date_type
+    # page/page_size 仅在全市场查询（未指定 stock_code）时生效，单标的查询会被服务端忽略。
+    if args.stock_code is None:
+        params["page"] = args.page if page is None else page
+        params["page_size"] = args.page_size
+    return params
+
+
+def fetch(params):
+    url = f"{BASE_URL}{ENDPOINT}?{urllib.parse.urlencode(params)}"
     try:
         with safe_urlopen(url) as resp:
             return json.loads(resp.read().decode())
@@ -52,16 +68,44 @@ stock_code, date):
         body = e.read().decode()
         print(f"HTTP {e.code}: {body}", file=sys.stderr)
         sys.exit(1)
+    except urllib.error.URLError as e:
+        print(f"请求失败: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="获取单票指定日期股本信息")
-    parser.add_argument("--stock_code", required=True, help="股票代码，如 000001.SZ")
+    parser = argparse.ArgumentParser(description="查询股票股本信息")
+    parser.add_argument("--stock_code", default=None, help="股票代码，如 000001.SZ；不传返回全市场")
     parser.add_argument("--date", required=True, help="日期 YYYYMMDD")
+    parser.add_argument("--date_type", dest="date_type", choices=["publish_date", "end_date"], default=None,
+                        help="日期条件类型，默认 publish_date（发布日期），可选 end_date（生效日期）")
+    parser.add_argument("--page", type=int, default=1, help="全市场查询页码，从 1 开始，默认 1；单标的查询忽略")
+    parser.add_argument("--page_size", dest="page_size", type=int, default=200,
+                        help="全市场查询每页条数，默认 200，最大 500；单标的查询忽略")
+    parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取全市场全量数据")
     args = parser.parse_args()
 
-    result = fetch(args.stock_code, args.date)
+    if args.stock_code is None and not (1 <= args.page_size <= 500):
+        parser.error("--page_size 须在 1～500 之间")
+    if args.stock_code is None and args.page < 1:
+        parser.error("--page 须大于等于 1")
+
+    if args.fetch_all:
+        first = fetch(build_params(args, page=1))
+        data = first.get("data") or {}
+        items = list(data.get("items", []))
+        total_pages = int(data.get("total_pages") or 1)
+        for page in range(2, total_pages + 1):
+            page_data = fetch(build_params(args, page=page)).get("data") or {}
+            items.extend(page_data.get("items", []))
+        data["items"] = items
+        data["total_pages"] = total_pages
+        first["data"] = data
+        result = first
+    else:
+        result = fetch(build_params(args))
+
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

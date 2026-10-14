@@ -18,7 +18,8 @@ description: "查询单票股权质押个股详细信息。当用户需要获取
 
 | 参数名     | 类型   | 是否必填 | 描述            | 取值示例  | 备注                                                                                     |
 |------------|--------|----------|-----------------|-----------|------------------------------------------------------------------------------------------|
-| stock_code | string | 是       | 单个股票代码    | 603323.SH | 支持沪深京股票，A股需为6位数字+后缀（SH=上交所，SZ=深交所，BJ=北交所），单次仅支持一个代码 |
+| stock_code | string | 否       | 单个股票代码    | 603323.SH | 支持沪深京股票，A股需为6位数字+后缀（SH=上交所，SZ=深交所，BJ=北交所），单次仅支持一个代码；不传时需配合 `is_last=true` |
+| is_last    | bool   | 否       | 是否仅获取最新一期 | true      | 不传 `stock_code` 时必填为 true，查询全市场最新一期                                      |
 | page       | int    | 否       | 页码，从 1 开始 | 1         | 默认值为 1，必须大于等于 1                                                               |
 | page_size  | int    | 否       | 每页记录数      | 50        | 默认值为 50，必须大于等于 1                                                              |
 
@@ -29,7 +30,10 @@ description: "查询单票股权质押个股详细信息。当用户需要获取
 ```bash
 python <RUN_PY> pledge-detail --stock_code 603323.SH
 python <RUN_PY> pledge-detail --stock_code 603323.SH --page 2 --page_size 20
+python <RUN_PY> pledge-detail --is-last
 ```
+
+> 最后一条不传 `--stock_code`，配合 `--is-last` 查询全市场最新一期。
 
 > `<RUN_PY>` 为主 `SKILL.md` 同级的 `run.py` 绝对路径，参见主 SKILL.md 的「调用方式」说明。
 
@@ -73,7 +77,7 @@ python <RUN_PY> pledge-detail --stock_code 603323.SH --page 2 --page_size 20
 
 ## 注意事项
 
-- `stock_code` 为必填参数，单次请求只支持一个股票代码
+- `stock_code` 与 `is_last` 二选一：传 `stock_code` 查单票全部报告期，或不传 `stock_code` 时配合 `--is-last` 查全市场最新一期
 - 分页参数 `page` 和 `page_size` 均为可选，默认 `page=1`、`page_size=50`
 - 返回值包含 `items`、`total_pages`、`total_items` 分页包装
 - `last_year_fluctuation` 可为 null（无上年数据时）

@@ -16,14 +16,15 @@ description: Get balance sheet (资产负债表) for all stocks in a specific re
 
 ## 请求参数
 
-说明：year、report_type、page、page_size 为必填项。
+说明：模式A 传 `stock_code` 查单票全部报告期；模式B 不传 `stock_code`，用 `year`+`report_type`（含 `page`、`page_size`）查全市场。两者二选一。
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| year | int | 是 | 报告所属年度 | 2025 | 必填 |
-| report_type | string | 是 | 报告期类型标识 | q2 | q1（一季报）、q2（半年报）、q3（三季报）、annual（全年报） |
-| page | int | 是 | 页码 | 1 | 从 1 开始 |
-| page_size | int | 是 | 每页记录数 | 20 | 建议 10–100 |
+| stock_code | string | 否 | 股票代码（模式A） | 000001.SZ | 6 位数字 + .SZ/.SH/.BJ；存在则进入模式A 单票查询 |
+| year | int | 否 | 报告所属年度（模式B） | 2025 | 模式B 必填 |
+| report_type | string | 否 | 报告期类型标识（模式B） | q2 | q1（一季报）、q2（半年报）、q3（三季报）、annual（全年报）；模式B 必填 |
+| page | int | 否 | 页码（模式B） | 1 | 从 1 开始，默认 1 |
+| page_size | int | 否 | 每页记录数（模式B） | 20 | 默认 20，建议 10–100 |
 
 ## 执行方式
 
@@ -80,4 +81,5 @@ python scripts/handler.py --year 2025 --report-type q2 --page 1 --page-size 20
 
 ```bash
 python <RUN_PY> stock-balance-all-stocks-specific-period --year 2025 --report-type annual --page 1 --page-size 5
+python <RUN_PY> stock-balance-all-stocks-specific-period --stock-code 000001.SZ
 ```

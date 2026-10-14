@@ -38,7 +38,10 @@ python <RUN_PY> stock-prospectuses --stock-code 600000.SH --page 1 --page-size 2
 python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,600036.SH --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> etf-candlesticks-batch --symbols 510300.XSHG,159915.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
-python <RUN_PY> futures-contract-kline --symbol A2605.DCE --interval daily --limit 5
+python <RUN_PY> futures-kline --symbol A2605.DCE --interval daily --limit 5
+python <RUN_PY> futures-kline-batch --symbols A2605.DCE,M2605.DCE --interval daily --limit 5
+python <RUN_PY> futures-minutes --symbol A2605.DCE --interval 5min --start 1787000000000 --end 1787191200000 --limit 5
+python <RUN_PY> futures-realtime-day-kline --symbols A2605.DCE,M2605.DCE
 python <RUN_PY> etf-pcf-infos --symbol 510300.SH --trade-date 20260909
 python <RUN_PY> etf-net-value --etf-code 510300 --nav-date 20260909
 python <RUN_PY> etf-share --etf-code 510300 --page 1 --page-size 5
@@ -48,12 +51,16 @@ python <RUN_PY> stock-dividends-effective --symbol 600519.XSHG --page 1 --page-s
 python <RUN_PY> executive-holdings-changes --stock-code 600519 --page 1 --page-size 20
 python <RUN_PY> eastmoney-shareholder-changes --symbol 股东增持 --page 1 --page-size 20
 python <RUN_PY> ashare-code-change --trade-code 001872.SZ
+python <RUN_PY> ashare-code-change-timeline
 python <RUN_PY> ashare-status-change --trade-code 600848.SH --change-type 上市
 python <RUN_PY> stock-st-history --symbol 600735.SH,000004.SZ
 python <RUN_PY> nth-trade-date --n 5
 python <RUN_PY> continuous-auction-volume --trade-date 20260918 --page 1 --page-size 50
 python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 --end-date 20260828 --lookback-hours 48 --page 1 --page-size 5
 python <RUN_PY> semantic-search-news --query 人工智能
+python <RUN_PY> stock-candlesticks-daily --trade-date 20261008 --page 1 --page-size 500
+python <RUN_PY> ths-board-constituents --board-name 军工 --page 1 --page-size 100
+python <RUN_PY> stock-tech-factor --symbol 000001.SZ --trade-date 20261012 --category trend
 ```
 
 下载类：

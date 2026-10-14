@@ -18,7 +18,7 @@ description: "查询东财美股历史日 K 线。当用户需要查询东财美
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| `--stock_code` | string | 是 | 股票代码 | `AAL` | 东财美股代码 |
+| `--stock_code` | string | 否 | 股票代码；不传则查询全市场 | `AAL` | 东财美股代码 |
 | `--start_date` | string | 否 | 起始日期（含） | `2026-06-01` | 格式 `YYYY-MM-DD` 或 `YYYYMMDD` |
 | `--end_date` | string | 否 | 截止日期（含） | `2026-06-10` | 格式 `YYYY-MM-DD` 或 `YYYYMMDD` |
 | `--page` | int | 否 | 页码 | `1` | 从 1 开始，默认 1 |
@@ -34,6 +34,8 @@ description: "查询东财美股历史日 K 线。当用户需要查询东财美
 | 全部历史 | `--stock_code` | 全量拉取全部历史 K 线（分页） |
 | 日期区间 | `--stock_code --start_date --end_date` | 按 3 天窗口分批请求，合并后分页 |
 | 日期区间全量 | `--stock_code --start_date --end_date --all` | 按 3 天窗口分批请求，合并后返回全量（不分页） |
+| 全市场全部历史 | （不传 `--stock_code`） | 全量拉取全市场历史 K 线（分页，数据量可达数千条） |
+| 全市场日期区间 | `--start_date --end_date`（不传 `--stock_code`） | 按 3 天窗口分批查全市场，合并后分页 |
 
 ## 执行方式
 
@@ -43,7 +45,10 @@ description: "查询东财美股历史日 K 线。当用户需要查询东财美
 python <RUN_PY> eastmoney-us-stock-daily-ohlc --stock_code AAL --page 1 --page_size 10
 python <RUN_PY> eastmoney-us-stock-daily-ohlc --stock_code AAL --start_date 2026-05-01 --end_date 2026-06-10 --page 1 --page_size 50
 python <RUN_PY> eastmoney-us-stock-daily-ohlc --stock_code AAL --start_date 2026-05-01 --end_date 2026-06-10 --all
+python <RUN_PY> eastmoney-us-stock-daily-ohlc --start_date 2026-06-01 --end_date 2026-06-03 --page 1 --page_size 50
 ```
+
+> 最后一条不传 `--stock_code`，查询全市场（数据量可达数千条）。
 
 > `<RUN_PY>` 为主 `SKILL.md` 同级的 `run.py` 绝对路径，参见主 SKILL.md 的「调用方式」说明。
 
@@ -121,5 +126,5 @@ python <RUN_PY> eastmoney-us-stock-daily-ohlc --stock_code AAL --start_date 2026
 - `start_date` / `end_date` 支持 `YYYY-MM-DD` 与 `YYYYMMDD` 两种格式
 - 记录字段为 snake_case，所有数值字段均为字符串
 - `data` 在错误或无数据时可能为 `null`
-- `stock_code` 为东财美股代码（如 `AAL`）
+- `stock_code` 为东财美股代码（如 `AAL`）；不传时查询全市场（可用 `--start_date`/`--end_date` 限定区间）
 - 可先通过 `eastmoney-us-stock-list` 获取有效的美股代码列表

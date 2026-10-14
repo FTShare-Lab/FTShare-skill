@@ -20,20 +20,22 @@ def safe_urlopen(request, timeout=30):
     return SAFE_URLOPENER.open(request, timeout=timeout)
 def main():
     key = _require_api_key(); parser = argparse.ArgumentParser(description='限售解禁')
-    parser.add_argument("--stock_code")
-    parser.add_argument("--start_date")
-    parser.add_argument("--end_date")
+    parser.add_argument("--stock-code", "--stock_code", dest="stock_code")
+    parser.add_argument("--start-date", "--start_date", dest="start_date")
+    parser.add_argument("--end-date", "--end_date", dest="end_date")
     parser.add_argument("--page")
     parser.add_argument("--page_size")
-    parser.add_argument("--stock-code", required=True)
     args = parser.parse_args()
+    if not args.stock_code and not (args.start_date and args.end_date):
+        parser.error("必须传 --stock-code，或同时传入 --start-date 和 --end-date")
+    if bool(args.start_date) != bool(args.end_date):
+        parser.error("--start-date 和 --end-date 必须同时传入")
     params = {}
     if args.stock_code is not None: params["stock_code"] = args.stock_code
     if args.start_date is not None: params["start_date"] = args.start_date
     if args.end_date is not None: params["end_date"] = args.end_date
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.stock_code is not None: params["stock_code"] = args.stock_code
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

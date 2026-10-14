@@ -28,7 +28,6 @@ def main():
     if args.rank_group is not None: params["rank_group"] = args.rank_group
     if args.market is not None: params["market"] = args.market
     if args.trade_date is not None: params["trade_date"] = args.trade_date
-    if args.trade_date is not None: params["trade_date"] = args.trade_date
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

@@ -120,9 +120,9 @@ order_by=None, ob=None, filter_=None, masks=None, page_size=None, page_no=None, 
 def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询 A 股行情列表（分页，daec）")
-    parser.add_argument("--order_by", required=True, help='排序规则，如 change_rate desc')
-    parser.add_argument("--page_no", type=int, required=True, help="页码，从 1 开始")
-    parser.add_argument("--page_size", type=int, required=True, help="每页记录数")
+    parser.add_argument("--order_by", default=None, help='排序规则，如 change_rate desc（可选）')
+    parser.add_argument("--page_no", type=int, default=1, help="页码，从 1 开始（默认 1）")
+    parser.add_argument("--page_size", type=int, default=20, help="每页记录数（默认 20）")
     parser.add_argument("--filter", default="", help="筛选条件表达式，可选")
     parser.add_argument("--masks", default="", help="返回字段掩码（daec 当前忽略，返回全字段）")
     args = parser.parse_args()

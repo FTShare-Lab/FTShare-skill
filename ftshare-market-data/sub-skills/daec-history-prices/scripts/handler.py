@@ -30,7 +30,6 @@ def main():
     if args.range is not None: params["range"] = args.range
     if args.days is not None: params["days"] = args.days
     if args.ts_ms is not None: params["ts_ms"] = args.ts_ms
-    if args.ts_ms is not None: params["ts_ms"] = args.ts_ms
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:

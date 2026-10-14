@@ -44,19 +44,26 @@ VALID_REPORT_TYPES = ["q1", "q2", "q3", "annual"]
 def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询指定报告期全市场业绩快报（分页）")
-    parser.add_argument("--year", type=int, required=True, help="报告所属年度，如 2025")
-    parser.add_argument("--report-type", required=True, choices=VALID_REPORT_TYPES,
-                        help="报告期类型：q1（一季报）/ q2（半年报）/ q3（三季报）/ annual（年报）")
+    parser.add_argument("--stock-code", dest="stock_code", default=None,
+                        help="股票代码（模式A），如 000001.SZ；存在则查该票所有报告期；不传则按模式B 用 --year + --report-type 查全市场")
+    parser.add_argument("--year", type=int, default=None, help="报告所属年度，如 2025（模式B 必填）")
+    parser.add_argument("--report-type", default=None, choices=VALID_REPORT_TYPES,
+                        help="报告期类型：q1（一季报）/ q2（半年报）/ q3（三季报）/ annual（年报）（模式B 必填）")
     parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始（默认 1）")
     parser.add_argument("--page-size", type=int, default=20, help="每页记录数（默认 20）")
     args = parser.parse_args()
 
-    params = {
-        "year": args.year,
-        "report_type": args.report_type,
-        "page": args.page,
-        "page_size": args.page_size,
-    }
+    if args.stock_code:
+        params = {"stock_code": args.stock_code}
+    elif args.year is not None and args.report_type is not None:
+        params = {
+            "year": args.year,
+            "report_type": args.report_type,
+            "page": args.page,
+            "page_size": args.page_size,
+        }
+    else:
+        parser.error("必须传 --stock-code，或同时传入 --year 和 --report-type")
     url = f"{BASE_URL}/api/v1/market/data/finance/stock-performance-express?" + urllib.parse.urlencode(params)
 
     try:

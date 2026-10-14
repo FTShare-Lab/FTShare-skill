@@ -32,7 +32,6 @@ def main():
     if args.listing_date_since is not None: params["listing_date_since"] = args.listing_date_since
     if args.page is not None: params["page"] = args.page
     if args.page_size is not None: params["page_size"] = args.page_size
-    if args.symbol is not None: params["symbol"] = args.symbol
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "Content-Type": "application/json", "X-Client-Name": "ft-claw"}, method="GET")
     try:
