@@ -105,7 +105,7 @@ def main():
     parser.add_argument("--interval-value", dest="interval_value", type=int, default=None,
                         choices=INTERVAL_VALUES, help="分钟周期：1/5/15，默认 1")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
-                        help="起始时间戳（毫秒）；与结束时间相差不超过 3 个北京时间自然日")
+                        help="起始时间戳（毫秒）；与结束时间相差不超过 30 个北京时间自然日")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
                         help="结束时间戳（毫秒）")
     parser.add_argument("--limit", type=int, default=None,

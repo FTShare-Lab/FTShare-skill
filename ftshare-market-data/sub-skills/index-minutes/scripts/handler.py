@@ -46,13 +46,14 @@ def main():
                         help="复权：none（默认，不复权）/forward（前复权）/backward（后复权）")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int)
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int)
-    parser.add_argument("--limit", type=int, default=50)
+    parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
-    if args.interval_value <= 0 or not 1 <= args.limit <= 1000:
+    if args.interval_value <= 0 or (args.limit is not None and not 1 <= args.limit <= 1000):
         parser.error("interval-value 须大于 0，limit 须在 1～1000 之间")
     params = {"symbol": args.symbol, "interval_value": args.interval_value,
-              "since_ts_millis": args.since_ts_millis, "until_ts_millis": args.until_ts_millis,
-              "limit": args.limit}
+              "since_ts_millis": args.since_ts_millis, "until_ts_millis": args.until_ts_millis}
+    if args.limit is not None:
+        params["limit"] = args.limit
     if args.adjust_kind and args.adjust_kind.lower() != "none":
         params["adjust_kind"] = args.adjust_kind.lower()
     request = urllib.request.Request(BASE_URL + ENDPOINT + "?" + urllib.parse.urlencode(params),
