@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import unittest
+import urllib.parse
 from io import StringIO
 from unittest.mock import patch
 import importlib.util
@@ -27,9 +28,9 @@ class TestBuildQuery(unittest.TestCase):
         self.assertEqual(body["limit"], 5)
 
     def test_batch_symbols_query(self):
-        body = handler.build_query(None, ["A2611.DCE", "CU2611.SHF"], "1min", 1791475200000, 1791647999000, None)
+        body = handler.build_query(None, ["A2611.DCE", "CU2611.SHFE"], "1min", 1791475200000, 1791647999000, None)
         self.assertNotIn("symbol", body)
-        self.assertEqual(body["symbols"], ["A2611.DCE", "CU2611.SHF"])
+        self.assertEqual(body["symbols"], "A2611.DCE,CU2611.SHFE")
         self.assertNotIn("limit", body)
 
     def test_rejects_too_many_symbols(self):
@@ -44,13 +45,12 @@ class TestFetch(unittest.TestCase):
     @patch.object(handler, "safe_urlopen")
     def test_query_string_expands_symbols(self, mock_open):
         mock_open.return_value.__enter__.return_value.read.return_value = b'{"code":200}'
-        handler.fetch(None, ["A2611.DCE", "CU2611.SHF"], "5min", 1791475200000, 1791647999000, 5)
+        handler.fetch(None, ["A2611.DCE", "CU2611.SHFE"], "5min", 1791475200000, 1791647999000, 5)
         req = mock_open.call_args[0][0]
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v2/market/data/futures_minutes", req.full_url)
         query = req.full_url.split("?", 1)[1]
-        self.assertIn("symbols=A2611.DCE", query)
-        self.assertIn("symbols=CU2611.SHF", query)
+        self.assertEqual(urllib.parse.parse_qs(query)["symbols"], ["A2611.DCE,CU2611.SHFE"])
         self.assertIn("interval=5min", query)
         self.assertIn("start=1791475200000", query)
         self.assertIn("end=1791647999000", query)

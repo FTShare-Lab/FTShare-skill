@@ -62,7 +62,7 @@ def parse_symbols(raw):
 
 
 def fetch(symbols):
-    query = urllib.parse.urlencode({"symbols": symbols}, doseq=True)
+    query = urllib.parse.urlencode({"symbols": ",".join(symbols)})
     req = urllib.request.Request(
         f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
@@ -83,7 +83,7 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="批量查询期货合约当前交易日的实时日 K 线")
     parser.add_argument("--symbols", required=True,
-                        help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,CU2611.SHF；支持 .DCE/.SHF/.CZC/.INE/.GFE/.CFE 短后缀")
+                        help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,CU2611.SHFE；只接受 .SHFE/.INE/.DCE/.CZCE/.CFFEX/.GFEX 全称后缀")
     args = parser.parse_args()
 
     symbols = parse_symbols(args.symbols)

@@ -11,7 +11,7 @@ description: 可转债历史分钟 K 线，单只或批量（convertible_bond_mi
 |------|------|
 | 接口名称 | 可转债历史分钟K线（convertible_bond_minute_candlesticks） |
 | 外部接口 | `GET /api/v2/market/data/convertible-bond-minute-candlesticks` |
-| 请求方式 | GET（query 参数，`symbols` 以重复参数发送） |
+| 请求方式 | GET（query 参数，`symbols` 使用逗号分隔） |
 | 适用场景 | 获取单只或批量可转债的分钟 K 线；同一路径通过 `symbol` / `symbols` 区分查询形式 |
 | 数据范围 | 按时间窗口返回可用历史分钟行情，窗口包含当日时可包含当日已生成分钟行情 |
 | 单次限量 | 批量最多 20 个标的；单次最多 30 个北京时间自然日，包含起止日期，非交易日也计入；传入 `limit` 时每只标的返回最新 1～1000 条，不传 `limit` 时每只标的返回窗口内全部记录 |
@@ -21,7 +21,7 @@ description: 可转债历史分钟 K 线，单只或批量（convertible_bond_mi
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | symbol | string | 二选一 | 单只可转债代码 | 113042.SH | 与 `symbols` 不能同时传 |
-| symbols | string[] | 二选一 | 1～20 个可转债代码，逗号分隔传给 CLI | 113042.SH,123107.SZ | 接口侧以重复参数发送；也支持 JSON 字符串数组 |
+| symbols | string | 二选一 | 1～20 个可转债代码，逗号分隔传给 CLI | 113042.SH,123107.SZ | 接口侧以逗号分隔发送，兼容旧的重复参数和 JSON 字符串数组格式 |
 | interval_value | int | 否 | 分钟周期 | 1 | 仅支持 1、5、15；不传等同于 1 |
 | since_ts_millis | int | 是 | 起始时间戳（毫秒） | 1786291200000 | 单只、批量都必须提供；不得晚于 `until` |
 | until_ts_millis | int | 是 | 结束时间戳（毫秒） | 1786377599999 | 与起始时间相差不超过 30 个北京时间自然日（包含起止日期，非交易日也计入） |

@@ -22,7 +22,7 @@ class TestBuildQuery(unittest.TestCase):
 
     def test_required_only(self):
         body = handler.build_query(["000300.SH"], "day", "none", 1756431000000, 1756791000000, None)
-        self.assertEqual(body["symbols"], ["000300.SH"])
+        self.assertEqual(body["symbols"], "000300.SH")
         self.assertEqual(body["interval_unit"], "day")
         self.assertEqual(body["since_ts_millis"], 1756431000000)
         self.assertNotIn("adjust_kind", body)

@@ -22,7 +22,7 @@ BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").
 _REQUEST_HEADERS = {"FTSHARE_API_KEY": os.environ["FTSHARE_API_KEY"], "Content-Type": "application/json"} if os.environ.get("FTSHARE_API_KEY") else {}
 ENDPOINT = "/api/v2/market/data/futures/kline/batch"
 
-INTERVALS = ("daily", "weekly", "monthly", "quarterly", "yearly")
+INTERVALS = ("daily", "weekly", "monthly", "quarterly")
 MAX_SYMBOLS = 20
 
 HEADERS = {
@@ -63,7 +63,7 @@ def parse_symbols(raw):
 
 
 def build_query(symbols, interval, start, end, limit):
-    body = {"symbols": symbols, "interval": interval.lower()}
+    body = {"symbols": ",".join(symbols), "interval": interval.lower()}
     if start is not None:
         body["start"] = start
     if end is not None:
@@ -75,7 +75,7 @@ def build_query(symbols, interval, start, end, limit):
 
 def fetch(symbols, interval, start, end, limit):
     body = build_query(symbols, interval, start, end, limit)
-    query = urllib.parse.urlencode(body, doseq=True)
+    query = urllib.parse.urlencode(body)
     req = urllib.request.Request(
         f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
@@ -96,9 +96,9 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="批量查询多个期货合约的历史 K 线")
     parser.add_argument("--symbols", required=True,
-                        help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,M2611.DCE；支持 .DCE/.SHF/.CZC/.INE/.GFE/.CFE 短后缀")
+                        help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,M2611.DCE；只接受 .SHFE/.INE/.DCE/.CZCE/.CFFEX/.GFEX 全称后缀")
     parser.add_argument("--interval", default="daily", choices=INTERVALS,
-                        help="K 线周期，默认 daily；周/月/季/年 K 由日 K 聚合")
+                        help="K 线周期，默认 daily；周/月/季 K 由日 K 聚合")
     parser.add_argument("--start", type=int, default=None,
                         help="起始时间戳（毫秒，闭区间）")
     parser.add_argument("--end", type=int, default=None,

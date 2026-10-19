@@ -67,7 +67,7 @@ def build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_milli
     if symbol is not None:
         body["symbol"] = symbol
     if symbols is not None:
-        body["symbols"] = symbols
+        body["symbols"] = ",".join(symbols)
     if interval_value is not None:
         body["interval_value"] = interval_value
     body["since_ts_millis"] = since_ts_millis
@@ -79,7 +79,7 @@ def build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_milli
 
 def fetch(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit):
     body = build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit)
-    query = urllib.parse.urlencode(body, doseq=True)
+    query = urllib.parse.urlencode(body)
     req = urllib.request.Request(
         f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},

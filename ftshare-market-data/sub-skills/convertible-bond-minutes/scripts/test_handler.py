@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import unittest
+import urllib.parse
 from io import StringIO
 from unittest.mock import patch
 import importlib.util
@@ -31,7 +32,7 @@ class TestBuildQuery(unittest.TestCase):
         body = handler.build_query(None, ["113042.SH", "123107.SZ"], 5,
                                    1786291200000, 1786377599999, None)
         self.assertNotIn("symbol", body)
-        self.assertEqual(body["symbols"], ["113042.SH", "123107.SZ"])
+        self.assertEqual(body["symbols"], "113042.SH,123107.SZ")
         self.assertEqual(body["interval_value"], 5)
         self.assertNotIn("limit", body)
 
@@ -52,8 +53,7 @@ class TestFetch(unittest.TestCase):
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v2/market/data/convertible-bond-minute-candlesticks", req.full_url)
         query = req.full_url.split("?", 1)[1]
-        self.assertIn("symbols=113042.SH", query)
-        self.assertIn("symbols=123107.SZ", query)
+        self.assertEqual(urllib.parse.parse_qs(query)["symbols"], ["113042.SH,123107.SZ"])
         self.assertIn("interval_value=1", query)
         self.assertIn("since_ts_millis=1786291200000", query)
         self.assertEqual(req.headers.get("X-client-name"), "ft-claw")

@@ -6,7 +6,7 @@ def main():
  if a.interval_value<1 or (a.limit is not None and not 1<=a.limit<=1000):p.error("interval-value 须大于 0，limit 须在 1～1000 之间")
  key=os.environ.get("FTSHARE_API_KEY")
  if not key: print("FTSHARE_API_KEY environment variable is required",file=sys.stderr); raise SystemExit(2)
- params=[("symbols",s.strip()) for s in a.symbols.split(",") if s.strip()]+[("since_ts_millis",a.since_ts_millis),("until_ts_millis",a.until_ts_millis),("interval_value",a.interval_value)]
+ params=[("symbols",",".join(s.strip() for s in a.symbols.split(",") if s.strip()))]+[("since_ts_millis",a.since_ts_millis),("until_ts_millis",a.until_ts_millis),("interval_value",a.interval_value)]
  if a.limit is not None: params.append(("limit",a.limit))
  if a.adjust_kind and a.adjust_kind.lower()!="none":params.append(("adjust_kind",a.adjust_kind.lower()))
  req=urllib.request.Request(BASE_URL+ENDPOINT+"?"+urllib.parse.urlencode(params),headers={"FTSHARE_API_KEY":key,"Content-Type":"application/json"},method="GET")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""期货合约历史K线：期货合约日/周/月/季/年 K 线（GET /api/v1/market/data/futures/kline）"""
+"""期货合约历史K线：期货合约日/周/月/季 K 线（GET /api/v1/market/data/futures/kline）"""
 import argparse
 import json
 import sys
@@ -27,7 +27,6 @@ INTERVALS = (
     "weekly", "1w", "week",
     "monthly", "1mo", "month",
     "quarterly", "1q", "quarter",
-    "yearly", "1y", "year",
 )
 
 HEADERS = {
@@ -90,11 +89,11 @@ def fetch(params):
 
 def main():
     _require_api_key()
-    parser = argparse.ArgumentParser(description="查询期货合约日/周/月/季/年 K 线")
+    parser = argparse.ArgumentParser(description="查询期货合约日/周/月/季 K 线")
     parser.add_argument("--symbol", required=True,
-                        help="期货合约代码，如 A2605.DCE；支持交易所短后缀")
+                        help="期货合约代码，如 A2605.DCE；只接受交易所全称后缀")
     parser.add_argument("--interval", default="daily", choices=INTERVALS,
-                        help="K 线周期，默认 daily；周/月/季/年 K 基于日 K 按北京时间聚合")
+                        help="K 线周期，默认 daily；周/月/季 K 基于日 K 按北京时间聚合")
     parser.add_argument("--start", type=int, default=None,
                         help="起始时间戳（毫秒，闭区间）；可省略时间范围")
     parser.add_argument("--end", type=int, default=None,

@@ -67,7 +67,7 @@ def build_query(symbol, symbols, interval, start, end, limit):
     if symbol is not None:
         body["symbol"] = symbol
     if symbols is not None:
-        body["symbols"] = symbols
+        body["symbols"] = ",".join(symbols)
     body["start"] = start
     body["end"] = end
     if limit is not None:
@@ -77,7 +77,7 @@ def build_query(symbol, symbols, interval, start, end, limit):
 
 def fetch(symbol, symbols, interval, start, end, limit):
     body = build_query(symbol, symbols, interval, start, end, limit)
-    query = urllib.parse.urlencode(body, doseq=True)
+    query = urllib.parse.urlencode(body)
     req = urllib.request.Request(
         f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
@@ -98,8 +98,8 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询单个或批量期货合约的历史分钟 K 线")
     target = parser.add_mutually_exclusive_group(required=True)
-    target.add_argument("--symbol", help="单个期货合约代码，如 A2611.DCE；支持 .DCE/.SHF/.CZC/.INE/.GFE/.CFE 短后缀")
-    target.add_argument("--symbols", help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,CU2611.SHF")
+    target.add_argument("--symbol", help="单个期货合约代码，如 A2611.DCE；只接受 .SHFE/.INE/.DCE/.CZCE/.CFFEX/.GFEX 全称后缀")
+    target.add_argument("--symbols", help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,CU2611.SHFE")
     parser.add_argument("--interval", default="1min", choices=INTERVALS,
                         help="分钟周期，默认 1min；也兼容 1m/5m/15m/30m/1h")
     parser.add_argument("--start", required=True, type=int,

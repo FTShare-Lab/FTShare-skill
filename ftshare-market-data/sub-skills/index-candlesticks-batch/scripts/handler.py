@@ -61,7 +61,7 @@ def parse_symbols(raw):
 
 def build_query(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_millis, limit):
     body = {
-        "symbols": symbols,
+        "symbols": ",".join(symbols),
         "interval_unit": interval_unit.lower(),
         "until_ts_millis": until_ts_millis,
     }
@@ -76,7 +76,7 @@ def build_query(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_m
 
 def fetch(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_millis, limit):
     body = build_query(symbols, interval_unit, adjust_kind, since_ts_millis, until_ts_millis, limit)
-    query = urllib.parse.urlencode(body, doseq=True)
+    query = urllib.parse.urlencode(body)
     req = urllib.request.Request(
         f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},

@@ -11,14 +11,14 @@ description: 批量获取多只 A 股股票 K 线 GET 接口（market.ft.tech，
 |------|------|
 | 接口名称 | 批量股票K线（stock_candlesticks_batch） |
 | 外部接口 | `GET /api/v2/market/data/stock-candlesticks/batch` |
-| 请求方式 | GET（query 参数，`symbols` 可重复传入） |
+| 请求方式 | GET（query 参数，`symbols` 使用逗号分隔） |
 | 适用场景 | 一次批量查询 A 股股票的历史 K 线（开高低收、成交量、成交额、换手率），支持日/周/月/年周期与前复权/后复权。接口会校验证券类别，非 A 股股票（ETF/可转债/指数）返回 `code=400` |
 
 ## 2. 请求参数
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| symbols | string[] | 是 | 标的代码列表，逗号分隔传给 CLI | 600519.SH,000001.SZ,600036.SH | 仅支持 A 股股票，不支持 ETF/可转债/指数；沪市 `.XSHG`/`.SH`、深市 `.XSHE`/`.SZ`、北交所 `.BJSE`/`.BJ`；接口侧以重复 query 参数发送 |
+| symbols | string | 是 | 标的代码列表，逗号分隔传给 CLI | 600519.SH,000001.SZ,600036.SH | 仅支持 A 股股票，不支持 ETF/可转债/指数；沪市 `.XSHG`/`.SH`、深市 `.XSHE`/`.SZ`、北交所 `.BJSE`/`.BJ`；接口侧以逗号分隔发送，兼容旧的重复参数和 JSON 字符串数组格式 |
 | interval_unit | string | 是 | 周期单位 | day | day/week/month/year（大小写不敏感）；**不支持 minute** |
 | adjust_kind | string | 否 | 复权类型 | forward | none（默认，不复权）/forward（前复权）/backward（后复权） |
 | since_ts_millis | int | 否 | 开始时间戳（毫秒） | 1756431000000 | 与 limit 至少填一个；与 until 的跨度不得超过 12 个自然月，且不得晚于 until |
@@ -27,19 +27,24 @@ description: 批量获取多只 A 股股票 K 线 GET 接口（market.ft.tech，
 
 ## 3. 响应说明
 
-外层固定为 `code`（成功 200）/ `message`（成功 `success`）/ `data`（失败时为 `null`）。`data` 为非分页嵌套数组，外层每项为 `[symbol, K线数组]`，每根 K 线字段：
+外层固定为 `code`（成功 200）/ `message`（成功 `success`）/ `data`（失败时为 `null`）。`data` 为按请求顺序排列的非分页分组数组，每项结构为 `{symbol, items, total}`：
+
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| symbol | string | 标的代码，响应统一使用 `.SH`、`.SZ`、`.BJ` 短后缀 |
+| items | array | 该标的的 K 线数组；无数据时为 `[]` |
+| total | integer | `items` 的 K 线条数；无数据时为 0 |
+
+`items` 中每根 K 线字段：
 
 | 字段名 | 类型 | 说明 | 单位 |
 |--------|------|------|------|
-| symbol | string | 标的代码，响应统一使用 `.SH`、`.SZ`、`.BJ` 短后缀 | - |
-| open / high / low / close | number | 开/高/低/收盘价 | 元 |
-| ts_millis | string | 收盘时间戳 | 毫秒 |
-| ts_millis_open | string | 开盘时间戳 | 毫秒 |
-| turnover | number | 成交额 | 元 |
+| open / high / low / close | string | 开/高/低/收盘价（`close` 为收盘价或最新价）；JSON 中为字符串以保留精度 | 元 |
+| ts_millis | integer | 收盘时间戳 | 毫秒 |
+| ts_millis_open | integer | 开盘时间戳 | 毫秒 |
+| turnover | string | 成交额；JSON 中为字符串以保留精度 | 元 |
 | volume | integer | 成交量 | - |
 | turnover_rate | number | 换手率 | % |
-
-注：`open/high/low/close`、`turnover` 在 JSON 中实际以字符串返回（避免精度丢失）；`ts_millis` 为数字。
 
 ## 4. 调用方式
 
@@ -53,7 +58,7 @@ python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,600036.SH,000001.SZ
 ## 5. 注意事项
 
 - `symbols`、`interval_unit`、`until_ts_millis` 必填；`since_ts_millis` 与 `limit` 至少填一个；所有 `symbols` 使用相同周期。
-- 接口仅支持 GET；`symbols` 在查询参数中以重复参数形式发送（`symbols=600519.SH&symbols=000001.SZ`）。
+- 接口仅支持 GET；`symbols` 使用逗号分隔发送（`symbols=600519.SH,000001.SZ`），兼容旧的重复参数和 JSON 字符串数组格式。
 - 时间跨度最多 12 个自然月；需要更长历史时按窗口分段多次调用。
 - 不支持分钟 K 线；分钟数据请使用 `stock-minutes-batch` 子 skill（`interval_unit=minute` 会返回参数错误）。
 - 仅支持 A 股股票；传入 ETF、可转债或指数的代码返回 `code=400`「symbols [xxx] are not A-share stocks」，混入任一非股票标的会导致整批失败。ETF 用 `etf-candlesticks-batch`，指数用 `index-candlesticks-batch`。
