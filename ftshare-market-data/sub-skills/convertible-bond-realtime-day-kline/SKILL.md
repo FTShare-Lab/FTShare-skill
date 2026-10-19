@@ -11,7 +11,7 @@ description: 查询单只或批量可转债当前交易日实时日 K 线（GET 
 
 | 项目 | 说明 |
 |------|------|
-| 输入参数 | `symbols`（必填）：JSON 字符串数组，例如 `["113042.SH","123107.SZ"]`；单只也必须是单元素数组 |
+| 输入参数 | `symbols`（必填）：CLI 按空格分隔传入，接口侧以逗号分隔发送，例如 `113042.SH,123107.SZ`；也兼容旧的 JSON 字符串数组格式；支持带交易所后缀和可推断市场的六码裸代码 |
 | 响应结构 | `code` / `message` / `data`；`data` 为分组数组，每项含 `symbol`、`items`、`total` |
 | 每根 K 线字段 | open / high / low / close / ts_millis / ts_millis_open / turnover / volume |
 | 单次限量 | 无分页；1～20 个标的 |
@@ -27,6 +27,7 @@ python <RUN_PY> convertible-bond-realtime-day-kline --symbols 113042.SH 123107.S
 ## 注意事项
 
 - 仅接受可转债标的，支持 `.SH` / `.XSHG`、`.SZ` / `.XSHE` 后缀；代码可被解析不代表属于接口支持的证券类别。
+- 缺少 `--symbols`、空列表（空数组或空串）、非法代码或不支持的参数会请求失败。
 - 自动选择交易日：北京时间交易日 09:00 起选择当日，09:00 前及非交易日选择上一交易日，实际返回以行情可用性为准。
 - 不提供 `symbol`、日期范围、`interval_unit`、`interval_value`、`adjust_kind`、`limit` 或分页参数；不能通过本接口指定历史日期。
 - 每个有数据的标的返回 1 条实时日 K；盘中 OHLC、成交量和成交额会继续变化，不应当作盘中已确定的最终收盘数据。

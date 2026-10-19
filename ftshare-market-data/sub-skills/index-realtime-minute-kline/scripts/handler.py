@@ -39,7 +39,7 @@ def main():
     parser.add_argument("--symbols", nargs="+", required=True)
 
     args = parser.parse_args()
-    params = {"symbols": json.dumps(args.symbols, ensure_ascii=False)}
+    params = {"symbols": ",".join(args.symbols)}
 
     query = ("?" + urllib.parse.urlencode(params)) if params else ""
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={"FTSHARE_API_KEY": key, "X-Client-Name": "ft-claw", "Content-Type": "application/json"}, method="GET")

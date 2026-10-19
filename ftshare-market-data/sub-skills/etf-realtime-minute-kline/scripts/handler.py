@@ -40,7 +40,7 @@ def main():
     args = parser.parse_args()
     if len(args.symbols) > 20:
         parser.error("symbols 单次最多 20 个")
-    url = BASE_URL + ENDPOINT + "?" + urllib.parse.urlencode({"symbols": json.dumps(args.symbols, ensure_ascii=False)})
+    url = BASE_URL + ENDPOINT + "?" + urllib.parse.urlencode({"symbols": ",".join(args.symbols)})
     request = urllib.request.Request(url, headers={"FTSHARE_API_KEY": key, "X-Client-Name": "ft-claw", "Content-Type": "application/json"}, method="GET")
     try:
         with safe_urlopen(request) as response:
