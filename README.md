@@ -8,6 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Agent_Skill-ftshare--market--data-3563E9" alt="ftshare-market-data Agent Skill">
+  <a href="https://skills.sh/FTShare-Lab/FTShare-skill"><img src="https://skills.sh/b/FTShare-Lab/FTShare-skill" alt="skills.sh"></a>
   <img src="https://img.shields.io/badge/python-3.9%2B-111827" alt="Python 3.9 or later">
   <img src="https://img.shields.io/badge/dependencies-standard_library_only-667085" alt="Python standard library only">
   <a href="https://github.com/FTShare-Lab/FTShare-skill/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-667085" alt="MIT License"></a>
@@ -21,7 +22,7 @@
 <p align="center">
   <a href="https://ftai.chat/ftshare"><strong>FTShare 官网</strong></a>
   · <a href="https://ftai.chat/me/profile">获取 API Key</a>
-  · <a href="#三步开始使用">快速开始</a>
+  · <a href="#快速开始">快速开始</a>
   · <a href="https://github.com/FTShare-Lab/FTShare-skill/issues">问题反馈</a>
 </p>
 
@@ -38,14 +39,29 @@ FTShare Skill 是 FTShare 面向 Agent 运行时提供的金融数据接入方�
 
 <p align="center"><sub>FTShare 官网。点击图片进入产品与套餐页面。</sub></p>
 
-## 三步开始使用
+## 快速开始
 
-### 1. 获取仓库
+环境要求：安装需要 Node.js（用于 `npx`），运行需要 Python 3.9+（仅标准库，无需额外依赖）。
+
+### 1. 安装 Skill
 
 ```bash
-git clone https://github.com/FTShare-Lab/FTShare-skill.git
-cd FTShare-skill
+npx skills add FTShare-Lab/FTShare-skill
 ```
+
+[`skills`](https://github.com/vercel-labs/skills) CLI 会自动检测本机已安装的 Agent，并以交互方式询问安装范围（项目级 / 用户级）和目标 Agent。
+
+
+常见安装位置：
+
+| Agent | 项目级 | 用户级（`-g`） |
+|---|---|---|
+| Claude Code | `.claude/skills/ftshare-market-data/` | `~/.claude/skills/ftshare-market-data/` |
+| Codex | `.agents/skills/ftshare-market-data/` | `~/.agents/skills/ftshare-market-data/` |
+| OpenCode | `.agents/skills/ftshare-market-data/` | `~/.config/opencode/skills/ftshare-market-data/` |
+| OpenClaw | `skills/ftshare-market-data/` | `~/.openclaw/skills/ftshare-market-data/` |
+
+完整的 Agent 列表见 [skills CLI 文档](https://github.com/vercel-labs/skills#supported-agents)。
 
 ### 2. 配置 API Key
 
@@ -57,18 +73,22 @@ export FTSHARE_API_KEY="YOUR_FTSHARE_API_KEY"
 
 请勿将真实 API Key 提交到 Git 仓库、Issue、日志或公开截图。
 
-### 3. 加载父 Skill
+### 更新与卸载
 
-将完整的 `ftshare-market-data` 目录放入 Agent 运行时的 Skill 目录。
+```bash
+npx skills update ftshare-market-data
+npx skills remove ftshare-market-data
+```
 
-| 运行时 | Skill 目录示例 |
-|---|---|
-| Claude Code 项目级 | `.claude/skills/ftshare-market-data/` |
-| Claude Code 用户级 | `~/.claude/skills/ftshare-market-data/` |
-| Codex 用户级 | `~/.codex/skills/ftshare-market-data/` |
-| OpenClaw 等其他运行时 | 以对应运行时的 Skill 文档为准 |
+### 手动安装（不使用 npx）
 
-目录中必须完整保留 `SKILL.md`、`run.py` 和 `sub-skills/`。
+```bash
+git clone https://github.com/FTShare-Lab/FTShare-skill.git
+cp -r FTShare-skill/ftshare-market-data ~/.claude/skills/ # 或其它 Agent 运行时的 Skill 目录
+```
+
+将完整的 `ftshare-market-data` 目录放入 Agent 运行时的 Skill 目录即可。
+
 
 ## 用特色因子完成第一次调用
 
@@ -84,10 +104,10 @@ Agent 会路由到真实子 Skill：
 ashare-news-sentiment-factors
 ```
 
-对应的真实命令为：
+对应的真实命令为（`<SKILL_DIR>` 为 Skill 安装目录，如 `~/.claude/skills/ftshare-market-data`）：
 
 ```bash
-python3 ftshare-market-data/run.py ashare-news-sentiment-factors \
+python3 <SKILL_DIR>/run.py ashare-news-sentiment-factors \
   --trade-code 600519.SH \
   --start-date 20260801 \
   --end-date 20260831 \
@@ -117,7 +137,7 @@ Agent 整理并回答
 查看当前可用路由：
 
 ```bash
-python3 ftshare-market-data/run.py
+python3 <SKILL_DIR>/run.py
 ```
 
 ## FTShare 的三种接入方式

@@ -8,6 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Agent_Skill-ftshare--market--data-3563E9" alt="ftshare-market-data Agent Skill">
+  <a href="https://skills.sh/FTShare-Lab/FTShare-skill"><img src="https://skills.sh/b/FTShare-Lab/FTShare-skill" alt="skills.sh"></a>
   <img src="https://img.shields.io/badge/python-3.9%2B-111827" alt="Python 3.9 or later">
   <img src="https://img.shields.io/badge/dependencies-standard_library_only-667085" alt="Python standard library only">
   <a href="https://github.com/FTShare-Lab/FTShare-skill/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-667085" alt="MIT License"></a>
@@ -21,7 +22,7 @@
 <p align="center">
   <a href="https://ftai.chat/ftshare"><strong>FTShare</strong></a>
   · <a href="https://ftai.chat/me/profile">Get an API key</a>
-  · <a href="#get-started-in-three-steps">Get started</a>
+  · <a href="#get-started">Get started</a>
   · <a href="https://github.com/FTShare-Lab/FTShare-skill/issues">Issues</a>
 </p>
 
@@ -38,14 +39,28 @@ FTShare Skill is FTShare's financial-data access method for agent runtimes. Load
 
 <p align="center"><sub>FTShare's public product page is currently in Chinese. Click the image to open it.</sub></p>
 
-## Get started in three steps
+## Get started
 
-### 1. Clone the repository
+Requirements: Node.js (for `npx`) to install, and Python 3.9+ (standard library only) to run.
+
+### 1. Install the Skill
 
 ```bash
-git clone https://github.com/FTShare-Lab/FTShare-skill.git
-cd FTShare-skill
+npx skills add FTShare-Lab/FTShare-skill
 ```
+
+The [`skills`](https://github.com/vercel-labs/skills) CLI detects the agents installed on your machine and interactively asks for the install scope (project / user) and target agents.
+
+Common install locations:
+
+| Agent | Project | User (`-g`) |
+|---|---|---|
+| Claude Code | `.claude/skills/ftshare-market-data/` | `~/.claude/skills/ftshare-market-data/` |
+| Codex | `.agents/skills/ftshare-market-data/` | `~/.agents/skills/ftshare-market-data/` |
+| OpenCode | `.agents/skills/ftshare-market-data/` | `~/.config/opencode/skills/ftshare-market-data/` |
+| OpenClaw | `skills/ftshare-market-data/` | `~/.openclaw/skills/ftshare-market-data/` |
+
+See the [skills CLI docs](https://github.com/vercel-labs/skills#supported-agents) for the full list of agents.
 
 ### 2. Configure the API key
 
@@ -57,18 +72,21 @@ export FTSHARE_API_KEY="YOUR_FTSHARE_API_KEY"
 
 Never commit a real API key to Git, issues, logs, or public screenshots.
 
-### 3. Load the parent Skill
+### Update and uninstall
 
-Place the complete `ftshare-market-data` directory in your runtime's Skill directory.
+```bash
+npx skills update ftshare-market-data
+npx skills remove ftshare-market-data
+```
 
-| Runtime | Example Skill directory |
-|---|---|
-| Claude Code project | `.claude/skills/ftshare-market-data/` |
-| Claude Code user | `~/.claude/skills/ftshare-market-data/` |
-| Codex user | `~/.codex/skills/ftshare-market-data/` |
-| OpenClaw and other runtimes | Follow that runtime's Skill documentation |
+### Manual install (without npx)
 
-Keep `SKILL.md`, `run.py`, and `sub-skills/` together.
+```bash
+git clone https://github.com/FTShare-Lab/FTShare-skill.git
+cp -r FTShare-skill/ftshare-market-data ~/.claude/skills/ # or another agent runtime's Skill directory
+```
+
+Place the complete `ftshare-market-data` directory in your agent runtime's Skill directory.
 
 ## Make the first factor-data call
 
@@ -84,10 +102,10 @@ The agent routes the request to this real sub-skill:
 ashare-news-sentiment-factors
 ```
 
-The corresponding command is:
+The corresponding command is (`<SKILL_DIR>` is the install directory, e.g. `~/.claude/skills/ftshare-market-data`):
 
 ```bash
-python3 ftshare-market-data/run.py ashare-news-sentiment-factors \
+python3 <SKILL_DIR>/run.py ashare-news-sentiment-factors \
   --trade-code 600519.SH \
   --start-date 20260801 \
   --end-date 20260831 \
@@ -117,7 +135,7 @@ Agent organizes the answer
 List currently available routes with:
 
 ```bash
-python3 ftshare-market-data/run.py
+python3 <SKILL_DIR>/run.py
 ```
 
 ## Three ways to use FTShare
