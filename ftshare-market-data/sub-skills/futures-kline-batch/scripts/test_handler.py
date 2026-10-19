@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import unittest
+import urllib.parse
 from io import StringIO
 from unittest.mock import patch
 import importlib.util
@@ -19,7 +20,7 @@ class TestBuildQuery(unittest.TestCase):
 
     def test_batch_query(self):
         body = handler.build_query(["A2611.DCE", "M2611.DCE"], "daily", 1790784000000, 1791647999000, 5)
-        self.assertEqual(body["symbols"], ["A2611.DCE", "M2611.DCE"])
+        self.assertEqual(body["symbols"], "A2611.DCE,M2611.DCE")
         self.assertEqual(body["interval"], "daily")
         self.assertEqual(body["start"], 1790784000000)
         self.assertEqual(body["end"], 1791647999000)
@@ -49,8 +50,7 @@ class TestFetch(unittest.TestCase):
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v2/market/data/futures/kline/batch", req.full_url)
         query = req.full_url.split("?", 1)[1]
-        self.assertIn("symbols=A2611.DCE", query)
-        self.assertIn("symbols=M2611.DCE", query)
+        self.assertEqual(urllib.parse.parse_qs(query)["symbols"], ["A2611.DCE,M2611.DCE"])
         self.assertIn("interval=daily", query)
         self.assertIn("start=1790784000000", query)
         self.assertIn("limit=5", query)

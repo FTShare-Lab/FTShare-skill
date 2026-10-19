@@ -5,7 +5,7 @@ description: 批量查询 股票历史分钟 K 线。用户询问多只股票的
 
 # 批量股票历史分钟行情
 
-接口：`GET /api/v2/market/data/stock_minutes/batch`。必填 `--symbols`、`--since-ts-millis`、`--until-ts-millis`；`--symbols` 使用逗号分隔，最多 20 只；可选 `--interval-value`、`--limit`，时间跨度不超过 3 天，`limit` 范围 1~1000。
+接口：`GET /api/v2/market/data/stock_minutes/batch`。必填 `--symbols`、`--since-ts-millis`、`--until-ts-millis`；`--symbols` 使用逗号分隔，最多 20 只；可选 `--interval-value`、`--limit`，时间跨度不超过 30 个北京时间自然日（包含起止日期），`limit` 范围 1~1000，省略 `limit` 时返回范围内全部记录。
 
 ```bash
 python <RUN_PY> stock-minutes-batch --symbols 600519.SH,000001.SZ --since-ts-millis 1788919020000 --until-ts-millis 1788920820000 --limit 5

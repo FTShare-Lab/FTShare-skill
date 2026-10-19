@@ -67,7 +67,7 @@ def build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_milli
     if symbol is not None:
         body["symbol"] = symbol
     if symbols is not None:
-        body["symbols"] = symbols
+        body["symbols"] = ",".join(symbols)
     if interval_value is not None:
         body["interval_value"] = interval_value
     body["since_ts_millis"] = since_ts_millis
@@ -79,7 +79,7 @@ def build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_milli
 
 def fetch(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit):
     body = build_query(symbol, symbols, interval_value, since_ts_millis, until_ts_millis, limit)
-    query = urllib.parse.urlencode(body, doseq=True)
+    query = urllib.parse.urlencode(body)
     req = urllib.request.Request(
         f"{BASE_URL}{ENDPOINT}?{query}",
         headers={**HEADERS, **_REQUEST_HEADERS},
@@ -105,7 +105,7 @@ def main():
     parser.add_argument("--interval-value", dest="interval_value", type=int, default=None,
                         choices=INTERVAL_VALUES, help="分钟周期：1/5/15，默认 1")
     parser.add_argument("--since-ts-millis", dest="since_ts_millis", required=True, type=int,
-                        help="起始时间戳（毫秒）；与结束时间相差不超过 3 个北京时间自然日")
+                        help="起始时间戳（毫秒）；与结束时间相差不超过 30 个北京时间自然日")
     parser.add_argument("--until-ts-millis", dest="until_ts_millis", required=True, type=int,
                         help="结束时间戳（毫秒）")
     parser.add_argument("--limit", type=int, default=None,

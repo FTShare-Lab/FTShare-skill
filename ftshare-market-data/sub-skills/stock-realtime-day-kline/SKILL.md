@@ -5,7 +5,7 @@ description: 查询股票当前交易日实时日 K 线。必填 --symbols，按
 
 # 股票实时日K线
 
-查询股票当前交易日实时日 K 线。必填 --symbols，按空格分隔。接口：GET /api/v4/market/data/stock-realtime-day-kline。
+查询股票当前交易日实时日 K 线。必填 `--symbols`，CLI 按空格分隔；接口侧以逗号分隔发送（如 `600519.SH,000001.SZ`），也兼容旧的 JSON 字符串数组格式，支持交易所后缀和可推断市场的六码裸代码。接口：GET /api/v4/market/data/stock-realtime-day-kline。
 
 每根 K 线字段：symbol / open / high / low / close / ts_millis / ts_millis_open / turnover / volume / turnover_rate（换手率），返回当前交易日截至最新行情时刻的数据。
 
@@ -14,5 +14,5 @@ description: 查询股票当前交易日实时日 K 线。必填 --symbols，按
 通过主目录 `run.py` 调用：
 
 ```bash
-python <RUN_PY> stock-realtime-day-kline --symbols 600519.SH 000001.SZ --symbols 600519.SH 000001.SZ
+python <RUN_PY> stock-realtime-day-kline --symbols 600519.SH 000001.SZ
 ```

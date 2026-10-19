@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import unittest
+import urllib.parse
 from io import StringIO
 from unittest.mock import patch
 import importlib.util
@@ -22,7 +23,7 @@ class TestBuildQuery(unittest.TestCase):
 
     def test_required_only(self):
         body = handler.build_query(["510300.SH"], "day", "none", 1756431000000, 1756791000000, None)
-        self.assertEqual(body["symbols"], ["510300.SH"])
+        self.assertEqual(body["symbols"], "510300.SH")
         self.assertEqual(body["interval_unit"], "day")
         self.assertEqual(body["since_ts_millis"], 1756431000000)
         self.assertEqual(body["until_ts_millis"], 1756791000000)
@@ -33,7 +34,7 @@ class TestBuildQuery(unittest.TestCase):
     def test_optional_fields(self):
         body = handler.build_query(["510300.SH", "159915.SZ"], "week", "Forward",
                                    1756700000000, 1756791000000, 5)
-        self.assertEqual(body["symbols"], ["510300.SH", "159915.SZ"])
+        self.assertEqual(body["symbols"], "510300.SH,159915.SZ")
         self.assertEqual(body["adjust_kind"], "forward")
         self.assertEqual(body["limit"], 5)
 
@@ -58,8 +59,7 @@ class TestFetch(unittest.TestCase):
         self.assertEqual(req.get_method(), "GET")
         self.assertIn("/api/v2/market/data/etf-candlesticks/batch", req.full_url)
         query = req.full_url.split("?", 1)[1]
-        self.assertIn("symbols=510300.SH", query)
-        self.assertIn("symbols=159915.SZ", query)
+        self.assertEqual(urllib.parse.parse_qs(query)["symbols"], ["510300.SH,159915.SZ"])
         self.assertIn("interval_unit=day", query)
         self.assertIn("since_ts_millis=1756431000000", query)
         self.assertEqual(req.headers.get("X-client-name"), "ft-claw")

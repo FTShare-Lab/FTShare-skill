@@ -5,7 +5,7 @@ description: 批量查询 ETF 历史分钟 K 线。用户询问多只 ETF 的分
 
 # 批量 ETF 历史分钟行情
 
-接口：`GET /api/v2/market/data/etf_minutes/batch`。必填 `--symbols`、`--since-ts-millis`、`--until-ts-millis`；`--symbols` 使用逗号分隔，最多 20 只；可选 `--interval-value`、`--adjust-kind`、`--limit`。时间跨度不超过 3 天，`limit` 范围 1~1000。
+接口：`GET /api/v2/market/data/etf_minutes/batch`。必填 `--symbols`、`--since-ts-millis`、`--until-ts-millis`；`--symbols` 使用逗号分隔，最多 20 只；可选 `--interval-value`、`--adjust-kind`、`--limit`。时间跨度不超过 30 个北京时间自然日（包含起止日期），`limit` 范围 1~1000，省略 `limit` 时返回范围内全部记录。
 
 ```bash
 python <RUN_PY> etf-minutes-batch --symbols 510300.SH,159915.SZ --since-ts-millis 1787189400000 --until-ts-millis 1787191200000 --limit 5

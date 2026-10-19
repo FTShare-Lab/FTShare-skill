@@ -49,7 +49,7 @@ def main():
         print(f"--symbols 最多 {MAX_SYMBOLS} 个标的，当前 {len(symbols)} 个", file=sys.stderr)
         raise SystemExit(2)
 
-    url = BASE_URL + ENDPOINT + "?" + urllib.parse.urlencode({"symbols": json.dumps(symbols, ensure_ascii=False)})
+    url = BASE_URL + ENDPOINT + "?" + urllib.parse.urlencode({"symbols": ",".join(symbols)})
     request = urllib.request.Request(url, headers={**_REQUEST_HEADERS, "FTSHARE_API_KEY": key, "X-Client-Name": "ft-claw", "Content-Type": "application/json"}, method="GET")
     try:
         with safe_urlopen(request) as response:
