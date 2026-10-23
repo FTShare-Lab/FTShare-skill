@@ -48,7 +48,6 @@ description: 批量查询多只可转债历史日/周/月/年 K 线（convertibl
 | ts_millis_open | integer | K 线开始时间戳 | 毫秒 |
 | turnover | string | 成交额；JSON 中为字符串以保留精度 | 元 |
 | volume | integer | 成交量 | - |
-| turnover_rate | number / null | 换手率；可转债批量历史 K 线当前固定为 `null` | % |
 
 ## 4. 调用方式
 

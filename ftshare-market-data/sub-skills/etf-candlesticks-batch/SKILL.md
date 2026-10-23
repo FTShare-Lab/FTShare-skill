@@ -46,7 +46,6 @@ description: 批量查询多只 ETF 的历史 K 线（etf_candlesticks_batch）�
 | ts_millis_open | integer | 开盘时间戳 | 毫秒 |
 | turnover | string | 成交额；JSON 中为字符串以保留精度 | 元 |
 | volume | integer | 成交量 | - |
-| turnover_rate | number / null | 换手率；ETF 批量历史 K 线当前固定为 `null` | % |
 
 ## 4. 调用方式
 
