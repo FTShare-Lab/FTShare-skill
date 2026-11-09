@@ -61,6 +61,10 @@ python <RUN_PY> semantic-search-news --query 人工智能
 python <RUN_PY> stock-candlesticks-daily --trade-date 20261008 --page 1 --page-size 500
 python <RUN_PY> ths-board-constituents --board-name 军工 --page 1 --page-size 100
 python <RUN_PY> stock-tech-factor --symbol 000001.SZ --trade-date 20261012 --category trend
+python <RUN_PY> sge-spot-description-all --category spot_deferred --active-only
+python <RUN_PY> market-announcements --keyword 回购 --start-date 20261001 --end-date 20261031 --page 1 --page-size 20
+python <RUN_PY> periodic-reports --stock-code 000001.SZ --report-type annual --page 1 --page-size 20
+python <RUN_PY> index-fut-depth --trade-date 20261030 --code-prefix IF
 ```
 
 下载类：
@@ -69,6 +73,8 @@ python <RUN_PY> stock-tech-factor --symbol 000001.SZ --trade-date 20261012 --cat
 # 公告正文 PDF：先查列表拿 url_hash，再下载
 python <RUN_PY> stock-announcements --url-hash d8d54544...cf574adf --output ./ann.pdf
 python <RUN_PY> etf-announcements --url-hash d8d54544...cf574adf
+python <RUN_PY> market-announcements --url-hash 7d3176c8...c846f8dfbc --output ./ann.pdf
+python <RUN_PY> periodic-reports --url-hash 37801609...68090432 --output ./report.pdf
 ```
 
 ## 能力范围
