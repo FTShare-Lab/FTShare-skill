@@ -41,9 +41,7 @@ def fetch_page(page: int, page_size: int, **extra) -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description="查询恒生系列指数成分股权重")
-    parser.add_argument("--trade_date", type=int, default=None, help="交易日 YYYYMMDD；与 start_date/end_date 互斥")
-    parser.add_argument("--start_date", type=int, default=None, help="交易日下界 YYYYMMDD；须与 end_date 同时提供")
-    parser.add_argument("--end_date", type=int, default=None, help="交易日上界 YYYYMMDD；须与 start_date 同时提供")
+    parser.add_argument("--trade_date", type=int, required=True, help="交易日 YYYYMMDD（服务端必填）")
     parser.add_argument("--index_slug", type=str, default=None,
                         help="指数代码，大小写不敏感：HSI(恒生)/HSCEI(国企)/HSAIT(恒生科技)")
     parser.add_argument("--stock_code", type=str, default=None, help="4 位港股代码，如 0700(腾讯)")
@@ -52,21 +50,7 @@ def main():
     parser.add_argument("--all", action="store_true", dest="fetch_all", help="自动翻页获取全量")
     args = parser.parse_args()
 
-    # trade_date 与 start/end 互斥
-    if args.trade_date is not None and (args.start_date is not None or args.end_date is not None):
-        print("错误：--trade_date 不可与 --start_date/--end_date 同时使用", file=sys.stderr)
-        sys.exit(1)
-    # start/end 必须成对
-    if (args.start_date is None) != (args.end_date is None):
-        print("错误：--start_date 与 --end_date 必须同时提供", file=sys.stderr)
-        sys.exit(1)
-    # 至少一个过滤条件
-    if not (args.trade_date or args.start_date or args.index_slug or args.stock_code):
-        print("错误：至少需要一个过滤条件：--trade_date / --start_date+--end_date / --index_slug / --stock_code", file=sys.stderr)
-        sys.exit(1)
-
-    extra = dict(trade_date=args.trade_date, start_date=args.start_date, end_date=args.end_date,
-                 index_slug=args.index_slug, stock_code=args.stock_code)
+    extra = dict(trade_date=args.trade_date, index_slug=args.index_slug, stock_code=args.stock_code)
 
     if args.fetch_all:
         first = fetch_page(1, args.page_size, **extra)

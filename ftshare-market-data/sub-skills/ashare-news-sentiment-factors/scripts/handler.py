@@ -36,13 +36,30 @@ def safe_urlopen(request, timeout=30):
 def main():
     key = _require_api_key()
     parser = argparse.ArgumentParser(description='查询 A 股新闻情绪因子')
-    parser.add_argument("--trade-code", required=True)
-    parser.add_argument("--start-date")
-    parser.add_argument("--end-date")
-    parser.add_argument("--page", type=int, default=1)
-    parser.add_argument("--page-size", type=int, default=50)
+    parser.add_argument("--trade-code", required=True, help="股票代码，格式 600519.SH")
+    parser.add_argument("--start-date", required=True, help="起始预测日 YYYYMMDD（服务端必填；不传会返回 503）")
+    parser.add_argument("--end-date", help="截止预测日 YYYYMMDD；与 start_date 间隔不得超过 31 天")
+    parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始，默认 1")
+    parser.add_argument("--page-size", type=int, default=50, help="每页条数，默认 50，最大 200")
 
     args = parser.parse_args()
+    if args.page < 1:
+        print("--page 必须 >= 1", file=sys.stderr)
+        raise SystemExit(2)
+    if not 1 <= args.page_size <= 200:
+        print("--page-size 必须在 1~200 之间", file=sys.stderr)
+        raise SystemExit(2)
+    if args.end_date and args.start_date:
+        from datetime import datetime
+        try:
+            d0 = datetime.strptime(args.start_date, "%Y%m%d")
+            d1 = datetime.strptime(args.end_date, "%Y%m%d")
+        except ValueError:
+            print("日期格式必须为 YYYYMMDD", file=sys.stderr)
+            raise SystemExit(2)
+        if (d1 - d0).days > 31:
+            print("--start-date 与 --end-date 间隔不能超过 31 天", file=sys.stderr)
+            raise SystemExit(2)
     params = {}
     if args.trade_code is not None:
         params['trade_code'] = args.trade_code
