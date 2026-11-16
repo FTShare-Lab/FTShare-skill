@@ -83,7 +83,12 @@ python <RUN_PY> periodic-reports --url-hash 37801609...68090432 --output ./repor
 
 ## 子技能索引与路由
 
-不要凭记忆猜子技能名，按下面顺序定位：
+**两条硬性要求：**
+
+1. **先定位，再调用**：不要凭记忆猜子技能名，按下面顺序定位。
+2. **输出/调用前必须核对真实目录名**：子技能目录名以 `sub-skills/` 下的真实目录为准（可用 `ls sub-skills`、`sub-skills/INDEX.md` 或 `python <RUN_PY> --index` 核对）。近似前缀很容易拼错，例如 `sw-industry-*`（申万行业）不等于 `sw-index-*`，`supply-chain-subsubindustry-companies` 不等于 `supply-chain-subindustry-companies`。目录名拼错会导致「找不到 subskill」而调用失败。
+
+定位顺序：
 
 1. **快速路由**：`python <RUN_PY> --index` 输出「名称 + 触发场景」一行一个；`--index --json` 输出结构化 JSON（含 route / doc_url / tier），便于程序化匹配。
 2. **完整索引**：`sub-skills/INDEX.md`，246 个子技能按业务域分组，含「子技能 / 接口 / 路由 / 触发场景 / 套餐 / 在线文档」；按需读取，不必整体加载。
