@@ -5,6 +5,8 @@ description: Get China urban fixed asset investment monthly data (城镇固定�
 
 # 中国经济 - 城镇固定资产投资（月度）
 
+接口：`GET /api/v1/market/data/economic/china-fixed-asset-investment`。在线文档：[《固定资产投资》](https://market.ft.tech/gateway/doc/pages/vp2bmxs5.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China urban fixed asset investment monthly data (城镇固定�
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-fixed-asset-investment-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`investment`（本月投资）、`yoy`（同比 %）、`mom`（环比 %）、`cumulative`（累计值）、`unit`（亿元）、`currency`（CNY），以表格展示给用户。

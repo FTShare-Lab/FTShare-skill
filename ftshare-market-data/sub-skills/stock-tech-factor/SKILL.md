@@ -5,6 +5,8 @@ description: "查询单只沪深北 A 股在指定交易日的基础行情、估
 
 # 股票技术面因子
 
+接口：`GET /api/v2/market/data/stock-factor`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -83,7 +85,7 @@ python <RUN_PY> stock-tech-factor --symbol 000001.SZ
 | volume             | 量价：`turnover_rate`、`turnover_rate_f`、`volume_ratio`、EMV、MFI、OBV、VR       |
 | sentiment          | 情绪：`updays`、`downdays`、`topdays`、`lowdays`，以及 BRAR、CR、PSY             |
 
-完整字段清单（共 183 个）以源接口文档 `ftshare-doc/api-doc/股票数据/特色数据/股票技术面因子.md` 为准。
+完整字段清单（共 183 个）以在线文档 [《股票技术面因子》](https://market.ft.tech/gateway/doc/pages/6dkil79o.md) 为准。
 
 ## 注意事项
 

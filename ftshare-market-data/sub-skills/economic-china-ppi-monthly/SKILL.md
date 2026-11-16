@@ -5,6 +5,8 @@ description: Get China PPI monthly data (中国 PPI 工业品出厂价格指数 
 
 # 中国经济 - PPI（月度）
 
+接口：`GET /api/v1/market/data/economic/china-ppi`。在线文档：[《PPI》](https://market.ft.tech/gateway/doc/pages/n6lijleg.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China PPI monthly data (中国 PPI 工业品出厂价格指数 
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-ppi-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`ppi`（当月工业品出厂价格指数）、`yoy`（同比 %）、`mom`（环比 %）、`cumulative_avg`（当年累计平均），以表格展示给用户。

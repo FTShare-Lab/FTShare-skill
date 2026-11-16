@@ -5,6 +5,8 @@ description: Get China CPI monthly data (居民消费价格指数 月度). Use w
 
 # 中国经济 - 居民消费价格指数（月度）
 
+接口：`GET /api/v1/market/data/economic/china-cpi`。在线文档：[《CPI》](https://market.ft.tech/gateway/doc/pages/0v982m8z.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China CPI monthly data (居民消费价格指数 月度). Use w
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-cpi-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`national_cpi`/`national_yoy`/`national_mom`（全国 CPI 及同比、环比）、`cumulative`（累计）、`city_cpi`/`city_yoy`/`city_mom`（城市）、`rural_cpi`/`rural_yoy`/`rural_mom`（农村），以表格展示给用户。

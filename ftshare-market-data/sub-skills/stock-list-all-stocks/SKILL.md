@@ -5,6 +5,8 @@ description: "获取所有股票代码列表。当用户需要获取所有 A 股
 
 # 获取所有股票代码列表
 
+接口：`GET /api/v1/market/data/stock-list`。在线文档：[《股票列表》](https://market.ft.tech/gateway/doc/pages/3ot2m3sk.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

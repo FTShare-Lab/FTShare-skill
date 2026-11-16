@@ -5,7 +5,7 @@ description: 查询董监高持股变动明细。用户询问董监高、高管�
 
 # 董监高持股变动
 
-接口：`GET /api/v1/market/data/holder/stock-ggmx`。支持按股票代码、变动方向和变动日期范围筛选，返回分页数据。
+接口：`GET /api/v1/market/data/holder/stock-ggmx`。支持按股票代码、变动方向和变动日期范围筛选，返回分页数据。在线文档：[《董监高持股变动》](https://market.ft.tech/gateway/doc/pages/iuma9fkg.md)
 
 ## 调用示例
 

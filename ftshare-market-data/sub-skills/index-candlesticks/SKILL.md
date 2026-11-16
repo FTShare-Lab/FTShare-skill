@@ -5,6 +5,8 @@ description: 单只指数历史日/周/月/年 K 线 GET 接口（market.ft.tech
 
 # 指数 K 线 - 查询单只指数 K 线（index-candlesticks）
 
+接口：`GET /api/v1/market/data/index-candlesticks`。在线文档：[《指数K线》](https://market.ft.tech/gateway/doc/pages/gr2q0bjx.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -13,8 +15,6 @@ description: 单只指数历史日/周/月/年 K 线 GET 接口（market.ft.tech
 | 外部接口 | `GET /api/v1/market/data/index-candlesticks` |
 | 请求方式 | GET（query 参数） |
 | 适用场景 | 获取指定指数的日/周/月/年 K 线，含开高低收点位、成交量、成交额；支持前复权 / 后复权 / 不复权。仅接受指数标的 |
-
-> 与 `index-ohlcs`（`GET daec/history/ohlcs`，YYYYMMDD 日期区间，仅日/周/月）区别：本接口走 GET query 参数，参数为毫秒时间戳，支持日/周/月/年 K。分钟级 K 线请使用 `index-minutes` 子 skill。
 
 ## 2. 请求参数
 

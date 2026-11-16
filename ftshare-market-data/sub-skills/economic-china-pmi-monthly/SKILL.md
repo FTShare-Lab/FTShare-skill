@@ -5,6 +5,8 @@ description: Get China PMI monthly data (中国 PMI 月度). Use when user asks 
 
 # 中国经济 - PMI（月度）
 
+接口：`GET /api/v1/market/data/economic/china-pmi`。在线文档：[《PMI》](https://market.ft.tech/gateway/doc/pages/s4xvqnu0.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China PMI monthly data (中国 PMI 月度). Use when user asks 
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-pmi-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`manufacturing_pmi`（制造业 PMI）、`manufacturing_yoy`/`manufacturing_mom`（制造业同比/环比 %）、`non_manufacturing_pmi`（非制造业 PMI）、`non_manufacturing_yoy`/`non_manufacturing_mom`（非制造业同比/环比 %），以表格展示给用户。

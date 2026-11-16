@@ -5,6 +5,8 @@ description: "查询大宗交易列表。当用户需要获取 A 股大宗交易
 
 # 查询大宗交易列表
 
+接口：`GET /api/v1/market/data/block-trades`。在线文档：[《大宗交易》](https://market.ft.tech/gateway/doc/pages/h7eun4xp.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

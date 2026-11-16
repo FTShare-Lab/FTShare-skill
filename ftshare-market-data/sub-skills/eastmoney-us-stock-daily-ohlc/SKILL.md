@@ -5,6 +5,8 @@ description: "查询东财美股历史日 K 线。当用户需要查询东财美
 
 # 查询东财美股历史 OHLC
 
+接口：`GET /api/v1/market/data/eastmoney-us-stock-daily-ohlc`。在线文档：[《东方财富美股日OHLC》](https://market.ft.tech/gateway/doc/pages/q4fuvuxi.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -128,3 +130,6 @@ python <RUN_PY> eastmoney-us-stock-daily-ohlc --start_date 2026-06-01 --end_date
 - `data` 在错误或无数据时可能为 `null`
 - `stock_code` 为东财美股代码（如 `AAL`）；不传时查询全市场（可用 `--start_date`/`--end_date` 限定区间）
 - 可先通过 `eastmoney-us-stock-list` 获取有效的美股代码列表
+
+> 注意：该接口成功时外层 `code` 为 `0`（不是 200），`message` 为 `success`，`data` 为分页对象；判成功请以 `code in (0, 200)` 为准。
+

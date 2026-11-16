@@ -5,6 +5,8 @@ description: Get cumulative return time series for a specific fund over a given 
 
 # 查询指定基金在指定区间的累计收益率
 
+接口：`GET /api/v1/market/data/fund/fund-cal-return`。在线文档：[《基金收益》](https://market.ft.tech/gateway/doc/pages/y8y3hv34.md)
+
 ## 参数
 
 | 参数 | 类型 | 必填 | 说明 | 示例 |

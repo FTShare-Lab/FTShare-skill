@@ -5,6 +5,8 @@ description: 按公告日期范围查询A股重大合同信息（market.ft.tech�
 
 # 重大合同 - 按公告日期范围查询
 
+接口：`GET /api/v1/market/data/corporate/contract`。在线文档：[《重大合同》](https://market.ft.tech/gateway/doc/pages/2kakg1xc.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

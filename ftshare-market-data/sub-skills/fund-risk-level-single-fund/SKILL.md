@@ -5,6 +5,8 @@ description: "查询基金风险等级。当用户需要查询基金风险等级
 
 # 基金风险等级
 
+接口：`GET /api/v1/market/data/fund/fund-risk-level`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -32,7 +34,7 @@ python <RUN_PY> fund-risk-level-single-fund --fund_code 000001 --history
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金风险等级》](https://market.ft.tech/gateway/doc/pages/ws3whvws.md)。
 
 ## 注意事项
 

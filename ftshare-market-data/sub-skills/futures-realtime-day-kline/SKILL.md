@@ -5,6 +5,8 @@ description: 查询期货合约当前交易日的实时日 K 线（futures_realt
 
 # 期货实时日K线
 
+接口：`GET /api/v4/market/data/futures-realtime-day-kline`。在线文档：[《期货实时日K线》](https://market.ft.tech/gateway/doc/pages/ko4fup34.md)
+
 查询期货合约当前交易日截至请求时刻的实时日 K 线。接口以实时 1 分钟 K 线聚合生成当日日 K。必填 `--symbols`，逗号分隔，1～20 个。
 
 外部接口：`GET /api/v4/market/data/futures-realtime-day-kline`。

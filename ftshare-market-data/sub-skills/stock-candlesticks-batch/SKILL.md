@@ -5,6 +5,8 @@ description: 批量获取多只 A 股股票 K 线 GET 接口（market.ft.tech，
 
 # 批量股票K线
 
+接口：`GET /api/v2/market/data/stock-candlesticks/batch`。在线文档：[《批量股票K线》](https://market.ft.tech/gateway/doc/pages/rpk1uury.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

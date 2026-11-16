@@ -5,6 +5,8 @@ description: 可转债历史分钟 K 线，单只或批量（convertible_bond_mi
 
 # 可转债历史分钟K线
 
+接口：`GET /api/v2/market/data/convertible-bond-minute-candlesticks`。在线文档：[《可转债历史分钟K线》](https://market.ft.tech/gateway/doc/pages/lla0sp86.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

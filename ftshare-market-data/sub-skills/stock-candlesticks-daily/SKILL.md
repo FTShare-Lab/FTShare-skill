@@ -5,6 +5,8 @@ description: "查询股票日K快照。当用户需要某个交易日全部普�
 
 # 查询股票日K快照
 
+接口：`GET /api/v1/market/data/stock-candlesticks-daily`。在线文档：[《股票日K快照》](https://market.ft.tech/gateway/doc/pages/6b24gsjc.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

@@ -1,11 +1,11 @@
 ---
 name: stock-minute-seal
-description: 查询股票分钟封单金额。接口：GET /api/v2/market/data/stock-minute-seal。用户问个股某日的分钟封单金额、涨停或跌停封单的变化、封单金额时间序列时使用。所有请求必须设置 FTSHARE_API_KEY。
+description: "查询股票分钟封单金额。接口：GET /api/v2/market/data/stock-minute-seal。用户问个股某日的分钟封单金额、涨停或跌停封单的变化、封单金额时间序列时使用。同义：打板。"
 ---
 
 # 股票分钟封单金额
 
-接口：GET `/api/v2/market/data/stock-minute-seal`。参数和响应以 `ftshare-doc/api-doc/股票数据/打板专题数据/股票分钟封单金额.md` 为准。
+接口：GET `/api/v2/market/data/stock-minute-seal`。参数和响应以 [《股票分钟封单金额》](https://market.ft.tech/gateway/doc/pages/flxy83s5.md) 为准。
 
 请求必须从环境变量 `FTSHARE_API_KEY` 读取凭据，并通过请求头发送 `FTSHARE_API_KEY` 和 `Content-Type: application/json`；缺少凭据时不会发起请求。
 

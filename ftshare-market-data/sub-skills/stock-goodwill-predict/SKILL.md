@@ -5,6 +5,8 @@ description: Get goodwill impairment prediction data (商誉减值预期) for st
 
 # 查询商誉减值预期明细
 
+接口：`GET /api/v1/market/data/goodwill/predict`。在线文档：[《商誉预测》](https://market.ft.tech/gateway/doc/pages/p5g2tkdk.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -16,23 +18,25 @@ description: Get goodwill impairment prediction data (商誉减值预期) for st
 
 ## 请求参数
 
-说明：date 为必填项。
+说明：`date` 为必填项；`page` / `page_size` 可选（默认 1 / 200，最大 500）。2025 年报期共 832 条记录。
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | date | string | 是 | 报告期日期 | 20251231 | 格式 YYYYMMDD，按年份范围过滤，如 20251231 查询 2025 全年 |
+| page | int | 否 | 页码 | 1 | 从 1 开始，默认 1 |
+| page_size | int | 否 | 每页条数 | 200 | 默认 200，最大 500 |
 
 ## 执行方式
 
 ```bash
-python scripts/handler.py --date 20251231
+python <RUN_PY> stock-goodwill-predict --date 20251231
 ```
 
 ## 响应结构
 
 ```json
 {
-  "code": 0,
+  "code": 200,
   "message": "success",
   "data": {
     "pageNum": 1,

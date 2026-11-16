@@ -5,6 +5,8 @@ description: "查询上市公司管理层人员年度薪酬。用户问高管薪
 
 # 查询上市公司管理层年度薪酬
 
+接口：`GET /api/v1/market/data/stk-manager-pay`。在线文档：[《上市公司管理层薪酬》](https://market.ft.tech/gateway/doc/pages/szjpqfmh.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                |

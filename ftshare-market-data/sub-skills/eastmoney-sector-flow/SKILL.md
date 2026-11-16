@@ -5,6 +5,8 @@ description: 查询东方财富板块资金流（行业/概念/地域日资金�
 
 # 东方财富板块资金流
 
+接口：`GET /api/v1/market/data/eastmoney-sector-flow`。在线文档：[《东方财富板块资金流》](https://market.ft.tech/gateway/doc/pages/upr04twl.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

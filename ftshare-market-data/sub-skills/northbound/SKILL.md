@@ -1,9 +1,11 @@
 ---
 name: northbound
-description: "查询北向资金交易数据。当用户需要查询指定交易日北向资金（沪股通、深股通）交易汇总数据，或了解北向资金交易数据时使用。"
+description: "查询北向资金交易数据。当用户需要查询指定交易日北向资金（沪股通、深股通）交易汇总数据，或了解北向资金交易数据时使用。同义：陆股通。"
 ---
 
 # 查询北向资金交易数据
+
+接口：`GET /api/v1/market/data/northbound`。在线文档：[《北向资金交易》](https://market.ft.tech/gateway/doc/pages/q89f0uwz.md)
 
 ## 接口说明
 

@@ -5,6 +5,8 @@ description: Get China tax revenue monthly data (全国税收收入 月度). Use
 
 # 中国经济 - 全国税收收入（月度）
 
+接口：`GET /api/v1/market/data/economic/china-tax-revenue`。在线文档：[《税收》](https://market.ft.tech/gateway/doc/pages/ht6ox0mg.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China tax revenue monthly data (全国税收收入 月度). Use
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-tax-revenue-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年05月）、`monthly_revenue`（当月税收，亿元）、`cumulative_revenue`（累计税收，亿元）、`yoy_growth`（累计同比 %）、`mom_growth`（月度环比 %）、`monthly_yoy_growth`（月度同比 %），以表格展示给用户。

@@ -5,6 +5,8 @@ description: 查询全市场上市公司公告列表，或按 url_hash 下载公
 
 # 全市场公告列表
 
+接口：`GET /api/v2/market/data/announcements/market-announcements`。在线文档：[《全市场公告列表》](https://market.ft.tech/gateway/doc/pages/3eyc3hn0.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

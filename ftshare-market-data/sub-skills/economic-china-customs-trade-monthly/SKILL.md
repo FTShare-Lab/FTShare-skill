@@ -5,6 +5,8 @@ description: Get China customs import/export monthly data (海关进出口 月�
 
 # 中国经济 - 海关进出口（月度）
 
+接口：`GET /api/v1/market/data/economic/china-customs-trade`。在线文档：[《进出口》](https://market.ft.tech/gateway/doc/pages/n6bu5izh.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China customs import/export monthly data (海关进出口 月�
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-customs-trade-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`export_current`/`export_yoy`/`export_mom`（当月出口及同比、环比）、`import_current`/`import_yoy`/`import_mom`（当月进口）、`cumulative_export`/`cumulative_export_yoy`、`cumulative_import`/`cumulative_import_yoy`（累计及同比）、`unit`、`currency`，以表格展示给用户。

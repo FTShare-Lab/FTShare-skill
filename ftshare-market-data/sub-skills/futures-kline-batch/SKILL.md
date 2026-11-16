@@ -5,6 +5,8 @@ description: 批量查询多个期货合约的历史 K 线（futures_kline_batch
 
 # 批量期货合约历史K线
 
+接口：`GET /api/v2/market/data/futures/kline/batch`。在线文档：[《批量期货合约历史K线》](https://market.ft.tech/gateway/doc/pages/0ausz81h.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: Get China fiscal revenue monthly data (中国财政收入月度). U
 
 # 中国经济 - 财政收入（月度）
 
+接口：`GET /api/v1/market/data/economic/china-fiscal-revenue`。在线文档：[《财政收入》](https://market.ft.tech/gateway/doc/pages/w515ivba.md)
+
 ## 参数
 
 无需任何参数。
@@ -14,7 +16,7 @@ description: Get China fiscal revenue monthly data (中国财政收入月度). U
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-fiscal-revenue-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`revenue_current`（当月财政收入）、`yoy`（当月同比 %）、`mom`（当月环比 %）、`cumulative`（累计）、`cumulative_yoy`（累计同比 %）、`unit`（亿元）、`currency`（CNY），以表格展示给用户。

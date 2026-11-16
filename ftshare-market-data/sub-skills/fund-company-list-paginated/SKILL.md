@@ -5,6 +5,8 @@ description: "分页查询基金公司列表及名下基金数量。当用户需
 
 # 基金公司
 
+接口：`GET /api/v1/market/data/fund/fund-company`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -33,7 +35,7 @@ python <RUN_PY> fund-company-list-paginated --fund_company 华夏基金 --page 1
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金公司》](https://market.ft.tech/gateway/doc/pages/iuy3vkyw.md)。
 
 ## 注意事项
 

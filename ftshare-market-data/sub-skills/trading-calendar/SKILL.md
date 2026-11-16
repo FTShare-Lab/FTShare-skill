@@ -5,6 +5,8 @@ description: 查询中国内地（cn）或香港（hk）市场在指定闭区间
 
 # 查询交易日历
 
+接口：`GET /api/v1/market/data/time/trading-calendar`。在线文档：[《交易日历》](https://market.ft.tech/gateway/doc/pages/uqsqvzyv.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

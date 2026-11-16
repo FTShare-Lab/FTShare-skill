@@ -5,6 +5,8 @@ description: "查询股票股本信息。当用户需要查询某只 A 股在某
 
 # 查询股票股本信息
 
+接口：`GET /api/v2/market/data/share/get-stock-share`。在线文档：[《股本》](https://market.ft.tech/gateway/doc/pages/rmoimhs7.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                              |

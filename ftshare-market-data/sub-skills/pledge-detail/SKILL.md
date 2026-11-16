@@ -5,6 +5,8 @@ description: "查询单票股权质押个股详细信息。当用户需要获取
 
 # 查询单票股权质押个股详细信息
 
+接口：`GET /api/v1/market/data/pledge/pledge-detail`。在线文档：[《股权质押明细》](https://market.ft.tech/gateway/doc/pages/atshpwbu.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                                              |

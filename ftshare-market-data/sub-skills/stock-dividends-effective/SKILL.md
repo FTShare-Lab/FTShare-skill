@@ -5,6 +5,8 @@ description: 查询 A 股已实施（有效）分红记录（stock_dividends_eff
 
 # 股票有效分红记录
 
+接口：`GET /api/v2/market/data/stock-dividends-effective`。在线文档：[《股票有效分红记录》](https://market.ft.tech/gateway/doc/pages/jylv7533.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

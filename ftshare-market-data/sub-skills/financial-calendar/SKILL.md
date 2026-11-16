@@ -5,6 +5,8 @@ description: 按日期范围查询财经日历（market.ft.tech），含华尔�
 
 # 查询财经日历
 
+接口：`GET /api/v1/market/data/finance/financial-calendar/baidu`。在线文档：[《百度财经日历》](https://market.ft.tech/gateway/doc/pages/vlqbh6t9.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

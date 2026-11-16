@@ -5,6 +5,8 @@ description: 语义搜索新闻（market.ft.tech）。用户问语义搜新闻�
 
 # 语义搜索新闻
 
+接口：`GET /api/v3/market/data/semantic-search-news`。在线文档：[《新闻语义搜索》](https://market.ft.tech/gateway/doc/pages/kwjie41c.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

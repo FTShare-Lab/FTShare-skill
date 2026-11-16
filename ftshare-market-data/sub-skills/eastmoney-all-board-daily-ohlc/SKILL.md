@@ -5,6 +5,8 @@ description: 分页查询东方财富全部板块历史日线 OHLC（板块代�
 
 # 查询东方财富全板块日线 OHLC
 
+接口：`GET /api/v1/market/data/eastmoney-all-board-daily-ohlc`。在线文档：[《东方财富全板块日线OHLC》](https://market.ft.tech/gateway/doc/pages/7eeaj9ic.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

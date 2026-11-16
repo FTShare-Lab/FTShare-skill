@@ -5,6 +5,8 @@ description: 查询单个期货会员在指定合约/日期区间的持仓变化
 
 # 查询期货会员建仓过程
 
+接口：`GET /api/v2/market/data/member-build-process`。在线文档：[《会员建仓过程》](https://market.ft.tech/gateway/doc/pages/h32opb6k.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

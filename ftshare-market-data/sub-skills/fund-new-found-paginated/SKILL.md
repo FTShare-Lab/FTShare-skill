@@ -5,6 +5,8 @@ description: "查询新发基金（按成立日范围 + 倒序，分页）。当
 
 # 基金新发
 
+接口：`GET /api/v1/market/data/fund/fund-new-found`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -35,7 +37,7 @@ python <RUN_PY> fund-new-found-paginated --fund_type 混合型 --page 1 --page_s
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金新发》](https://market.ft.tech/gateway/doc/pages/nfbnt3tz.md)。
 
 ## 注意事项
 

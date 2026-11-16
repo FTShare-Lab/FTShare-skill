@@ -5,6 +5,8 @@ description: 查询 ETF 份额变动（etf_share）。用户问 ETF 份额、期
 
 # ETF 份额变动
 
+接口：`GET /api/v2/market/data/etf-share`。在线文档：[《ETF份额》](https://market.ft.tech/gateway/doc/pages/1bwbos96.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: 期货历史分钟 K 线，单合约或批量（futures_minutes，G
 
 # 期货历史分钟K线
 
+接口：`GET /api/v2/market/data/futures_minutes`。在线文档：[《期货历史分钟K线》](https://market.ft.tech/gateway/doc/pages/6je0p1c6.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

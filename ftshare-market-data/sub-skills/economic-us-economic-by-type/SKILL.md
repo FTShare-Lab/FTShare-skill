@@ -5,6 +5,8 @@ description: Get US economic indicator time series by type (美国经济指标�
 
 # 美国经济指标 - 按类型查询
 
+接口：`GET /api/v1/market/data/economic/us-economic`。在线文档：[《美国经济指标》](https://market.ft.tech/gateway/doc/pages/vatd7paf.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -48,16 +50,16 @@ description: Get US economic indicator time series by type (美国经济指标�
 从用户问题中识别要查的美国经济指标类型，对应到上表 `type` 值，执行：
 
 ```bash
-python script/handler.py --type <type值>
+python <RUN_PY> economic-us-economic-by-type --type cpi-yoy
 ```
 
 示例：
 
 ```bash
-python script/handler.py --type ism-manufacturing
-python script/handler.py --type nonfarm-payroll
-python script/handler.py --type cpi-mom
-python script/handler.py --type fed-funds-rate-upper
+python <RUN_PY> economic-us-economic-by-type --type ism-manufacturing
+python <RUN_PY> economic-us-economic-by-type --type nonfarm-payroll
+python <RUN_PY> economic-us-economic-by-type --type cpi-mom
+python <RUN_PY> economic-us-economic-by-type --type fed-funds-rate-upper
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（或季度格式）、`prev_value`、`current_value`、`release_date`，以表格展示给用户。

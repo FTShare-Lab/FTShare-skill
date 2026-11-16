@@ -5,6 +5,8 @@ description: "查询上市公司管理层人员持股变动明细。用户问管
 
 # 查询上市公司管理层持股变动明细
 
+接口：`GET /api/v1/market/data/stk-manager-hold`。在线文档：[《上市公司管理层持股》](https://market.ft.tech/gateway/doc/pages/vik756y6.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                |

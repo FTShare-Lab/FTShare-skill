@@ -5,6 +5,8 @@ description: 查询东方财富期货龙虎榜面板（成交量/持仓量多空
 
 # 查询东方财富期货龙虎榜
 
+接口：`GET /api/v1/market/data/eastmoney-futures-strange`。在线文档：[《东方财富期货龙虎榜》](https://market.ft.tech/gateway/doc/pages/h5s1a7oc.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

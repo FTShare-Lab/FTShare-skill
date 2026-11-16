@@ -5,6 +5,8 @@ description: "分页查询公募基金基础列表。当用户需要查询基金
 
 # 基金列表
 
+接口：`GET /api/v1/market/data/fund/fund-list`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -34,7 +36,7 @@ python <RUN_PY> fund-list-paginated --fund_type 股票型 --page 1 --page_size 5
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金列表》](https://market.ft.tech/gateway/doc/pages/vct97ek2.md)。
 
 ## 注意事项
 

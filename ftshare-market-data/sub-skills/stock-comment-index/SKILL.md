@@ -5,6 +5,8 @@ description: 查询东方财富千股千评综合诊断主表（market.ft.tech�
 
 # 千股千评主表
 
+接口：`GET /api/v1/market/data/stock-comment/index`。在线文档：[《千股千评》](https://market.ft.tech/gateway/doc/pages/t6k24jo7.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

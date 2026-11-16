@@ -5,6 +5,8 @@ description: Get basic information of funds by fund code with pagination. Use wh
 
 # 查询基金基础信息（分页）
 
+接口：`GET /api/v1/market/data/fund/fund-basicinfo`。在线文档：[《基金基础信息》](https://market.ft.tech/gateway/doc/pages/givmend6.md)
+
 ## 参数
 
 | 参数 | 类型 | 必填 | 说明 | 示例 |

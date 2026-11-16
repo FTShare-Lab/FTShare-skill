@@ -5,6 +5,8 @@ description: 查询期货合约历史 K 线（期货合约日/周/月/季 K 线�
 
 # 期货合约历史K线
 
+接口：`GET /api/v1/market/data/futures/kline`。在线文档：[《期货合约历史K线》](https://market.ft.tech/gateway/doc/pages/j3w50zz7.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

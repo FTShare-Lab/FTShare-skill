@@ -5,6 +5,8 @@ description: 指定日期 ETF PCF 列表（market.ft.tech）。用户问 ETF PCF
 
 # 指定日期 ETF PCF 列表 - 获取指定日期 ETF PCF 列表
 
+接口：`GET /api/v2/market/data/etf-pcf/etf-pcfs`。在线文档：[《ETF-PCF清单列表》](https://market.ft.tech/gateway/doc/pages/82ffwm3o.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: Get China LPR (Loan Prime Rate) monthly data (LPR 贷款市场报�
 
 # 中国经济 - LPR 贷款市场报价利率（月度）
 
+接口：`GET /api/v1/market/data/economic/china-lpr`。在线文档：[《LPR》](https://market.ft.tech/gateway/doc/pages/wg95club.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China LPR (Loan Prime Rate) monthly data (LPR 贷款市场报�
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-lpr-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `date`（如 2025-12-22）、`lpr_1y`（1 年期 LPR %）、`lpr_5y`（5 年期 LPR %），以表格展示给用户。

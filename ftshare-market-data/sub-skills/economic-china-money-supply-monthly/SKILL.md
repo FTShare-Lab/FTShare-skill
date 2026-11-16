@@ -5,6 +5,8 @@ description: Get China money supply monthly data (货币供应量 M0/M1/M2 月�
 
 # 中国经济 - 货币供应量（月度）
 
+接口：`GET /api/v1/market/data/economic/china-money-supply`。在线文档：[《货币供应》](https://market.ft.tech/gateway/doc/pages/twl6t7h1.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China money supply monthly data (货币供应量 M0/M1/M2 月�
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-money-supply-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`m2_current`/`m2_yoy`/`m2_mom`（M2 当月及同比、环比）、`m1_current`/`m1_yoy`/`m1_mom`（M1）、`m0_current`/`m0_yoy`/`m0_mom`（M0）、`unit`（亿元）、`currency`（CNY），以表格展示给用户。

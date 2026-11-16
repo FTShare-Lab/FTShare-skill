@@ -5,6 +5,8 @@ description: 查询同花顺行业板块资金流日度。用户问同花顺行�
 
 # 同花顺行业板块资金流日度
 
+接口：`GET /api/v1/market/data/ths-industry-daily-flow`。在线文档：[《同花顺行业板块资金流日度》](https://market.ft.tech/gateway/doc/pages/n7u0assf.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

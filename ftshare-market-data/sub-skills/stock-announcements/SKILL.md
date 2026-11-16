@@ -5,6 +5,8 @@ description: 查询 A 股公告列表，或按 url_hash 下载公告正文 PDF�
 
 # A 股公告列表 / 公告正文下载
 
+接口：`GET /api/v2/market/data/announcements/stock-announcements`。在线文档：[《公告列表》](https://market.ft.tech/gateway/doc/pages/j61mozzt.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: Get China retail sales of consumer goods monthly data (社会消费
 
 # 中国经济 - 社会消费品零售总额（月度）
 
+接口：`GET /api/v1/market/data/economic/china-retail-sales`。在线文档：[《社零》](https://market.ft.tech/gateway/doc/pages/hped3tpp.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China retail sales of consumer goods monthly data (社会消费
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-retail-sales-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`current`（当月值）、`yoy`（同比 %）、`cumulative`（累计值）、`cumulative_yoy`（累计同比 %）、`unit`（亿元）、`currency`（CNY），以表格展示给用户。

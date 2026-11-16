@@ -5,6 +5,8 @@ description: 按股票代码查询重大合同历史（market.ft.tech）。用�
 
 # 重大合同 - 按股票代码查询
 
+接口：`GET /api/v1/market/data/corporate/contract/by-symbol`。在线文档：[《重大合同按标的》](https://market.ft.tech/gateway/doc/pages/bv3yxxhz.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

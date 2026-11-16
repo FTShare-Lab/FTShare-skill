@@ -1,11 +1,11 @@
 ---
 name: eastmoney-stock-flow
-description: 查询东方财富个股资金流。接口：GET /api/v1/market/data/eastmoney-stock-flow。所有请求必须设置 FTSHARE_API_KEY。
+description: "获取东方财富个股日资金流数据，含主力/超大单/大单/中单/小单五档净流入及净占比，以及收盘价与涨跌幅。接口：GET /api/v1/market/data/eastmoney-stock-flow。"
 ---
 
 # 东方财富个股资金流
 
-接口：GET `/api/v1/market/data/eastmoney-stock-flow`。参数和响应以 `ftshare-doc/api-doc/股票数据/资金流向数据/东方财富个股资金流.md` 为准。
+接口：GET `/api/v1/market/data/eastmoney-stock-flow`。参数和响应以 [《东方财富个股资金流》](https://market.ft.tech/gateway/doc/pages/x9fhxzl5.md) 为准。
 
 请求必须从环境变量 `FTSHARE_API_KEY` 读取凭据，并通过请求头发送 `FTSHARE_API_KEY` 和 `Content-Type: application/json`；缺少凭据时不会发起请求。
 

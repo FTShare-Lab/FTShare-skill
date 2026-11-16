@@ -5,6 +5,8 @@ description: Get China reserve requirement ratio monthly data (存款准备金�
 
 # 中国经济 - 存款准备金率（月度）
 
+接口：`GET /api/v1/market/data/economic/china-reserve-ratio`。在线文档：[《存款准备金率》](https://market.ft.tech/gateway/doc/pages/cl9tjf4p.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China reserve requirement ratio monthly data (存款准备金�
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-reserve-ratio-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `date`（如 2025年12月）、`reserve_ratio_small_medium`（中小型金融机构准备金率 %）、`reserve_ratio_large`（大型金融机构准备金率 %），以表格展示给用户。

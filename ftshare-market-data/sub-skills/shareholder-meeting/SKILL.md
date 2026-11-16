@@ -5,6 +5,8 @@ description: 查询A股上市公司股东大会信息（market.ft.tech）。用�
 
 # 股东大会 - 查询股东大会信息
 
+接口：`GET /api/v1/market/data/corporate/meeting`。在线文档：[《股东大会》](https://market.ft.tech/gateway/doc/pages/df11taap.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

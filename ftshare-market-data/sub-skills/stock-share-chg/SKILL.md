@@ -5,6 +5,8 @@ description: "查询 A 股股东增减持明细。当用户需要获取 A 股股
 
 # 查询 A 股股东增减持
 
+接口：`GET /api/v1/market/data/holder/stock-share-chg`。在线文档：[《股东增减持》](https://market.ft.tech/gateway/doc/pages/8n24xrdq.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                                            |

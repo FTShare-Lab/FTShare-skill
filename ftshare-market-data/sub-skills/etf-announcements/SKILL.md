@@ -5,6 +5,8 @@ description: 查询 ETF 公告列表（etf_announcements），或按 url_hash �
 
 # ETF 公告列表
 
+接口：`GET /api/v2/market/data/announcements/etf-announcements`。在线文档：[《ETF公告列表》](https://market.ft.tech/gateway/doc/pages/azfxn177.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

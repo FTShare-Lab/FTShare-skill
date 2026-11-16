@@ -5,6 +5,8 @@ description: 查询 A 股招股书及相关发行公告列表（stock_prospectus
 
 # 招股书列表
 
+接口：`GET /api/v2/market/data/announcements/stock-prospectuses`。在线文档：[《招股书列表》](https://market.ft.tech/gateway/doc/pages/xppnfsz6.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: 批量查询多只可转债历史日/周/月/年 K 线（convertibl
 
 # 批量可转债历史K线
 
+接口：`GET /api/v2/market/data/convertible-bond-candlesticks/batch`。在线文档：[《批量可转债历史K线》](https://market.ft.tech/gateway/doc/pages/k8ytss8s.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

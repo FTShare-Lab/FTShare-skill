@@ -5,6 +5,8 @@ description: 股票跨日分时行情，含均价与日累计量额（stock_intr
 
 # 股票跨日分时行情
 
+接口：`GET /api/v4/market/data/stock-intraday`。在线文档：[《标的分时数据 2.0》](https://market.ft.tech/gateway/doc/pages/yl2uyd8x.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

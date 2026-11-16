@@ -5,6 +5,8 @@ description: "按基金代码查报告期持仓明细。当用户需要查询基
 
 # 基金持仓明细
 
+接口：`GET /api/v1/market/data/fund/fund-portfolio`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -37,7 +39,7 @@ python <RUN_PY> fund-portfolio-single-fund-paginated --fund_code 000001 --report
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金持仓明细》](https://market.ft.tech/gateway/doc/pages/u3ixazhq.md)。
 
 ## 注意事项
 

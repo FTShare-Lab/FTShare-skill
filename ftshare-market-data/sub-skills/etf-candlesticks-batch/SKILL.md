@@ -5,6 +5,8 @@ description: 批量查询多只 ETF 的历史 K 线（etf_candlesticks_batch）�
 
 # 批量ETFK线
 
+接口：`GET /api/v2/market/data/etf-candlesticks/batch`。在线文档：[《批量ETFK线》](https://market.ft.tech/gateway/doc/pages/kz0hn1mk.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: Get goodwill data by industry (行业商誉). Use when user asks ab
 
 # 查询行业商誉
 
+接口：`GET /api/v1/market/data/goodwill/industry`。在线文档：[《商誉行业》](https://market.ft.tech/gateway/doc/pages/v4l12equ.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -25,7 +27,7 @@ description: Get goodwill data by industry (行业商誉). Use when user asks ab
 ## 执行方式
 
 ```bash
-python scripts/handler.py --date 20251231
+python <RUN_PY> stock-goodwill-industry --date 20251231
 ```
 
 ## 响应结构

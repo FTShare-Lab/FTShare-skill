@@ -5,6 +5,8 @@ description: "查询南向资金交易数据。当用户需要查询指定交易
 
 # 查询南向资金交易数据
 
+接口：`GET /api/v1/market/data/southbound`。在线文档：[《南向资金交易》](https://market.ft.tech/gateway/doc/pages/ujoa8eup.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

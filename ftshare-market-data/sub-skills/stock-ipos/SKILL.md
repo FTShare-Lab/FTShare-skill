@@ -5,6 +5,8 @@ description: "获取股票 IPO 列表。当用户需要获取 A 股 IPO 列表�
 
 # 获取股票 IPO 列表
 
+接口：`GET /api/v1/market/data/stock-ipos`。在线文档：[《股票IPO》](https://market.ft.tech/gateway/doc/pages/zrq7obzx.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

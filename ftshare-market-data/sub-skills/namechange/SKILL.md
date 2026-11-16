@@ -5,6 +5,8 @@ description: "查询 A 股股票曾用名。用户问股票曾用名、历史名
 
 # 查询 A 股股票曾用名
 
+接口：`GET /api/v1/market/data/namechange`。在线文档：[《股票曾用名》](https://market.ft.tech/gateway/doc/pages/hcone123.md)
+
 ## 接口说明
 
 | 项目     | 说明                                       |
