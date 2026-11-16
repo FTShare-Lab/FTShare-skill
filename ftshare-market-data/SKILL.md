@@ -58,7 +58,7 @@ python <RUN_PY> nth-trade-date --n 5
 python <RUN_PY> continuous-auction-volume --trade-date 20260918 --page 1 --page-size 50
 python <RUN_PY> news-reaction-snapshot --symbol 600519.SH --start-date 20260818 --end-date 20260828 --lookback-hours 48 --page 1 --page-size 5
 python <RUN_PY> semantic-search-news --query 人工智能
-python <RUN_PY> stock-candlesticks-daily --trade-date 20261008 --page 1 --page-size 500
+python <RUN_PY> stock-candlesticks-daily --trade_date 20261008 --page 1 --page_size 500
 python <RUN_PY> ths-board-constituents --board-name 军工 --page 1 --page-size 100
 python <RUN_PY> stock-tech-factor --symbol 000001.SZ --trade-date 20261012 --category trend
 python <RUN_PY> sge-spot-description-all --category spot_deferred --active-only
@@ -79,7 +79,20 @@ python <RUN_PY> periodic-reports --url-hash 37801609...68090432 --output ./repor
 
 ## 能力范围
 
-当前子 skill 仅覆盖《FTShare 四档套餐全量接口表》中的接口；接口详细参数、响应字段和限制以对应子目录的 `SKILL.md` 及 `ftshare-doc/api-doc/` 活动源文档为准。`api-doc/已下线` 和 `api-doc/未发布` 不属于当前范围。
+接口详细参数、响应字段和限制以对应子目录的 `SKILL.md` 及其链接的在线文档为准（文档首页：`https://market.ft.tech/gateway/doc/`）。
+
+## 子技能索引与路由
+
+不要凭记忆猜子技能名，按下面顺序定位：
+
+1. **快速路由**：`python <RUN_PY> --index` 输出「名称 + 触发场景」一行一个；`--index --json` 输出结构化 JSON（含 route / doc_url / tier），便于程序化匹配。
+2. **完整索引**：`sub-skills/INDEX.md`，246 个子技能按业务域分组，含「子技能 / 接口 / 路由 / 触发场景 / 套餐 / 在线文档」；按需读取，不必整体加载。
+3. **机器可读映射**：`sub-skills/manifest.tsv`（`skill / route / doc_title / doc_url / tier / category / description`）；`sub-skills/doc-map.tsv` 保存路由到文档标题/链接/套餐的映射。
+4. **单接口细节**：读对应 `sub-skills/<名称>/SKILL.md`；完整字段与示例见其指向的在线文档（markdown 链接可直接抓取）。
+
+索引与映射由 `python tools/index_skills.py --write` 从仓库自身生成（路由取 handler、文档标题与链接取 `sub-skills/doc-map.tsv`），不要手改；`--check` 校验是否过期并检查路由与文档映射是否齐全。
+
+各业务域子技能数量（以 `INDEX.md` 为准）：股票 134、宏观 23、基金 18、期货 17、ETF 17、指数 15、债券 9、大模型语料 7、美股 2、现货 2、港股 2。
 
 ## 输出与错误
 
