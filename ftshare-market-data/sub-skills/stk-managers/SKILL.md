@@ -5,6 +5,8 @@ description: "查询上市公司管理层人员信息。用户问上市公司管
 
 # 查询上市公司管理层信息
 
+接口：`GET /api/v1/market/data/stk-managers`。在线文档：[《上市公司管理层》](https://market.ft.tech/gateway/doc/pages/moz0yjm6.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                    |

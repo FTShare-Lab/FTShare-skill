@@ -5,6 +5,8 @@ description: 近一年A股个股重大合同汇总排名（market.ft.tech）。�
 
 # 重大合同 - 近一年个股汇总
 
+接口：`GET /api/v1/market/data/corporate/contract/summary`。在线文档：[《重大合同汇总》](https://market.ft.tech/gateway/doc/pages/5sahxrk6.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -1,9 +1,11 @@
 ---
 name: index-weight-summary
-description: 分页查询指数权重汇总（market.ft.tech）。可按 index_code 查询指定指数各期权重的 date 与 url_hash。用户问指数权重汇总、成分股权重期数、权重文件 url_hash、沪深300 权重日期、有哪些指数权重数据时使用。下游：取到 url_hash 后可调 index-weight-download 下载 xlsx；取到 index_code/date 后可调 index-weight-list 查成份明细。
+description: 分页查询指数权重汇总（market.ft.tech）。可按 index_code 查询指定指数各期权重的 date 与 url_hash。用户问指数权重汇总、成分股权重期数、权重文件 url_hash、沪深300 权重日期、有哪些指数权重数据时使用。下游：取到 index_code/date 后可调 index-weight-list 查成份明细。
 ---
 
 # 分页查询指数权重汇总（index-weight-summary）
+
+接口：`GET /api/v1/market/data/index/index_weight_summary`。在线文档：[《指数权重汇总》](https://market.ft.tech/gateway/doc/pages/vezscfb4.md)
 
 ## 1. 接口描述
 
@@ -65,7 +67,7 @@ python <RUN_PY> index-weight-summary --index-code 000300 --page 1 --page-size 20
 ### 直接执行 handler（调试）
 
 ```bash
-python scripts/handler.py --index-code 000300 --page 1 --page-size 20
+python <RUN_PY> index-weight-summary --index-code 000300 --page 1 --page-size 20
 ```
 
 （需在 `sub-skills/index-weight-summary` 目录下执行，或传入脚本完整路径。）
@@ -73,8 +75,8 @@ python scripts/handler.py --index-code 000300 --page 1 --page-size 20
 ## 5. 链路说明
 
 本接口为**权重链第 1 步**。  
-- 取到 `index_code` + `date` → 可调 `index-weight-list --index_code <code> --date <date>` 查成份明细。  
-- 取到 `url_hash` → 可调 `index-weight-download --url-hash <url_hash>` 直接下载整期 xlsx。
+- 取到 `index_code` + `date` → 可调 `index-weight-list --index-code <code> --date <date>` 查成份明细。  
+- `url_hash` 为该期权重文件的标识。
 
 ## 6. 请求示例
 

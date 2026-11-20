@@ -5,6 +5,8 @@ description: 单只 ETF 历史日/周/月/年 K 线 GET 接口（market.ft.tech�
 
 # ETF K 线 - 查询单只 ETF 历史 K 线（etf-candlesticks）
 
+接口：`GET /api/v1/market/data/etf-candlesticks`。在线文档：[《ETFK线》](https://market.ft.tech/gateway/doc/pages/c3s30whl.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -13,8 +15,6 @@ description: 单只 ETF 历史日/周/月/年 K 线 GET 接口（market.ft.tech�
 | 外部接口 | `GET /api/v1/market/data/etf-candlesticks` |
 | 请求方式 | GET（query 参数） |
 | 适用场景 | 获取指定 ETF 的日/周/月/年 K 线，含开高低收、成交量、成交额；支持前复权 / 后复权 / 不复权。仅接受 ETF 标的 |
-
-> 与 `etf-ohlcs`（`GET daec/history/ohlcs`，YYYYMMDD 日期区间，仅日/周/月）区别：本接口走 GET query 参数，参数为毫秒时间戳，支持日/周/月/年 K，是统一的 candlesticks 契约。分钟级 K 线请使用 `etf-minutes` 子 skill。
 
 ## 2. 请求参数
 
@@ -56,7 +56,7 @@ python <RUN_PY> etf-candlesticks --symbol 510300.XSHG --interval-unit week --adj
 ### 直接执行 handler（调试）
 
 ```bash
-python scripts/handler.py --symbol 510300.XSHG --interval-unit day --until-ts-millis 1756791000000 --limit 5
+python <RUN_PY> etf-candlesticks --symbol 510300.XSHG --interval-unit day --until-ts-millis 1756791000000 --limit 5
 ```
 
 ## 5. 注意事项

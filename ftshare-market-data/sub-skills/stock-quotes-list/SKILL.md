@@ -5,6 +5,8 @@ description: "查询 A 股行情列表（分页）。当用户需要获取 A 股
 
 # 查询 A 股行情列表（分页）
 
+接口：`GET /api/v1/market/data/daec/stocks`。在线文档：[《A股行情列表》](https://market.ft.tech/gateway/doc/pages/mdsj0xyo.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

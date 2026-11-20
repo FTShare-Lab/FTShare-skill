@@ -5,6 +5,8 @@ description: 查询同花顺概念板块资金流日度。用户问同花顺概�
 
 # 同花顺概念板块资金流日度
 
+接口：`GET /api/v1/market/data/ths-concept-daily-flow`。在线文档：[《同花顺概念板块资金流日度》](https://market.ft.tech/gateway/doc/pages/hgcm2rnm.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

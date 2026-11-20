@@ -5,6 +5,8 @@ description: 查询 A 股股票基础信息，支持按 symbol_id 筛选和分�
 
 # 股票基础信息
 
+接口：`GET /api/v1/market/data/stock-description`。在线文档：[《股票基础信息》](https://market.ft.tech/gateway/doc/pages/sw2o1vsr.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

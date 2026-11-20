@@ -5,6 +5,8 @@ description: Get goodwill impairment detail (商誉减值明细) for all stocks 
 
 # 查询个股商誉减值明细
 
+接口：`GET /api/v1/market/data/goodwill/stock-impairment`。在线文档：[《商誉减值》](https://market.ft.tech/gateway/doc/pages/p7iit8mt.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -25,7 +27,7 @@ description: Get goodwill impairment detail (商誉减值明细) for all stocks 
 ## 执行方式
 
 ```bash
-python scripts/handler.py --date 20251231
+python <RUN_PY> stock-goodwill-impairment --date 20251231
 ```
 
 ## 响应结构

@@ -5,6 +5,8 @@ description: "查询所有期股权质押总揽数据。当用户需要获取 A 
 
 # 查询所有期股权质押总揽数据
 
+接口：`GET /api/v1/market/data/pledge/pledge-summary`。在线文档：[《股权质押汇总》](https://market.ft.tech/gateway/doc/pages/ovns66g1.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                                                                                       |

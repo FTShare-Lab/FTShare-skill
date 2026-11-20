@@ -5,6 +5,8 @@ description: Get China industrial added value growth monthly data (工业增加�
 
 # 中国经济 - 工业增加值（月度）
 
+接口：`GET /api/v1/market/data/economic/china-industrial-added-value`。在线文档：[《工业增加值》](https://market.ft.tech/gateway/doc/pages/2tsc1z6m.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China industrial added value growth monthly data (工业增加�
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-industrial-added-value-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`yoy`（同比增长 %）、`cumulative_yoy`（累计同比增长 %），以表格展示给用户。

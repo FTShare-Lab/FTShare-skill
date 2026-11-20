@@ -5,6 +5,8 @@ description: 可转债全量列表（market.ft.tech）。用户问可转债列�
 
 # 可转债列表 - 获取可转债列表
 
+接口：`GET /api/v1/market/data/cb/cb-lists`。在线文档：[《可转债列表》](https://market.ft.tech/gateway/doc/pages/fpj2vwor.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

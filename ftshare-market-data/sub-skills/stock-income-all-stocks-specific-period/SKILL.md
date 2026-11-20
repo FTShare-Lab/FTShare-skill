@@ -5,6 +5,8 @@ description: Get income statement (利润表) for all stocks in a specific repor
 
 # 查询单报告期全市场利润表（分页）
 
+接口：`GET /api/v1/market/data/finance/income`。在线文档：[《A股利润表》](https://market.ft.tech/gateway/doc/pages/dv3kxyb2.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -29,7 +31,7 @@ description: Get income statement (利润表) for all stocks in a specific repor
 ## 执行方式
 
 ```bash
-python scripts/handler.py --year 2025 --report-type q2 --page 1 --page-size 20
+python <RUN_PY> stock-income-all-stocks-specific-period --year 2025 --report-type q2 --page 1 --page-size 20
 ```
 
 ## 响应结构

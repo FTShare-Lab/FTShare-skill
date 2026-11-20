@@ -5,6 +5,8 @@ description: 查询 ETF 申赎清单（PCF 汇总信息，etf_pcf_infos）。用
 
 # ETF 申赎清单（PCF 汇总信息）
 
+接口：`GET /api/v2/market/data/etf-pcf/etf-pcf-infos`。在线文档：[《ETF申赎清单》](https://market.ft.tech/gateway/doc/pages/beq3ulj3.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

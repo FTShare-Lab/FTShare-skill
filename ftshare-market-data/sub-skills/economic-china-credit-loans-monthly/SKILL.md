@@ -5,6 +5,8 @@ description: Get China credit/loans monthly data (中国信贷数据 月度). Us
 
 # 中国经济 - 信贷（月度）
 
+接口：`GET /api/v1/market/data/economic/china-credit-loans`。在线文档：[《社融信贷》](https://market.ft.tech/gateway/doc/pages/89eo4u6b.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -27,7 +29,7 @@ description: Get China credit/loans monthly data (中国信贷数据 月度). Us
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-credit-loans-monthly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `month`（如 2025年03月份）、`new_loans`（本月新增信贷）、`yoy`（同比 %）、`mom`（环比 %）、`cumulative`（当年累计）、`cumulative_yoy`（累计同比 %）、`unit`（亿元）、`currency`（CNY），以表格展示给用户。

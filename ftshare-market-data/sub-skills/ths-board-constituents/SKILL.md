@@ -5,6 +5,8 @@ description: "查询同花顺板块成分股。当用户需要查同花顺概念
 
 # 查询同花顺板块成分股
 
+接口：`GET /api/v1/market/data/ths-board-constituents`。在线文档：[《同花顺板块成分股》](https://market.ft.tech/gateway/doc/pages/sbu6tt44.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

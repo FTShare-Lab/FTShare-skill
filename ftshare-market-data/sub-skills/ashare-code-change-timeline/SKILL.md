@@ -5,7 +5,7 @@ description: 查询 A 股代码变更时间线（全量）。Use when user asks 
 
 # A 股代码变更时间线
 
-接口：`GET /api/v1/market/data/stk_code_change_timeline`。无入参，全量返回全部代码变更事件，不分页。
+接口：`GET /api/v1/market/data/stk_code_change_timeline`。无入参，全量返回全部代码变更事件，不分页。在线文档：[《A股代码变更时间线》](https://market.ft.tech/gateway/doc/pages/0a0mfc8k.md)
 
 ```bash
 python <RUN_PY> ashare-code-change-timeline

@@ -1,11 +1,11 @@
 ---
 name: abnormal-trading-details
-description: 查询龙虎榜明细。接口：GET /api/v1/market/data/abnormal-trading-details。所有请求必须设置 FTSHARE_API_KEY。
+description: "查询龙虎榜明细，按交易日返回上榜标的的涨跌幅、收盘价、成交额、上榜原因，以及买入额/卖出额前 5 名营业部明细。可用参数：--date、--page、--page_size。接口：GET /api/v1/market/data/abnormal-trading-details。"
 ---
 
 # 龙虎榜明细
 
-接口：GET `/api/v1/market/data/abnormal-trading-details`。参数和响应以 `ftshare-doc/api-doc/股票数据/打板专题数据/龙虎榜明细.md` 为准。
+接口：GET `/api/v1/market/data/abnormal-trading-details`。参数和响应以 [《龙虎榜明细》](https://market.ft.tech/gateway/doc/pages/yxmc9f7y.md) 为准。
 
 请求必须从环境变量 `FTSHARE_API_KEY` 读取凭据，并通过请求头发送 `FTSHARE_API_KEY` 和 `Content-Type: application/json`；缺少凭据时不会发起请求。
 

@@ -5,6 +5,8 @@ description: 按公告日期分页查询报告公告列表，可选按证券代�
 
 # 查询报告公告列表
 
+接口：`GET /api/v1/market/data/report-announcements/list`。在线文档：[《报告公告列表》](https://market.ft.tech/gateway/doc/pages/4qspcoqt.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

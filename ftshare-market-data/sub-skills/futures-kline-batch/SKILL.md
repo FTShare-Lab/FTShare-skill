@@ -5,6 +5,8 @@ description: 批量查询多个期货合约的历史 K 线（futures_kline_batch
 
 # 批量期货合约历史K线
 
+接口：`GET /api/v2/market/data/futures/kline/batch`。在线文档：[《批量期货合约历史K线》](https://market.ft.tech/gateway/doc/pages/0ausz81h.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -20,7 +22,7 @@ description: 批量查询多个期货合约的历史 K 线（futures_kline_batch
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| symbols | string | 是 | 期货合约代码列表，逗号分隔传给 CLI | A2611.DCE,M2611.DCE | 1～20 个；接口侧以逗号分隔发送，兼容旧的重复参数格式 |
+| symbols | string | 是 | 不带交易所后缀的期货合约代码列表，逗号分隔传给 CLI | A2611,M2611 | 1～20 个；请求不区分大小写，CZCE 真实合约必须使用四位年份代码（如 `AP2612`）；接口侧以逗号分隔发送，兼容旧的重复参数格式 |
 | interval | string | 否 | K 线周期 | daily | `daily`/`weekly`/`monthly`/`quarterly`；默认 `daily` |
 | start | int | 否 | 起始时间戳（毫秒） | 1790784000000 | 闭区间；按北京时间解释 |
 | end | int | 否 | 结束时间戳（毫秒） | 1791647999000 | 闭区间；不能单独传入 |
@@ -32,7 +34,7 @@ description: 批量查询多个期货合约的历史 K 线（futures_kline_batch
 
 | 字段名 | 类型 | 说明 |
 |--------|------|------|
-| symbol | string | 请求中的合约代码（保留请求值） |
+| symbol | string | 请求中合约代码规范化后的裸代码，大小写沿用对应交易所官网格式；CZCE 真实合约返回四位年份代码 |
 | items | array | 该合约符合条件且经 `limit` 截断后的 K 线记录列表 |
 | total | integer | `items` 中的 K 线记录数（已应用 `limit`）；无数据时为 0 |
 
@@ -40,7 +42,7 @@ description: 批量查询多个期货合约的历史 K 线（futures_kline_batch
 
 | 字段名 | 类型 | 说明 |
 |--------|------|------|
-| symbol | string | 去除交易所后缀并转小写后的合约代码 |
+| symbol | string | 不带交易所后缀的官网合约代码，大小写沿用对应交易所官网格式；CZCE 真实合约返回四位年份代码 |
 | datetime | int | K 线时间戳（毫秒） |
 | trade_date | int | 交易日 YYYYMMDD |
 | open / high / low / close | number | 开盘价 / 最高价 / 最低价 / 收盘价 |
@@ -55,17 +57,17 @@ description: 批量查询多个期货合约的历史 K 线（futures_kline_batch
 ## 4. 调用方式
 
 ```bash
-python <RUN_PY> futures-kline-batch --symbols A2611.DCE,M2611.DCE --interval daily --start 1790784000000 --end 1791647999000 --limit 5
-python <RUN_PY> futures-kline-batch --symbols A2611.DCE,M2611.DCE,CU2611.SHFE --interval weekly --limit 5
+python <RUN_PY> futures-kline-batch --symbols A2611,M2611 --interval daily --start 1790784000000 --end 1791647999000 --limit 5
+python <RUN_PY> futures-kline-batch --symbols A2611,M2611,CU2611 --interval weekly --limit 5
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。
 
 ## 5. 注意事项
 
-- **交易所后缀规则（必读）**：合约代码格式为 `<合约代码>.<交易所代码>`，只接受交易所全称后缀 `.SHFE`、`.INE`、`.DCE`、`.CZCE`、`.CFFEX`、`.GFEX`；短后缀 `.SHF`、`.CZC`、`.CFE`、`.GFE` 及其它未列出的后缀会返回 HTTP 400；无后缀的裸合约代码仍兼容。
-- `symbols` 使用逗号分隔发送（`symbols=A2611.DCE,M2611.DCE`），兼容旧的重复参数格式。
-- 外层分组的 `symbol` 保留请求值；分组内 K 线记录的 `symbol` 为去除交易所后缀并转小写后的合约代码。
+- **合约代码口径（必读）**：合约代码使用不带交易所后缀的裸代码，请求不区分大小写；CZCE 真实合约必须使用四位年份代码（如 `AP2612`），三位代码不符合接口代码规范。
+- `symbols` 使用逗号分隔发送（`symbols=A2611,M2611`），兼容旧的重复参数格式。
+- 外层分组的 `symbol` 和分组内 K 线记录的 `symbol` 均为不带交易所后缀的官网合约代码，大小写沿用对应交易所官网格式。
 - `start` 与 `end` 均为 Unix 毫秒时间戳，按北京时间解释；`end` 不能单独传入，必须与 `start` 同时使用（handler 会本地校验）。
 - `start` 与 `end` 的时间跨度不得超过 12 个自然月。
 - 单合约历史 K 线请使用 `futures-kline`；历史分钟 K 线请使用 `futures-minutes`。

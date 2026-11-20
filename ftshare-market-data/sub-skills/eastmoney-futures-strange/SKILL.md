@@ -5,6 +5,8 @@ description: 查询东方财富期货龙虎榜面板（成交量/持仓量多空
 
 # 查询东方财富期货龙虎榜
 
+接口：`GET /api/v1/market/data/eastmoney-futures-strange`。在线文档：[《东方财富期货龙虎榜》](https://market.ft.tech/gateway/doc/pages/h5s1a7oc.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -20,7 +22,7 @@ description: 查询东方财富期货龙虎榜面板（成交量/持仓量多空
 |--------|------|----------|------|----------|------|
 | exchange | string | 是 | 交易所代码 | `gfex` | `shfe`/`dce`/`czce`/`cffex`/`ine`/`gfex`（中金所为 `cffex`；广期所为 `gfex`，不是 `gfe`） |
 | variety | string | 是 | 品种名称 | `多晶硅` | 中文名称，URL 编码后传入 |
-| contract | string | 是 | 合约代码 | `ps2609` | 小写合约代码 |
+| contract | string | 是 | 合约代码，如 `ps2609` | `ps2609` | 请求不区分大小写；CZCE 真实合约使用四位年份代码；响应沿用交易所官网大小写 |
 | trade_date | string | 是 | 交易日 | `20260721` | `YYYYMMDD` |
 
 ## 执行方式

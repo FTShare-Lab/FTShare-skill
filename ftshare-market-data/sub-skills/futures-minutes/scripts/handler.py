@@ -98,8 +98,8 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询单个或批量期货合约的历史分钟 K 线")
     target = parser.add_mutually_exclusive_group(required=True)
-    target.add_argument("--symbol", help="单个期货合约代码，如 A2611.DCE；只接受 .SHFE/.INE/.DCE/.CZCE/.CFFEX/.GFEX 全称后缀")
-    target.add_argument("--symbols", help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,CU2611.SHFE")
+    target.add_argument("--symbol", help="单个期货合约代码（不带交易所后缀），如 A2611；CZCE 真实合约须用四位年份代码")
+    target.add_argument("--symbols", help="期货合约代码列表（不带交易所后缀），逗号分隔，1～20 个，如 A2611,CU2611")
     parser.add_argument("--interval", default="1min", choices=INTERVALS,
                         help="分钟周期，默认 1min；也兼容 1m/5m/15m/30m/1h")
     parser.add_argument("--start", required=True, type=int,
@@ -107,14 +107,14 @@ def main():
     parser.add_argument("--end", required=True, type=int,
                         help="结束时间戳（毫秒，闭区间）；与 start 跨度不超过 3 个自然日")
     parser.add_argument("--limit", type=int, default=None,
-                        help="返回的最新 K 线条数，默认 500，范围 1～1000；批量时按每个合约分别限制")
+                        help="返回的最新 K 线条数，默认 500，范围 1～10000；批量时按每个合约分别限制")
     args = parser.parse_args()
 
     if args.start > args.end:
         print("--start 不能晚于 --end", file=sys.stderr)
         raise SystemExit(2)
-    if args.limit is not None and not 1 <= args.limit <= 1000:
-        print("--limit 须在 1～1000 之间", file=sys.stderr)
+    if args.limit is not None and not 1 <= args.limit <= 10000:
+        print("--limit 须在 1～10000 之间", file=sys.stderr)
         raise SystemExit(2)
 
     symbols = parse_symbols(args.symbols) if args.symbols is not None else None

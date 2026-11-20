@@ -5,6 +5,8 @@ description: "按指数代码查询跟踪该指数的基金。当用户需要查
 
 # 指数跟踪基金
 
+接口：`GET /api/v2/market/data/fund/index-fund`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -32,7 +34,7 @@ python <RUN_PY> fund-index-tracking-funds --index_code 000300 --scope etf
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《指数跟踪基金》](https://market.ft.tech/gateway/doc/pages/vfl9rnr6.md)。
 
 ## 注意事项
 

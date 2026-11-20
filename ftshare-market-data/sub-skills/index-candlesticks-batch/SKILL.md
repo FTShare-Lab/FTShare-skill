@@ -5,6 +5,8 @@ description: 批量查询多个指数的历史 K 线（index_candlesticks_batch�
 
 # 批量指数K线
 
+接口：`GET /api/v2/market/data/index-candlesticks/batch`。在线文档：[《批量指数K线》](https://market.ft.tech/gateway/doc/pages/mrsinfcz.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

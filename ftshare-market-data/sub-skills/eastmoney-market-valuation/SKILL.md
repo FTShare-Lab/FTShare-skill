@@ -5,6 +5,8 @@ description: "查询东财市场日估值。当用户需要查询 A 股主要市
 
 # 查询东财市场日估值
 
+接口：`GET /api/v1/market/data/eastmoney-market-valuation`。在线文档：[《东方财富市场估值》](https://market.ft.tech/gateway/doc/pages/t4ewt2c8.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -19,9 +21,9 @@ description: "查询东财市场日估值。当用户需要查询 A 股主要市
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | `market_code` | string | 否 | 市场代码 | `000300` | 000001=上证指数, 000300=沪深300, 399001=深证成指, 399006=创业板指, 000688=科创50, 899050=北证50 |
-| `trade_date` | string | 否 | 交易日 | `2026-06-08` | 格式 `YYYY-MM-DD`；与 `start_date`/`end_date` 互斥 |
-| `start_date` | string | 否 | 区间起始日 | `2026-06-01` | 格式 `YYYY-MM-DD`；与 `end_date` 同时提供 |
-| `end_date` | string | 否 | 区间结束日 | `2026-06-09` | 格式 `YYYY-MM-DD`；与 `start_date` 同时提供 |
+| `trade_date` | string | 否 | 交易日 | `20260608` | 格式 `YYYYMMDD`；与 `start_date`/`end_date` 互斥 |
+| `start_date` | string | 否 | 区间起始日 | `20260601` | 格式 `YYYYMMDD`；与 `end_date` 同时提供 |
+| `end_date` | string | 否 | 区间结束日 | `20260609` | 格式 `YYYYMMDD`；与 `start_date` 同时提供 |
 | `--page` | int | 否 | 页码 | `1` | 从 1 开始，默认 1 |
 | `--page_size` | int | 否 | 每页条数 | `50` | 默认 50，最大 500 |
 
@@ -41,10 +43,10 @@ description: "查询东财市场日估值。当用户需要查询 A 股主要市
 
 ```bash
 python <RUN_PY> eastmoney-market-valuation --market_code 000300 --page 1 --page_size 10
-python <RUN_PY> eastmoney-market-valuation --market_code 000001 --start_date 2026-06-01 --end_date 2026-06-09
-python <RUN_PY> eastmoney-market-valuation --start_date 2026-06-01 --end_date 2026-06-09 --page 1 --page_size 50
-python <RUN_PY> eastmoney-market-valuation --market_code 000300 --trade_date 2026-06-08
-python <RUN_PY> eastmoney-market-valuation --start_date 2026-06-01 --end_date 2026-06-09 --all
+python <RUN_PY> eastmoney-market-valuation --market_code 000001 --start_date 20260601 --end_date 20260609
+python <RUN_PY> eastmoney-market-valuation --start_date 20260601 --end_date 20260609 --page 1 --page_size 50
+python <RUN_PY> eastmoney-market-valuation --market_code 000300 --trade_date 20260608
+python <RUN_PY> eastmoney-market-valuation --start_date 20260601 --end_date 20260609 --all
 ```
 
 > `<RUN_PY>` 为主 `SKILL.md` 同级的 `run.py` 绝对路径，参见主 SKILL.md 的「调用方式」说明。
@@ -70,7 +72,7 @@ python <RUN_PY> eastmoney-market-valuation --start_date 2026-06-01 --end_date 20
 |--------|------|------|
 | `market_code` | string | 市场代码，如 `000001`=上证指数 |
 | `market_name` | string | 市场名称，如 `上证指数` |
-| `trade_date` | string | 交易日期，格式 `YYYY-MM-DD` |
+| `trade_date` | string | 交易日期，格式 `YYYYMMDD` |
 | `pe_ttm` | string | 市盈率 TTM，无数据时为空 |
 | `total_shares` | string | 总股本，无数据时为空 |
 | `free_shares` | string | 流通股本，无数据时为空 |
@@ -95,7 +97,7 @@ python <RUN_PY> eastmoney-market-valuation --start_date 2026-06-01 --end_date 20
       {
         "market_code": "000001",
         "market_name": "上证指数",
-        "trade_date": "2026-06-08",
+        "trade_date": "20260608",
         "pe_ttm": "13.95",
         "total_shares": "484989600",
         "free_shares": "462381100",
@@ -116,5 +118,5 @@ python <RUN_PY> eastmoney-market-valuation --start_date 2026-06-01 --end_date 20
 - 市场代码参考：上证指数(000001)、沪深300(000300)、深证成指(399001)、创业板指(399006)、科创50(000688)、北证50(899050)
 - 所有数值字段序列化为字符串，避免 JSON 浮点精度问题
 - 无数据的字段输出为空字符串 `""`，而非 `null`
-- 推荐使用 `YYYY-MM-DD` 日期格式；`YYYYMMDD` 会返回空列表
+- 推荐使用 `YYYYMMDD` 日期格式；`YYYYMMDD` 会返回空列表
 - 当前单日查询可能异常，建议优先使用区间查询

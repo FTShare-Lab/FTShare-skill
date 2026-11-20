@@ -5,6 +5,8 @@ description: 查询股指期货合约深度快照、对应指数价格与仪器�
 
 # 股指期货与指数深度行情
 
+接口：`GET /api/v1/market/data/index-fut/depth`。在线文档：[《股指期货与指数深度行情》](https://market.ft.tech/gateway/doc/pages/7am2phuz.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

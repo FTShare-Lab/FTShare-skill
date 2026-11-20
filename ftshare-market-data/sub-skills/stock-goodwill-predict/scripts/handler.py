@@ -41,9 +41,8 @@ def safe_urlopen(req_or_url):
 ENDPOINT = "/api/v1/market/data/goodwill/predict"
 
 
-def fetch(
-date: str) -> dict:
-    params = urllib.parse.urlencode({"date": date})
+def fetch(date: str, page: int = 1, page_size: int = 200) -> dict:
+    params = urllib.parse.urlencode({"date": date, "page": page, "page_size": page_size})
     url = f"{BASE_URL}{ENDPOINT}?{params}"
     try:
         with safe_urlopen(url) as resp:
@@ -62,9 +61,19 @@ def main():
         required=True,
         help="报告期日期，格式 YYYYMMDD，如 20251231 查询 2025 全年",
     )
+    parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始，默认 1")
+    parser.add_argument("--page_size", "--page-size", dest="page_size", type=int, default=200,
+                        help="每页条数，默认 200，最大 500")
     args = parser.parse_args()
 
-    result = fetch(args.date)
+    if args.page < 1:
+        print("--page 必须 >= 1", file=sys.stderr)
+        raise SystemExit(2)
+    if not 1 <= args.page_size <= 500:
+        print("--page_size 必须在 1~500 之间", file=sys.stderr)
+        raise SystemExit(2)
+
+    result = fetch(args.date, args.page, args.page_size)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

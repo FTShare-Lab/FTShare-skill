@@ -5,6 +5,8 @@ description: "查询东财个股日估值。当用户需要查询全部 A 股个
 
 # 查询东财个股日估值
 
+接口：`GET /api/v1/market/data/eastmoney-stock-valuation`。在线文档：[《东方财富个股估值》](https://market.ft.tech/gateway/doc/pages/z885d6r1.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -19,9 +21,9 @@ description: "查询东财个股日估值。当用户需要查询全部 A 股个
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
 | `symbol` | string | 否 | 股票代码 | `000001` | 6位数字代码，不传返回全部股票 |
-| `trade_date` | string | 否 | 交易日 | `2026-06-08` | 格式 `YYYY-MM-DD`；与 `start_date`/`end_date` 互斥 |
-| `start_date` | string | 否 | 区间起始日 | `2026-06-01` | 格式 `YYYY-MM-DD`；与 `end_date` 同时提供 |
-| `end_date` | string | 否 | 区间结束日 | `2026-06-09` | 格式 `YYYY-MM-DD`；与 `start_date` 同时提供 |
+| `trade_date` | string | 否 | 交易日 | `20260608` | 格式 `YYYYMMDD`；与 `start_date`/`end_date` 互斥 |
+| `start_date` | string | 否 | 区间起始日 | `20260601` | 格式 `YYYYMMDD`；与 `end_date` 同时提供 |
+| `end_date` | string | 否 | 区间结束日 | `20260609` | 格式 `YYYYMMDD`；与 `start_date` 同时提供 |
 | `--page` | int | 否 | 页码 | `1` | 从 1 开始，默认 1 |
 | `--page_size` | int | 否 | 每页条数 | `50` | 默认 50，最大 500 |
 
@@ -41,10 +43,10 @@ description: "查询东财个股日估值。当用户需要查询全部 A 股个
 
 ```bash
 python <RUN_PY> eastmoney-stock-valuation --symbol 000001 --page 1 --page_size 10
-python <RUN_PY> eastmoney-stock-valuation --symbol 000001 --start_date 2026-06-01 --end_date 2026-06-09
-python <RUN_PY> eastmoney-stock-valuation --start_date 2026-06-01 --end_date 2026-06-09 --page 1 --page_size 50
-python <RUN_PY> eastmoney-stock-valuation --symbol 000001 --trade_date 2026-06-08
-python <RUN_PY> eastmoney-stock-valuation --start_date 2026-06-01 --end_date 2026-06-09 --all
+python <RUN_PY> eastmoney-stock-valuation --symbol 000001 --start_date 20260601 --end_date 20260609
+python <RUN_PY> eastmoney-stock-valuation --start_date 20260601 --end_date 20260609 --page 1 --page_size 50
+python <RUN_PY> eastmoney-stock-valuation --symbol 000001 --trade_date 20260608
+python <RUN_PY> eastmoney-stock-valuation --start_date 20260601 --end_date 20260609 --all
 ```
 
 > `<RUN_PY>` 为主 `SKILL.md` 同级的 `run.py` 绝对路径，参见主 SKILL.md 的「调用方式」说明。
@@ -70,7 +72,7 @@ python <RUN_PY> eastmoney-stock-valuation --start_date 2026-06-01 --end_date 202
 |--------|------|------|
 | `stock_code` | string | 股票代码，如 `000001` |
 | `stock_name` | string | 股票简称，如 `平安银行` |
-| `trade_date` | string | 交易日期，格式 `YYYY-MM-DD` |
+| `trade_date` | string | 交易日期，格式 `YYYYMMDD` |
 | `pe_ttm` | string | 市盈率 TTM，无数据时为空 |
 | `pe_lar` | string | 市盈率 LYR（静态），无数据时为空 |
 | `pb_mrq` | string | 市净率 MRQ，无数据时为空 |
@@ -100,7 +102,7 @@ python <RUN_PY> eastmoney-stock-valuation --start_date 2026-06-01 --end_date 202
       {
         "stock_code": "000001",
         "stock_name": "平安银行",
-        "trade_date": "2026-06-08",
+        "trade_date": "20260608",
         "pe_ttm": "4.9709",
         "pe_lar": "5.0207",
         "pb_mrq": "0.4612",
@@ -126,5 +128,5 @@ python <RUN_PY> eastmoney-stock-valuation --start_date 2026-06-01 --end_date 202
 - 无数据的字段输出为空字符串 `""`，而非 `null`
 - 部分估值指标（如 PEG、市现率 LYR）可能因财务数据缺失而为空
 - 负值指标（如负市盈率）会正常返回负数字符串
-- 推荐使用 `YYYY-MM-DD` 日期格式；`YYYYMMDD` 会返回空列表
+- 推荐使用 `YYYYMMDD` 日期格式；`YYYYMMDD` 会返回空列表
 - 当前单日查询可能异常，建议优先使用区间查询

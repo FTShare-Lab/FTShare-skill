@@ -96,7 +96,7 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="批量查询多个期货合约的历史 K 线")
     parser.add_argument("--symbols", required=True,
-                        help="期货合约代码列表，逗号分隔，1～20 个，如 A2611.DCE,M2611.DCE；只接受 .SHFE/.INE/.DCE/.CZCE/.CFFEX/.GFEX 全称后缀")
+                        help="不带交易所后缀的期货合约代码列表，逗号分隔，1～20 个，如 A2611,M2611；CZCE 真实合约须用四位年份代码")
     parser.add_argument("--interval", default="daily", choices=INTERVALS,
                         help="K 线周期，默认 daily；周/月/季 K 由日 K 聚合")
     parser.add_argument("--start", type=int, default=None,

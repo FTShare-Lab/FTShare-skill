@@ -5,6 +5,8 @@ description: 查询指定股票的千股千评历史综合评分走势（market.
 
 # 千股千评 — 综合评价历史评分
 
+接口：`GET /api/v1/market/data/stock-comment/score`。在线文档：[《千股千评评分》](https://market.ft.tech/gateway/doc/pages/yrx27y0e.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

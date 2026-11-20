@@ -5,6 +5,8 @@ description: Get China GDP quarterly data (中国 GDP 季度数据). Use when us
 
 # 中国经济 - GDP（季度）
 
+接口：`GET /api/v1/market/data/economic/china-gdp`。在线文档：[《GDP》](https://market.ft.tech/gateway/doc/pages/egodfcdg.md)
+
 ## 参数
 
 无需任何参数。
@@ -14,7 +16,7 @@ description: Get China GDP quarterly data (中国 GDP 季度数据). Use when us
 直接执行：
 
 ```bash
-python script/handler.py
+python <RUN_PY> economic-china-gdp-quarterly
 ```
 
 脚本输出 JSON 数组，按时间倒序，每项含 `period`（如 2025年第1-4季度）、`gdp`、`gdp_yoy`（GDP 同比 %）、`primary`/`secondary`/`tertiary`（三次产业值）及对应累计同比、`unit`（亿元）、`currency`（人民币），以表格展示给用户。

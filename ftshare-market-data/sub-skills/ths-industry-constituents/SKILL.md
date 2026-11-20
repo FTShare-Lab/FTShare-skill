@@ -5,6 +5,8 @@ description: 查询同花顺行业成分股列表。当用户需要查询指定�
 
 # 查询同花顺行业成分股列表
 
+接口：`GET /api/v1/market/data/ths-industry-constituents`。在线文档：[《同花顺行业成分股列表》](https://market.ft.tech/gateway/doc/pages/b54yn3wh.md)
+
 ## 参数
 
 | 参数 | 类型 | 必填 | 说明 | 示例 |

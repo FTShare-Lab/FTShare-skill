@@ -5,6 +5,8 @@ description: 查询指定股票的千股千评机构参与度走势（market.ft.
 
 # 千股千评 — 机构参与度
 
+接口：`GET /api/v1/market/data/stock-comment/org-participate`。在线文档：[《机构参与度》](https://market.ft.tech/gateway/doc/pages/2p8ebvd0.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: 查询指定股票的千股千评市场热度用户关注指数及�
 
 # 千股千评 — 市场热度用户关注指数
 
+接口：`GET /api/v1/market/data/stock-comment/focus`。在线文档：[《千股千评关注度》](https://market.ft.tech/gateway/doc/pages/fu7619ln.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

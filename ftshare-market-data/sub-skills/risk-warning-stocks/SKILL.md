@@ -5,6 +5,8 @@ description: 按交易日查询风险警示股票列表。必填 --date，可选
 
 # 风险警示股
 
+接口：`GET /api/v1/market/data/risk-warning-stocks`。在线文档：[《风险警示股》](https://market.ft.tech/gateway/doc/pages/3o4clccl.md)
+
 按指定交易日查询风险警示股票列表。接口：GET `/api/v1/market/data/risk-warning-stocks`。
 
 ## 参数

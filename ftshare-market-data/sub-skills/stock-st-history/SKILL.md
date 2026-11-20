@@ -5,7 +5,7 @@ description: 查询 A 股股票历史风险警示（ST/*ST/PT/退市整理期）
 
 # 股票历史ST状态
 
-接口：`GET /api/v1/market/data/stock-st-history`。`symbol` 必填，支持逗号分隔批量；`st_type` 可选过滤；不分页，一次返回全部阶段区间。
+接口：`GET /api/v1/market/data/stock-st-history`。`symbol` 必填，支持逗号分隔批量；`st_type` 可选过滤；不分页，一次返回全部阶段区间。在线文档：[《股票历史ST状态》](https://market.ft.tech/gateway/doc/pages/hs1q3li4.md)
 
 ```bash
 python <RUN_PY> stock-st-history --symbol 600735.SH

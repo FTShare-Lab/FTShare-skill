@@ -110,7 +110,7 @@ class TestMain(unittest.TestCase):
             with patch.object(sys, "argv", ["handler.py", "--symbol", "A2611.DCE",
                                             "--start", "1791475200000",
                                             "--end", "1791647999000",
-                                            "--limit", "1001"]):
+                                            "--limit", "10001"]):
                 with self.assertRaises(SystemExit):
                     handler.main()
 

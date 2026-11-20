@@ -5,7 +5,7 @@ description: 查询东方财富美股列表。Use when user asks for 美股列�
 
 # 东方财富美股列表
 
-接口：`GET /api/v1/market/data/eastmoney-us-stock-list`。获取东方财富美股最新快照，支持刷新和分页。
+接口：`GET /api/v1/market/data/eastmoney-us-stock-list`。获取东方财富美股最新快照，支持刷新和分页。在线文档：[《东方财富美股列表》](https://market.ft.tech/gateway/doc/pages/h5azbbob.md)
 
 ## 调用示例
 

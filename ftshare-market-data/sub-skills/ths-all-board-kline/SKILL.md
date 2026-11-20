@@ -5,6 +5,8 @@ description: Get THS all boards K-line by date range (同花顺全板块 K 线).
 
 # 同花顺全板块 K 线
 
+接口：`GET /api/v1/market/data/ths-all-board-kline`。在线文档：[《同花顺全板块K线》](https://market.ft.tech/gateway/doc/pages/6ujul8nk.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

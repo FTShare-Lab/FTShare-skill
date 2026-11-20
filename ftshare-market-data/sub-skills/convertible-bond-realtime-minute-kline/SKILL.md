@@ -5,6 +5,8 @@ description: 查询单只或批量可转债当前交易日实时 1 分钟 K 线�
 
 # 可转债实时分钟K线
 
+接口：`GET /api/v4/market/data/convertible-bond-realtime-minute-kline`。在线文档：[《可转债实时分钟K线》](https://market.ft.tech/gateway/doc/pages/igkrpa9d.md)
+
 查询单只或批量可转债当前交易日实时 1 分钟 K 线。必填 `--symbols`，按空格分隔，1～20 只。
 
 外部接口：`GET /api/v4/market/data/convertible-bond-realtime-minute-kline`。

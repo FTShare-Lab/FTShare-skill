@@ -49,7 +49,7 @@ python <RUN_PY> stock-realtime-minute-kline --symbols 600519.SH 000001.SZ
 python <RUN_PY> hk-candlesticks --trade-code 00700.HK --interval-unit day --until-date 2026-03-24
 ```
 
-`<RUN_PY>` 是本目录下 `run.py` 的绝对路径。当前子 skill 仅对应《FTShare 四档套餐全量接口表》及其活动源文档；已下线、未发布和暂不支持的接口不在范围内。
+`<RUN_PY>` 是本目录下 `run.py` 的绝对路径。当前子 skill 仅对应《FTShare 四档套餐全量接口表》及其在线文档（`https://market.ft.tech/gateway/doc/`）；已下线、未发布和暂不支持的接口不在范围内。
 
 ```json
 {
@@ -123,30 +123,24 @@ python run.py stock-ipos --all
 
 ## 能力总览
 
-子 skill 以《FTShare 四档套餐全量接口表》为范围依据，按股票、ETF、指数、基金、可转债、期货、港股、板块、资金流、财务、公司治理、新闻公告研报和宏观经济等领域组织。每个接口的参数、响应字段和限制见对应子目录的 `SKILL.md` 及活动源文档；`api-doc/已下线`、`api-doc/未发布` 不计入范围。
+子 skill 按股票、ETF、指数、基金、可转债、期货、港股、板块、资金流、财务、公司治理、新闻公告研报和宏观经济等领域组织。每个接口的参数、响应字段和限制见对应子目录的 `SKILL.md`，以及其中链接的在线文档（<https://market.ft.tech/gateway/doc/>）。
 
 
-| 域 | 代表子 skill |
-|---|---|
-| **交易日 / 财经日历 / 新闻公告研报** | `nth-trade-date`、`trading-calendar`、`financial-calendar`、`semantic-search-news`、`news-reaction-snapshot`、`stock-announcements`、`stock-reports`、`stock-prospectuses` |
-| **A 股行情 / 基础** | `stock-list-all-stocks`、`stock-description-all`、`stock-quotes-list`、`stock-ipos`、`stock-intraday`、`stock-candlesticks-daily`、`eastmoney-all-board-daily-ohlc`、`block-trades`、`margin-trading-details`、`continuous-auction-volume`、`intraday-auction-volume` |
-| **A 股财报 / 业绩** | `stock-income-*`、`stock-balance-*`、`stock-cashflow-*`、`stock-performance-express-*`、`stock-performance-forecast-*` |
-| **A 股股东 / 质押 / 增减持** | `stock-holder-ten`、`stock-holder-ften`、`stock-holder-nums`、`pledge-summary`、`pledge-detail`、`stock-share-chg`、`executive-holdings-changes`、`eastmoney-shareholder-changes` |
-| **A 股公司行动 / 代码与状态** | `shareholder-meeting`、`stock-dividends`、`stock-dividends-effective`、`major-contract-by-date`、`major-contract-by-symbol`、`major-contract-summary`、`ashare-code-change`、`ashare-code-change-timeline`、`ashare-status-change`、`stock-st-history` |
-| **A 股估值 / 千股千评 / 热度 / 资金流** | `eastmoney-stock-valuation`、`eastmoney-market-valuation`、`stock-comment-index/score/org-participate/desire/focus`、`stock-rank-xueqiu`、`stock-rank-eastmoney`、`stock-capital-flows` |
-| **A 股技术面因子（特色数据）** | `stock-tech-factor` |
-| **A 股涨跌停** | `limit-up-pool`、`limit-up-pool-yesterday`、`limit-down-pool`、`stock-minute-seal` |
-| **A 股商誉** | `stock-goodwill-detail`、`stock-goodwill-impairment`、`stock-goodwill-industry`、`stock-goodwill-market-overview`、`stock-goodwill-predict` |
-| **A 股供应链（特色数据）** | `supply-chain-industry-names`、`supply-chain-one-hop`、`supply-chain-companies`、`supply-chain-subsubindustry-companies`、`supply-chain-parent-subindustries`、`supply-chain-subsubindustries` |
-| **可转债** | `cb-lists`、`cb-base-data`、`convertible-bond-candlesticks`、`convertible-bond-candlesticks-batch`、`convertible-bond-minutes`、`convertible-bond-realtime-day-kline`、`convertible-bond-realtime-minute-kline`、`convertible-bond-szse-matching-trades` 等深交所成交明细 |
-| **ETF** | `etf-description-all`、`etf-components-all`、`etf-component-details`、`etf-pre-single`、`etf-pcfs`、`etf-pcf-infos`、`etf-share`、`etf-net-value`、`etf-announcements`、`etf-adjust-factor`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-minutes`、`etf-minutes-batch`、`etf-realtime-minute-kline`、`etf-realtime-day-kline`、`eastmoney-etf-flow` |
-| **基金** | `fund-basicinfo-single-fund`、`fund-cal-return-...`、`fund-nav-single-fund-paginated`、`fund-overview-all-funds-paginated`、`fund-support-symbols-all-funds-paginated` |
-| **指数** | `index-detail`、`index-list-paginated`、`index-ohlcs`、`index-prices`、`index-candlesticks`、`index-candlesticks-batch`、`index-minutes`、`index-minutes-batch`、`sw-index-history-minutes`、`index-realtime-minute-kline`、`index-realtime-day-kline`、`index-description-all`、`index-description-paginated`、`index-weight-list`、`index-weight-summary` |
-| **板块（东财 / 同花顺）** | `eastmoney-concept-boards`、`eastmoney-board-constituents/daily-ohlc/latest-ohlc`、`10jqk-board-list/kline/all-kline`、`ths-industry-constituents`、`ths-board-constituents` |
-| **港股** | `company-hk`、`hk-candlesticks`、`northbound`、`southbound`、`eastmoney-hk-index-daily-kline`、`hsi-daily-weight` |
-| **美股** | `eastmoney-us-stock-list`、`eastmoney-us-stock-daily-ohlc`、`us-basic` |
-| **期货** | `futures-base-data`、`futures-lists`、`futures-limit`、`futures-settle`、`futures-weekly-detail`、`futures-warehouse-receipt`、`futures-kline`、`futures-kline-batch`、`futures-minutes`、`futures-realtime-minute-kline`、`futures-realtime-day-kline`、`eastmoney-futures-position`、`eastmoney-futures-strange`、`member-build-process`、`member-position-ranking` |
-| **宏观经济（中国 + 美国）** | `economic-china-gdp/cpi/ppi/pmi/lpr/...-monthly`（15 项）、`economic-us-economic-by-type`（16 类，按 `--type`） |
+<!-- BEGIN: skills-table -->
+| 域 | 子技能数 | 代表子 skill |
+|---|---|---|
+| **股票数据** | 134 | `10jqk-board-list`、`abnormal-trading-details`、`abnormal-trading-overview`、`ashare-code-change`、`ashare-code-change-timeline`、`ashare-interactions`、`ashare-news-sentiment-factors`、`ashare-rating-factor-snapshot` 等 134 个 |
+| **ETF专题** | 17 | `etf-adjust-factor`、`etf-announcements`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-component-details`、`etf-components-all`、`etf-description-all`、`etf-minutes` 等 17 个 |
+| **债券专题** | 9 | `cb-lists`、`convertible-bond-candlesticks`、`convertible-bond-candlesticks-batch`、`convertible-bond-minutes`、`convertible-bond-realtime-day-kline`、`convertible-bond-realtime-minute-kline`、`convertible-bond-szse-directed-trades`、`convertible-bond-szse-matching-trades` 等 9 个 |
+| **公募基金** | 18 | `fund-asset-allocation-single-fund-paginated`、`fund-basicinfo-single-fund`、`fund-cal-return-single-fund-specific-period`、`fund-classification-single-fund`、`fund-company-list-paginated`、`fund-fee-single-fund-paginated`、`fund-holder-structure-single-fund`、`fund-index-tracking-funds` 等 18 个 |
+| **指数专题** | 16 | `global-index-daily-kline`、`index-candlesticks`、`index-candlesticks-batch`、`index-description-all`、`index-description-paginated`、`index-minutes`、`index-minutes-batch`、`index-realtime-day-kline` 等 16 个 |
+| **期货数据** | 19 | `eastmoney-futures-position`、`eastmoney-futures-strange`、`futures-base-data`、`futures-daily-kline`、`futures-kline`、`futures-kline-batch`、`futures-limit`、`futures-lists` 等 19 个 |
+| **现货数据** | 2 | `bullion-price`、`sge-spot-description-all` |
+| **港股数据** | 2 | `hk-candlesticks`、`hsi-daily-weight` |
+| **美股数据** | 2 | `eastmoney-us-stock-daily-ohlc`、`eastmoney-us-stock-list` |
+| **宏观经济** | 23 | `chinabond-yield-daily`、`economic-china-cpi-monthly`、`economic-china-credit-loans-monthly`、`economic-china-customs-trade-monthly`、`economic-china-fiscal-revenue-monthly`、`economic-china-fixed-asset-investment-monthly`、`economic-china-gdp-quarterly`、`economic-china-industrial-added-value-monthly` 等 23 个 |
+| **大模型语料** | 7 | `market-announcements`、`periodic-reports`、`semantic-search-news`、`shareholder-meeting`、`stock-announcements`、`stock-prospectuses`、`stock-reports` |
+<!-- END: skills-table -->
 
 ## 名称 → 代码映射
 
@@ -154,11 +148,14 @@ python run.py stock-ipos --all
 
 ## 查看可用接口
 
-不带参数运行 `run.py` 会打印用法并列出全部可用子 skill：
+不带参数运行 `run.py` 会按「名称 + 触发场景」列出全部子 skill；`--index` 等价，`--index --json` 输出含路由与文档链接的结构化清单，便于程序化匹配：
 
 ```bash
-python run.py
+python run.py --index
+python run.py --index --json
 ```
+
+完整索引在 `sub-skills/INDEX.md`（按业务域分组，含路由、触发场景、套餐档位与在线文档），机器可读映射在 `sub-skills/manifest.tsv`。两者由 `python tools/index_skills.py --write` 生成，`--check` 校验是否过期。
 
 查看某个接口的详细参数、响应结构与字段说明：
 

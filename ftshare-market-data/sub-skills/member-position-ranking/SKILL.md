@@ -5,6 +5,8 @@ description: 查询指定交易日/交易所/合约/方向的期货会员持仓�
 
 # 查询期货会员持仓排名
 
+接口：`GET /api/v2/market/data/member-position-ranking`。在线文档：[《会员持仓排名》](https://market.ft.tech/gateway/doc/pages/aftwyj12.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

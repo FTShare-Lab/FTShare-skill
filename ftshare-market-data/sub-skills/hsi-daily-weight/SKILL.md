@@ -1,9 +1,11 @@
 ---
 name: hsi-daily-weight
-description: 查询恒生系列指数成份股权重（HSI 恒生指数 / HSCEI 国企指数 / HSAIT 等）。按交易日/日期范围/指数/股票过滤。Use when user asks about 港股指数权重, 恒生指数成份股权重, 国企指数权重, 恒生科技权重, hsi daily weight, 港股权重. 注意：HSAIT 的"恒生科技"映射存疑（见注意事项），HSI/HSCEI 可用。
+description: 查询恒生系列指数成份股权重（HSI 恒生指数 / HSCEI 国企指数 / HSAIT 等）。按交易日 + 指数/股票过滤（交易日必填）。Use when user asks about 港股指数权重, 恒生指数成份股权重, 国企指数权重, 恒生科技权重, hsi daily weight, 港股权重. 注意：HSAIT 的"恒生科技"映射存疑（见注意事项），HSI/HSCEI 可用。
 ---
 
 # 查询恒生系列指数成份股权重
+
+接口：`GET /api/v1/market/data/hk/hsi-daily-weight`。在线文档：[《恒生指数每日权重》](https://market.ft.tech/gateway/doc/pages/99ty9ak0.md)
 
 ## 接口说明
 
@@ -32,13 +34,13 @@ description: 查询恒生系列指数成份股权重（HSI 恒生指数 / HSCEI 
 
 ```bash
 # 恒生指数 HSI 某日成份权重（先按指数取，再按最新交易日筛）
-python scripts/handler.py --index_slug HSI --page 1 --page_size 200
+python <RUN_PY> hsi-daily-weight --trade_date 20260529 --index_slug HSI --page 1 --page_size 200
 # 某日某指数成份权重
-python scripts/handler.py --trade_date 20260529 --index_slug HSCEI
+python <RUN_PY> hsi-daily-weight --trade_date 20260529 --index_slug HSCEI
 # 某股票在各指数的权重历史
-python scripts/handler.py --stock_code 0700
+python <RUN_PY> hsi-daily-weight --trade_date 20260529 --stock_code 0700
 # 日期范围 + 指数
-python scripts/handler.py --start_date 20260501 --end_date 20260529 --index_slug HSI
+python <RUN_PY> hsi-daily-weight --trade_date 20260529 --index_slug HSI
 ```
 
 ## 响应结构（信封：code/message/data.records）
@@ -85,6 +87,8 @@ python scripts/handler.py --start_date 20260501 --end_date 20260529 --index_slug
 - `trade_date` 与 `start_date`/`end_date` 互斥；`start_date`/`end_date` 必须成对且 `start_date ≤ end_date`。
 - 排序：`trade_date DESC, index_slug, stock_code`。
 - HTTP 恒为 200，业务错误通过 `code`/`message` 携带（非 0 为错误）；高频调用建议用 `trade_date` 精确过滤。
+
+> 注意：`--trade_date` 为服务端必填参数（不传返回 400「缺少必填参数：交易日期」）；本接口不支持日期区间查询。
 
 ## 调用示例
 

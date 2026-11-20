@@ -1,9 +1,11 @@
 ---
 name: margin-trading-details
-description: "获取融资融券明细。当用户需要获取 A 股融资融券明细列表（按交易日快照），支持单日、区间或标的过滤查询，或了解融资融券明细时使用。"
+description: "获取融资融券明细。当用户需要获取 A 股融资融券明细列表（按交易日快照），支持单日、区间或标的过滤查询，或了解融资融券明细时使用。同义：两融。"
 ---
 
 # 获取融资融券明细
+
+接口：`GET /api/v1/market/data/margin-trading-details`。在线文档：[《融资融券明细》](https://market.ft.tech/gateway/doc/pages/sx26v1nk.md)
 
 ## 接口说明
 

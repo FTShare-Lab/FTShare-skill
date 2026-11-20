@@ -1,13 +1,28 @@
 ---
 name: hibor-daily
-description: 查询HIBOR日度利率。接口：GET /api/v1/market/data/hibor-daily。所有请求必须设置 FTSHARE_API_KEY。
+description: "按日期范围查询香港银行同业拆借利率（HIBOR）日度数据。可用参数：--start_date、--end_date、--page、--page_size。接口：GET /api/v1/market/data/hibor-daily。"
 ---
 
 # HIBOR日度利率
 
-接口：GET `/api/v1/market/data/hibor-daily`。参数和响应以 `ftshare-doc/api-doc/宏观经济/国际宏观/HIBOR日度利率.md` 为准。
+接口：GET `/api/v1/market/data/hibor-daily`。参数和响应以 [《HIBOR日度利率》](https://market.ft.tech/gateway/doc/pages/wcjgmvoj.md) 为准。
 
 请求必须从环境变量 `FTSHARE_API_KEY` 读取凭据，并通过请求头发送 `FTSHARE_API_KEY` 和 `Content-Type: application/json`；缺少凭据时不会发起请求。
+
+## 参数
+
+| 参数 | 必填 | 说明 |
+|---|---|---|
+| `--start_date` | 是 | 开始日期，格式 YYYYMMDD |
+| `--end_date` | 是 | 结束日期，格式 YYYYMMDD，不能早于 start_date |
+| `--page` | 否 | 页码，从 1 开始，默认 1 |
+| `--page_size` | 否 | 每页数量，默认 100，范围 1–1000 |
+
+## 返回
+
+- 记录容器：`data.records`
+- 分页字段：`pageNum`、`pageSize`、`total`、`pages`
+- 记录字段：`trade_date`、`on_rate`、`w1`、`w2`、`m1–m12`
 
 ## 调用示例
 

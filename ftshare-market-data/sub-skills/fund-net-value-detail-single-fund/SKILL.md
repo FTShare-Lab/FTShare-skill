@@ -5,6 +5,8 @@ description: "按基金代码查询基金净值明细。当用户需要查询基
 
 # 基金净值明细
 
+接口：`GET /api/v1/market/data/fund/fund-net-value`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -36,7 +38,7 @@ python <RUN_PY> fund-net-value-detail-single-fund --fund_code 000001 --start_dat
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金净值明细》](https://market.ft.tech/gateway/doc/pages/6b5i2aid.md)。
 
 ## 注意事项
 

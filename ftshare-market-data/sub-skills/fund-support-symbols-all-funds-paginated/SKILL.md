@@ -5,6 +5,8 @@ description: Get paginated list of all supported fund symbols with code and name
 
 # 查询所有支持基金的标的列表（分页）
 
+接口：`GET /api/v1/market/data/fund/fund-support-symbols`。在线文档：[《基金支持标的》](https://market.ft.tech/gateway/doc/pages/87xbi3pr.md)
+
 ## 参数
 
 | 参数 | 类型 | 必填 | 说明 | 示例 |

@@ -5,6 +5,8 @@ description: Get goodwill detail (商誉明细) for all stocks in a specific yea
 
 # 查询个股商誉明细
 
+接口：`GET /api/v1/market/data/goodwill/stock-detail`。在线文档：[《商誉个股明细》](https://market.ft.tech/gateway/doc/pages/qtl1iak0.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -25,7 +27,7 @@ description: Get goodwill detail (商誉明细) for all stocks in a specific yea
 ## 执行方式
 
 ```bash
-python scripts/handler.py --date 20251231
+python <RUN_PY> stock-goodwill-detail --date 20251231
 ```
 
 ## 响应结构

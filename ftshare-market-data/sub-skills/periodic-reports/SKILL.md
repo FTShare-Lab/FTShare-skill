@@ -5,6 +5,8 @@ description: 查询上市公司定期报告（年报/半年报/一季报/三季�
 
 # 定期报告列表
 
+接口：`GET /api/v2/market/data/announcements/periodic-reports`。在线文档：[《定期报告列表》](https://market.ft.tech/gateway/doc/pages/6ktm9ygz.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

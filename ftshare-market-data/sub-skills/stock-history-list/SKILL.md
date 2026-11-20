@@ -5,6 +5,8 @@ description: 按交易日查询股票历史行情截面列表。必填 --trade-d
 
 # 股票历史列表
 
+接口：`GET /api/v1/market/data/stock-history-list`。在线文档：[《股票历史列表》](https://market.ft.tech/gateway/doc/pages/jmcwf10j.md)
+
 按交易日查询 A 股主板股票历史行情截面。接口：GET `/api/v1/market/data/stock-history-list`。
 
 注意：`region_sector`、`cum_adjust_factor` 不可用；`pe_ttm`、`concept_sectors` 仅 2026 年起有数据。

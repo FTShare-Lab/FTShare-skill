@@ -5,7 +5,7 @@ description: 查询指定 A 股的新闻市场反应快照（消息量价共振�
 
 # 消息量价共振
 
-接口：`GET /api/v3/market/data/news-reaction-snapshot`
+接口：`GET /api/v3/market/data/news-reaction-snapshot`。在线文档：[《消息量价共振》](https://market.ft.tech/gateway/doc/pages/96o5mbkw.md)
 
 参数：`--symbol` 必填（带交易所后缀，如 `600519.SH`，兼容 `.XSHG/.XSHE/.BJSE`、`SH:600000` 等写法，响应统一为六位数字加 `.SH/.SZ/.BJ`）；`--start-date`、`--end-date` 必填（`YYYYMMDD` 或 `YYYY-MM-DD`，与起始日相隔不超过 31 天）；`--lookback-hours` 可选，仅 `24` 或 `48`，不传返回两套窗口；`--page` 默认 1（上限 1000）、`--page-size` 默认 50（上限 200）；支持 `--all` 自动翻页。
 

@@ -5,6 +5,8 @@ description: "按基金代码查净值口径收益表现。当用户需要查询
 
 # 基金净值收益表现
 
+接口：`GET /api/v1/market/data/fund/fund-net-value-performance`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -36,7 +38,7 @@ python <RUN_PY> fund-net-value-performance-single-fund --fund_code 000001 --star
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金净值收益表现》](https://market.ft.tech/gateway/doc/pages/u3nr8qes.md)。
 
 ## 注意事项
 

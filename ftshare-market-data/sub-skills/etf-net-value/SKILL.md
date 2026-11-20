@@ -5,6 +5,8 @@ description: 查询 ETF 历史净值（etf_net_value）。用户问 ETF 净值�
 
 # ETF 历史净值
 
+接口：`GET /api/v2/market/data/etf-net-value`。在线文档：[《ETF净值》](https://market.ft.tech/gateway/doc/pages/00pn98cv.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: 查询全部指数基础信息（market.ft.tech）。用户问全�
 
 # 指数 - 查询全部指数基础信息
 
+接口：`GET /api/v1/market/data/index-description-all`。在线文档：[《指数基础信息》](https://market.ft.tech/gateway/doc/pages/ekyhuwqu.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

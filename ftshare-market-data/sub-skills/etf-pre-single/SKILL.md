@@ -5,6 +5,8 @@ description: 查询单只 ETF 盘前数据。用户问某只 ETF 盘前、申购
 
 # 查询单只 ETF 盘前数据
 
+接口：`GET /api/v2/market/data/etf-pre-single`。在线文档：[《单只ETF盘前数据》](https://market.ft.tech/gateway/doc/pages/v7xq6ura.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

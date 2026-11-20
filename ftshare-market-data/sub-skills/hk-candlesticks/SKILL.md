@@ -5,6 +5,12 @@ description: 按港股代码查询日/月/季/年 K 线。用户问港股 K 线�
 
 # 查询港股 K 线（hk-candlesticks）
 
+接口：`GET /api/v2/market/data/hk/hk-candlesticks`。在线文档：[《港股K线》](https://market.ft.tech/gateway/doc/pages/k4v3vd8x.md)
+
+> 口径提醒：
+> - `until_date` 为必填；若**不传 `since_date`**，返回的是该标的**最早**一段数据（实测 00700.HK 从 2010-01-04 开始），不是最近数据。取最新区间请同时传 `since_date`。
+> - `turnover`（成交额）单位为**千港元**（实测 09988.HK：volume 74,549,578 × close 176.57 ≈ 1.32e10 港元，turnover 13,996,288.13 × 1000 吻合）。
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -69,7 +75,7 @@ CLI 统一使用 **kebab-case** 长选项名：`--trade-code`、`--interval-unit
 ### 直接执行 handler（调试）
 
 ```bash
-python scripts/handler.py --trade-code 00700.HK --interval-unit day --until-date 2026-03-24
+python <RUN_PY> hk-candlesticks --trade-code 00700.HK --interval-unit day --until-date 2026-03-24
 ```
 
 （需在 `sub-skills/hk-candlesticks` 目录下执行，或传入脚本完整路径。）

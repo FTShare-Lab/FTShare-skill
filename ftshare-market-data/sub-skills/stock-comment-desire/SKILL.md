@@ -5,6 +5,8 @@ description: 查询指定股票的千股千评市场参与意愿及5日均值变
 
 # 千股千评 — 市场参与意愿
 
+接口：`GET /api/v1/market/data/stock-comment/desire`。在线文档：[《千股千评意愿度》](https://market.ft.tech/gateway/doc/pages/6olp75vh.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

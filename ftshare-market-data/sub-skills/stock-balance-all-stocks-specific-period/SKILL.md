@@ -5,6 +5,8 @@ description: Get balance sheet (资产负债表) for all stocks in a specific re
 
 # 查询单报告期全市场资产负债表（分页）
 
+接口：`GET /api/v1/market/data/finance/balance`。在线文档：[《A股资产负债表》](https://market.ft.tech/gateway/doc/pages/qf2a0ocw.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -29,7 +31,7 @@ description: Get balance sheet (资产负债表) for all stocks in a specific re
 ## 执行方式
 
 ```bash
-python scripts/handler.py --year 2025 --report-type q2 --page 1 --page-size 20
+python <RUN_PY> stock-balance-all-stocks-specific-period --year 2025 --report-type q2 --page 1 --page-size 20
 ```
 
 ## 响应结构

@@ -5,6 +5,8 @@ description: 含指数代码（纯 6 位 `index_code`）、名称、简介及其
 
 # 分页查询指数描述列表（index-description-paginated）
 
+接口：`GET /api/v1/market/data/index/index_description`。在线文档：[《中证指数描述列表》](https://market.ft.tech/gateway/doc/pages/y648z1s3.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -59,7 +61,7 @@ python <RUN_PY> index-description-paginated --page 1 --page-size 20
 ### 直接执行 handler（调试）
 
 ```bash
-python scripts/handler.py --page 1 --page-size 20
+python <RUN_PY> index-description-paginated --page 1 --page-size 20
 ```
 
 （需在 `sub-skills/index-description-paginated` 目录下执行，或传入脚本完整路径。）

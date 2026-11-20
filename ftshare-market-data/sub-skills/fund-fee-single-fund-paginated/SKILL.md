@@ -5,6 +5,8 @@ description: "查询基金费率（当前有效，分页）。当用户需要查
 
 # 基金费率
 
+接口：`GET /api/v1/market/data/fund/fund-fee`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -35,7 +37,7 @@ python <RUN_PY> fund-fee-single-fund-paginated --fund_code 000001 --charge_type 
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金费率》](https://market.ft.tech/gateway/doc/pages/gnzc5tcq.md)。
 
 ## 注意事项
 

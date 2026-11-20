@@ -5,6 +5,8 @@ description: Get A-share market-wide goodwill overview (A股商誉市场概况) 
 
 # 查询A股商誉市场概况
 
+接口：`GET /api/v1/market/data/goodwill/market-overview`。在线文档：[《商誉市场总览》](https://market.ft.tech/gateway/doc/pages/20nmy527.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -21,7 +23,7 @@ description: Get A-share market-wide goodwill overview (A股商誉市场概况) 
 ## 执行方式
 
 ```bash
-python scripts/handler.py
+python <RUN_PY> stock-goodwill-market-overview
 ```
 
 ## 响应结构

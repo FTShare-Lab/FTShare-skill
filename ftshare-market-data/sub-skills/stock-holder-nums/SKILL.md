@@ -1,9 +1,11 @@
 ---
 name: stock-holder-nums
-description: "查询 A 股股东人数。当用户需要获取 A 股股东人数信息（按 stock_code 查全部历史，或以 is_last=true 查全市场最新一期），含人均流通股、筹码集中度、十大股东持股比例等衍生指标时使用。"
+description: "查询 A 股股东人数。当用户需要获取 A 股股东人数信息（按 stock_code 查全部历史，或以 is_last=true 查全市场最新一期），含人均流通股、筹码集中度、十大股东持股比例等衍生指标时使用。同义：股东户数。"
 ---
 
 # 查询 A 股股东人数
+
+接口：`GET /api/v1/market/data/holder/stock-holder-nums`。在线文档：[《股东人数》](https://market.ft.tech/gateway/doc/pages/oecit8qn.md)
 
 ## 接口说明
 
@@ -44,8 +46,8 @@ python <RUN_PY> stock-holder-nums --is_last --page 1 --page_size 50
             "stock_name": "平安银行",
             "publish_date": "2026-04-29",
             "report_date": "2026-03-31",
-            "holder_num": 11215,
-            "holder_num_change_ratio": -5.5022,
+            "holder_num": 406492,
+            "holder_num_change_ratio": -9.8111,
             "per_capita_circ_share": 4895.6833,
             "per_capita_share_change_ratio": null,
             "chip_concentration": null,

@@ -5,6 +5,8 @@ description: 单只股票/ETF/指数/可转债历史日/周/月/年 K 线 GET �
 
 # 股票 K 线 - 查询单只标的 K 线（stock-candlesticks）
 
+接口：`GET /api/v1/market/data/stock-candlesticks`。在线文档：[《股票K线》](https://market.ft.tech/gateway/doc/pages/owq0364i.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: "查询东财单板块历史 OHLC。当用户需要查询指定东�
 
 # 查询东财单板块历史 OHLC
 
+接口：`GET /api/v1/market/data/eastmoney-board-daily-ohlc`。在线文档：[《东方财富板块日线OHLC》](https://market.ft.tech/gateway/doc/pages/h203ey6u.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

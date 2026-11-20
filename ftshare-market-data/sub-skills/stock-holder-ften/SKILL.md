@@ -5,6 +5,8 @@ description: "查询 A 股十大流通股东。当用户需要获取 A 股十大
 
 # 查询 A 股十大流通股东
 
+接口：`GET /api/v1/market/data/holder/stock-holder-ften`。在线文档：[《十大流通股东》](https://market.ft.tech/gateway/doc/pages/era9uwoi.md)
+
 ## 接口说明
 
 | 项目     | 说明                                                              |

@@ -5,6 +5,8 @@ description: "查询东财概念板块列表。当用户需要查询东财概念
 
 # 查询东财概念板块列表
 
+接口：`GET /api/v1/market/data/eastmoney-concept-boards`。在线文档：[《东方财富概念板块》](https://market.ft.tech/gateway/doc/pages/i21jsfx7.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -53,5 +55,5 @@ python <RUN_PY> eastmoney-concept-boards
 ## 注意事项
 
 - 接口直接返回数组，无分页包装结构
-- 板块代码以 `BK` 开头，可用于 `eastmoney-board-daily-ohlc` 和 `eastmoney-board-latest-ohlc` 查询K线
+- 板块代码以 `BK` 开头，可用于 `eastmoney-board-daily-ohlc`（单板块历史日线）或 `eastmoney-all-board-daily-ohlc`（全板块历史日线）查询 K 线
 - 成分代码不含市场后缀（如 `600089` 而非 `600089.SH`）

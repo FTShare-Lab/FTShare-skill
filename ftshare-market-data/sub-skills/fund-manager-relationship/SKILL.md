@@ -5,6 +5,8 @@ description: "按基金代码查历任/现任基金经理，或按基金经理�
 
 # 基金经理任职关系
 
+接口：`GET /api/v1/market/data/fund/fund-manager`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -35,7 +37,7 @@ python <RUN_PY> fund-manager-relationship --fund_code 000001 --is_inoffice 1
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金经理任职关系》](https://market.ft.tech/gateway/doc/pages/xju0x2mx.md)。
 
 ## 注意事项
 

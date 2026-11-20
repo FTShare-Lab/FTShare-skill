@@ -5,6 +5,8 @@ description: "查询基金持有人结构（按报告期）。当用户需要查
 
 # 基金持有人结构
 
+接口：`GET /api/v1/market/data/fund/fund-holder-structure`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -34,7 +36,7 @@ python <RUN_PY> fund-holder-structure-single-fund --fund_code 000001 --report_ty
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金持有人结构》](https://market.ft.tech/gateway/doc/pages/c8538o8n.md)。
 
 ## 注意事项
 

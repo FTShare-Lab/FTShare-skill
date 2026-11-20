@@ -5,6 +5,8 @@ description: 单只可转债历史日/周/月/年 K 线（convertible_bond_candl
 
 # 可转债历史K线 - 查询单只可转债日/周/月/年 K 线（convertible_bond_candlesticks）
 
+接口：`GET /api/v1/market/data/convertible-bond-candlesticks`。在线文档：[《可转债历史K线》](https://market.ft.tech/gateway/doc/pages/g1c884ww.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
@@ -54,7 +56,7 @@ python <RUN_PY> convertible-bond-candlesticks --symbol 113042.SH --interval-unit
 
 - `symbol`、`interval_unit`、`since_ts_millis`、`until_ts_millis` 必填；缺 `since` 会返回 `缺少必填参数：since_ts_millis`。
 - 仅接受可转债标的；传入股票等其它类别返回 `symbols [...] are not convertible bonds`。
-- 分钟 K 线不在本接口：本接口传 `interval_unit=minute` 会返回 400 并指向 `convertible-bond-minute-candlesticks`，请改用 `convertible-bond-minutes` 子 skill。
+- 分钟 K 线不在本接口：传 `interval_unit=minute` 会返回 400，请改用 `convertible-bond-minutes` 子 skill。
 - 周、月、年 K 按请求范围内的历史日 K 聚合；窗口未覆盖完整周期时，该周期不是完整周期数据。
 - 结果按时间升序返回；设置 `limit` 时保留最新若干根。
 - 单次时间跨度上限 12 个自然月，更长区间需分段调用。

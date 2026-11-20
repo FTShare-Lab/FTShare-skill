@@ -5,6 +5,8 @@ description: Get cash flow statement (现金流量表) for all stocks in a speci
 
 # 查询单报告期全市场现金流量表（分页）
 
+接口：`GET /api/v1/market/data/finance/cashflow`。在线文档：[《A股现金流量表》](https://market.ft.tech/gateway/doc/pages/6ch0qd83.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -29,7 +31,7 @@ description: Get cash flow statement (现金流量表) for all stocks in a speci
 ## 执行方式
 
 ```bash
-python scripts/handler.py --year 2025 --report-type q2 --page 1 --page-size 20
+python <RUN_PY> stock-cashflow-all-stocks-specific-period --year 2025 --report-type q2 --page 1 --page-size 20
 ```
 
 ## 响应结构

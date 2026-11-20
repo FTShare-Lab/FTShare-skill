@@ -5,6 +5,8 @@ description: 根据公告 ID 查询单条报告公告的摘要、标题、证券
 
 # 查询报告公告摘要
 
+接口：`GET /api/v2/market/data/report-announcements/summary`。在线文档：[《报告公告摘要》](https://market.ft.tech/gateway/doc/pages/kfe01dfi.md)
+
 ## 接口说明
 
 | 项目 | 说明 |

@@ -5,6 +5,8 @@ description: 查询 ETF 成分证券明细（etf_component_details）。用户�
 
 # ETF 成分证券明细
 
+接口：`GET /api/v2/market/data/etf-component-details`。在线文档：[《ETF成分证券明细》](https://market.ft.tech/gateway/doc/pages/4cmtk12o.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |

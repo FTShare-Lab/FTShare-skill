@@ -1,9 +1,11 @@
 ---
 name: index-weight-list
-description: 分页查询指数成份权重明细（market.ft.tech）。必填 index_code；可选 date、分页。每条含成份代码、名称、权重及该期 url_hash。用户问指数成份权重、沪深300 权重列表、某期指数权重明细、指数成份股占比时使用。前置：可先用 index-weight-summary 确认有哪些期数/日期。下游：取到 url_hash 后可调 index-weight-download 下载 xlsx。
+description: 分页查询指数成份权重明细（market.ft.tech）。必填 index_code；可选 date、分页。每条含成份代码、名称、权重及该期 url_hash。用户问指数成份权重、沪深300 权重列表、某期指数权重明细、指数成份股占比时使用。前置：可先用 index-weight-summary 确认有哪些期数/日期。
 ---
 
 # 分页查询指数权重列表（index-weight-list）
+
+接口：`GET /api/v1/market/data/index/index_weight`。在线文档：[《指数权重列表》](https://market.ft.tech/gateway/doc/pages/xym4pwjo.md)
 
 ## 1. 接口描述
 
@@ -63,7 +65,7 @@ python <RUN_PY> index-weight-list --index-code 000300 --page 1 --page-size 20
 ### 直接执行 handler（调试）
 
 ```bash
-python scripts/handler.py --index-code 000300 --date 20250320 --page 1 --page-size 20
+python <RUN_PY> index-weight-list --index-code 000300 --date 20250320 --page 1 --page-size 20
 ```
 
 （需在 `sub-skills/index-weight-list` 目录下执行，或传入脚本完整路径。）
@@ -72,7 +74,7 @@ python scripts/handler.py --index-code 000300 --date 20250320 --page 1 --page-si
 
 本接口为**权重链第 2 步**。  
 - **前置**：`index-weight-summary` → 取得 `index_code` 与可用 `date`。  
-- **下游**：返回的 `url_hash` → `index-weight-download --url-hash <url_hash>` 下载整期 xlsx。
+- `url_hash` 为该期权重文件的标识。
 
 ### 名称→代码映射
 

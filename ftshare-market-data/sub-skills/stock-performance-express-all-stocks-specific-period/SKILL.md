@@ -5,6 +5,8 @@ description: Get performance express (业绩快报) for all stocks in a specific
 
 # 查询指定报告期全市场业绩快报（分页）
 
+接口：`GET /api/v1/market/data/finance/stock-performance-express`。在线文档：[《业绩快报》](https://market.ft.tech/gateway/doc/pages/ny95bwo1.md)
+
 ## 参数
 
 | 参数 | 类型 | 必填 | 说明 | 示例 |
@@ -20,13 +22,13 @@ description: Get performance express (业绩快报) for all stocks in a specific
 从用户问题中提取年度和报告期类型，执行：
 
 ```bash
-python scripts/handler.py --year 2024 --report-type annual --page 1 --page-size 20
+python <RUN_PY> stock-performance-express-all-stocks-specific-period --year 2024 --report-type annual --page 1 --page-size 20
 ```
 
 查单票全部报告期（模式A，不分页）：
 
 ```bash
-python scripts/handler.py --stock-code 000001.SZ
+python <RUN_PY> stock-performance-express-all-stocks-specific-period --stock-code 000001.SZ
 ```
 
 脚本输出带分页信息的 JSON，每项含 `stock_code`、`stock_name`、`eps`、`total_revenue`、`net_profit`、`roe` 等字段，以表格展示给用户。

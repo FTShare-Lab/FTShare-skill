@@ -1,9 +1,11 @@
 ---
 name: 10jqk-board-list
-description: Get all THS board list (同花顺板块列表). Use when user asks about 同花顺板块列表、概念板块、行业板块、地域板块、证监会板块、有哪些板块.
+description: "Get all THS board list (同花顺板块列表). Use when user asks about 同花顺板块列表、概念板块、行业板块、地域板块、证监会板块、有哪些板块。同义：打板。"
 ---
 
 # 同花顺板块列表
+
+接口：`GET /api/v1/market/data/ths-board-list`。在线文档：[《同花顺板块列表》](https://market.ft.tech/gateway/doc/pages/o11ndmcf.md)
 
 ## 1. 接口描述
 

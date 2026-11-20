@@ -5,6 +5,8 @@ description: 查询 A 股股票资金流向（主力净流入）。支持当前�
 
 # 查询 A 股股票资金流向（实时快照 / 15 分钟切片）
 
+接口：`GET /api/v1/market/data/stock-capital-flows`。在线文档：[《股票资金流向》](https://market.ft.tech/gateway/doc/pages/rt2hibwf.md)
+
 ## 接口说明
 
 | 项目 | 说明 |
@@ -24,21 +26,26 @@ description: 查询 A 股股票资金流向（主力净流入）。支持当前�
 | page | int | 否 | 页码 | 1 | 从 1 开始，默认 1 |
 | page_size | int | 否 | 每页条数 | 50 | 默认 50 |
 
+## 返回形状
+
+- 分页模式（不传 `--symbol`）：`{code, message, data:{pageNum, pageSize, total, pages, records}}`，记录按主力净流入降序。
+- 单标的模式（传 `--symbol`）：handler 已定位该标的并返回 `{found, symbol, rank, total_items, record}`，`record` 为单条资金流记录、`rank` 为全市场排名。
+
 ## 执行方式
 
 ```bash
 # 当前实时快照（分页）
-python scripts/handler.py --page 1 --page-size 50
+python <RUN_PY> stock-capital-flows --page 1 --page-size 50
 # 历史 15 分钟切片（默认 time=1530 日终）
-python scripts/handler.py --date 20260616 --page 1 --page-size 50
+python <RUN_PY> stock-capital-flows --date 20260616 --page 1 --page-size 50
 # 指定切片时刻（如 10:15）
-python scripts/handler.py --date 20260616 --time 1015 --page 1 --page-size 50
+python <RUN_PY> stock-capital-flows --date 20260616 --time 1015 --page 1 --page-size 50
 # 全量自动翻页拉取某日日终资金流
-python scripts/handler.py --date 20260616 --all
+python <RUN_PY> stock-capital-flows --date 20260616 --all
 # 只查某只票某切片（逐页定位，返回排名+记录）
-python scripts/handler.py --date 20260616 --symbol 601138.SH
+python <RUN_PY> stock-capital-flows --date 20260616 --symbol 601138.SH
 # 只查某只票当前实时快照
-python scripts/handler.py --symbol 601138.SH
+python <RUN_PY> stock-capital-flows --symbol 601138.SH
 ```
 
 ## 响应结构

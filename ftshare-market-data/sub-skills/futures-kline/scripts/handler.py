@@ -91,7 +91,7 @@ def main():
     _require_api_key()
     parser = argparse.ArgumentParser(description="查询期货合约日/周/月/季 K 线")
     parser.add_argument("--symbol", required=True,
-                        help="期货合约代码，如 A2605.DCE；只接受交易所全称后缀")
+                        help="不带交易所后缀的期货合约代码，如 A2605；CZCE 真实合约须用四位年份代码")
     parser.add_argument("--interval", default="daily", choices=INTERVALS,
                         help="K 线周期，默认 daily；周/月/季 K 基于日 K 按北京时间聚合")
     parser.add_argument("--start", type=int, default=None,

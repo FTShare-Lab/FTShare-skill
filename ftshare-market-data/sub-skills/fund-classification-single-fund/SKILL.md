@@ -5,6 +5,8 @@ description: "查询基金在多套分类标准下的分类。当用户需要查
 
 # 基金分类
 
+接口：`GET /api/v1/market/data/fund/fund-classification`。
+
 ## 接口说明
 
 | 项目     | 说明                                                              |
@@ -32,7 +34,7 @@ python <RUN_PY> fund-classification-single-fund --fund_code 000001 --classify_st
 
 ## 响应结构
 
-JSON 对象或数组，结构请参考 [ftshare-doc](../..) 接口文档。
+JSON 对象或数组，结构见 [《基金分类》](https://market.ft.tech/gateway/doc/pages/j00607zo.md)。
 
 ## 注意事项
 

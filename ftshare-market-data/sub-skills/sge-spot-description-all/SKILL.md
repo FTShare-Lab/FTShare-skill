@@ -5,6 +5,8 @@ description: 查询上海黄金交易所（SGE）现货/延期品种主档全量
 
 # 上金所现货品种
 
+接口：`GET /api/v1/market/data/sge-spot-description-all`。在线文档：[《上金所现货品种》](https://market.ft.tech/gateway/doc/pages/jzxudwbp.md)
+
 ## 1. 接口描述
 
 | 项目 | 说明 |
