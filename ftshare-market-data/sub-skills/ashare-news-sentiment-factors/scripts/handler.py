@@ -6,6 +6,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import datetime
 
 BASE_URL = os.environ.get("FTSHARE_BASE_URL", "https://market.ft.tech/gateway").rstrip("/")
 ENDPOINT = '/api/v3/market/data/ashare-news-sentiment-factors'
@@ -33,12 +34,21 @@ def safe_urlopen(request, timeout=30):
     return SAFE_URLOPENER.open(request, timeout=timeout)
 
 
+def _parse_date(value, flag):
+    try:
+        return datetime.strptime(value, "%Y%m%d")
+    except ValueError:
+        print(f"{flag} 必须为 YYYYMMDD 格式", file=sys.stderr)
+        raise SystemExit(2)
+
+
 def main():
     key = _require_api_key()
     parser = argparse.ArgumentParser(description='查询 A 股新闻情绪因子')
-    parser.add_argument("--trade-code", required=True, help="股票代码，格式 600519.SH")
-    parser.add_argument("--start-date", required=True, help="起始预测日 YYYYMMDD（服务端必填；不传会返回 503）")
-    parser.add_argument("--end-date", help="截止预测日 YYYYMMDD；与 start_date 间隔不得超过 31 天")
+    parser.add_argument("--trade-code", required=True, help="股票代码，格式 600519.SH；也接受 600519、SH:600519、600519.XSHG")
+    parser.add_argument("--date", help="单日预测日 YYYYMMDD，与 --start-date/--end-date 互斥")
+    parser.add_argument("--start-date", help="起始预测日 YYYYMMDD，必须与 --end-date 同时传入")
+    parser.add_argument("--end-date", help="截止预测日 YYYYMMDD，必须与 --start-date 同时传入")
     parser.add_argument("--page", type=int, default=1, help="页码，从 1 开始，默认 1")
     parser.add_argument("--page-size", type=int, default=50, help="每页条数，默认 50，最大 200")
 
@@ -49,30 +59,34 @@ def main():
     if not 1 <= args.page_size <= 200:
         print("--page-size 必须在 1~200 之间", file=sys.stderr)
         raise SystemExit(2)
-    if args.end_date and args.start_date:
-        from datetime import datetime
-        try:
-            d0 = datetime.strptime(args.start_date, "%Y%m%d")
-            d1 = datetime.strptime(args.end_date, "%Y%m%d")
-        except ValueError:
-            print("日期格式必须为 YYYYMMDD", file=sys.stderr)
+    if args.date is not None and (args.start_date is not None or args.end_date is not None):
+        print("--date 不能与 --start-date/--end-date 同时传入", file=sys.stderr)
+        raise SystemExit(2)
+    if (args.start_date is None) != (args.end_date is None):
+        print("--start-date 与 --end-date 必须同时传入", file=sys.stderr)
+        raise SystemExit(2)
+    if args.date is not None:
+        _parse_date(args.date, "--date")
+    if args.start_date is not None:
+        d0 = _parse_date(args.start_date, "--start-date")
+        d1 = _parse_date(args.end_date, "--end-date")
+        if d1 < d0:
+            print("--start-date 不能晚于 --end-date", file=sys.stderr)
             raise SystemExit(2)
-        if (d1 - d0).days > 31:
-            print("--start-date 与 --end-date 间隔不能超过 31 天", file=sys.stderr)
+        if (d1 - d0).days > 30:
+            print("--start-date 与 --end-date 含首尾跨度不能超过 31 天", file=sys.stderr)
             raise SystemExit(2)
-    params = {}
-    if args.trade_code is not None:
-        params['trade_code'] = args.trade_code
+
+    params = {'trade_code': args.trade_code}
+    if args.date is not None:
+        params['date'] = args.date
     if args.start_date is not None:
         params['start_date'] = args.start_date
-    if args.end_date is not None:
         params['end_date'] = args.end_date
-    if args.page is not None:
-        params['page'] = args.page
-    if args.page_size is not None:
-        params['page_size'] = args.page_size
+    params['page'] = args.page
+    params['page_size'] = args.page_size
 
-    query = ("?" + urllib.parse.urlencode(params)) if params else ""
+    query = "?" + urllib.parse.urlencode(params)
     request = urllib.request.Request(BASE_URL + ENDPOINT + query, headers={"FTSHARE_API_KEY": key, "X-Client-Name": "ft-claw", "Content-Type": "application/json"}, method="GET")
     try:
         with safe_urlopen(request) as response:

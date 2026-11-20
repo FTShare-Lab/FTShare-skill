@@ -68,7 +68,7 @@
       "doc_md": "https://market.ft.tech/gateway/doc/pages/zdxwn9lx.md",
       "tier": "进阶版",
       "category": "股票数据",
-      "description": "查询指定 A 股的新闻情绪因子。必填 --trade-code 与 --start-date；区间跨度不得超过 31 天。接口：GET /api/v3/market/data/ashare-news-sentiment-factors。"
+      "description": "查询指定 A 股的新闻情绪因子。用户询问个股新闻情绪、利好利空判断、情绪分数或预测日因子时使用。支持单日 --date、--start-date/--end-date 区间（跨度不超过 31 天）或都不传查当天。接口：GET /api/v3/market/data/ashare-news-sentiment-factors。"
     },
     {
       "skill": "ashare-rating-factor-snapshot",
@@ -78,7 +78,7 @@
       "doc_md": "https://market.ft.tech/gateway/doc/pages/hdns2u7u.md",
       "tier": "进阶版",
       "category": "股票数据",
-      "description": "查询指定 A 股的 Top-K 相关公司。用户询问股票相关性、相关公司排名或相关性评分时使用。"
+      "description": "查询 A 股相关性快照。用户询问股票相关性、相关公司、相关股票排名或相关性评分时使用。传 --trade-code 查单只股票的相关公司，不传则分页遍历全市场。接口：GET /api/v3/market/data/ashare-rating-factor-snapshot。"
     },
     {
       "skill": "ashare-status-change",

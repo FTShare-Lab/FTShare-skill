@@ -114,7 +114,7 @@ python3 <SKILL_DIR>/run.py ashare-news-sentiment-factors \
 ```
 
 > [!NOTE]
-> This interface requires an exchange suffix, such as `600519.SH`. Factor data may depend on plan entitlements and is research data, not an investment recommendation or prediction of future returns.
+> Stock codes are recommended in exchange-suffixed form, such as `600519.SH`. Factor data may depend on plan entitlements and is research data, not an investment recommendation or prediction of future returns.
 
 ## How routing works
 
