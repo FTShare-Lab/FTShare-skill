@@ -17,7 +17,7 @@ description: "获取东方财富期货每日成交持仓排行榜数据，按合
 |---|---|---|
 | `--exchange` | 否 | 交易所代码：shfe / dce / czce / cffex / ine / gfe |
 | `--variety-code` | 否 | 品种代码，如 cu / au / al / IF |
-| `--contract-code` | 否 | 合约代码，如 CU2607 / AU2608 |
+| `--contract-code` | 否 | 合约代码，如 CU2607 / AU2608；请求不区分大小写，CZCE 真实合约使用四位年份代码 |
 | `--trade-date` | 否 | 交易日 YYYY-MM-DD 或 YYYYMMDD；与其他日期条件组合时按 AND 过滤 |
 | `--start-date` | 否 | 起始日期 YYYY-MM-DD 或 YYYYMMDD；过滤大于等于该日期的记录 |
 | `--end-date` | 否 | 结束日期 YYYY-MM-DD 或 YYYYMMDD；过滤小于等于该日期的记录 |

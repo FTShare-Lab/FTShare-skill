@@ -1,6 +1,6 @@
 ---
 name: futures-limit
-description: "查询期货合约每日涨停价、跌停价和最低保证金率。接口：GET /api/v1/market/data/futures/ft-limit。"
+description: "查询期货合约每日涨停价、跌停价。接口：GET /api/v1/market/data/futures/ft-limit。"
 ---
 
 # 期货合约涨跌停价
@@ -15,7 +15,7 @@ description: "查询期货合约每日涨停价、跌停价和最低保证金率
 
 | 参数 | 必填 | 说明 |
 |---|---|---|
-| `--ts-code` | 否 | 合约代码，例如 `A2609.DCE`、`CU2608.SHF`。 |
+| `--ts-code` | 否 | 不带交易所后缀的合约代码，例如 `A2609`、`CU2608`；请求兼容 Tushare 短后缀，响应统一返回完整交易所后缀。 |
 | `--trade-date` | 否 | 单个交易日，格式 `YYYYMMDD`；不能与日期区间同时使用。`trade_date` 与 `start_date`+`end_date` 至少提供一组。 |
 | `--start-date` | 否 | 开始交易日，格式 `YYYYMMDD`；须与 `end_date` 同时提供。 |
 | `--end-date` | 否 | 结束交易日，格式 `YYYYMMDD`；须与 `start_date` 同时提供。 |
@@ -28,10 +28,10 @@ description: "查询期货合约每日涨停价、跌停价和最低保证金率
 
 - 记录容器：`data.records`
 - 分页字段：`pageNum`、`pageSize`、`total`、`pages`
-- 记录字段：`trade_date`、`ts_code`、`name`、`up_limit`、`down_limit`、`m_ratio`、`cont`、`exchange`
+- 记录字段：`trade_date`、`ts_code`、`name`、`up_limit`、`down_limit`、`cont`、`exchange`
 
 ## 调用示例
 
 ```bash
-python <RUN_PY> futures-limit --ts-code A2609.DCE --trade-date 20260721 --exchange DCE --page 1 --page-size 5
+python <RUN_PY> futures-limit --ts-code A2609 --trade-date 20260721 --exchange DCE --page 1 --page-size 5
 ```

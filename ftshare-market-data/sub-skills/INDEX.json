@@ -991,6 +991,16 @@
       "description": "查询指定交易日的期货合约要素，包括交易单位、最小变动价位、保证金、合约乘数、上市日、最后交易日和交割信息。可用参数：--trade-date、--symbol。接口：GET /api/v1/market/data/futures/futures-base-data。"
     },
     {
+      "skill": "futures-daily-kline",
+      "route": "/api/v1/market/data/futures/daily-kline",
+      "doc_title": "期货官方日K与9999主连",
+      "doc_url": "https://market.ft.tech/gateway/doc/p/g7x1q4wp",
+      "doc_md": "https://market.ft.tech/gateway/doc/pages/g7x1q4wp.md",
+      "tier": "免费版",
+      "category": "期货数据",
+      "description": "查询期货真实合约或 9999 主连的官方日 K（futures_daily_kline，GET /api/v1/market/data/futures/daily-kline）。用户问期货日线、主力连续合约日 K、某品种 9999 主连走势、某个交易日或日期区间的期货官方日行情时使用。必填 --symbol；日期用 --trade-date 单日，或用 --start-date/--end-date 区间。"
+    },
+    {
       "skill": "futures-kline",
       "route": "/api/v1/market/data/futures/kline",
       "doc_title": "期货合约历史K线",
@@ -1018,7 +1028,7 @@
       "doc_md": "https://market.ft.tech/gateway/doc/pages/5nbz5zdb.md",
       "tier": "免费版",
       "category": "期货数据",
-      "description": "查询期货合约每日涨停价、跌停价和最低保证金率。接口：GET /api/v1/market/data/futures/ft-limit。"
+      "description": "查询期货合约每日涨停价、跌停价。接口：GET /api/v1/market/data/futures/ft-limit。"
     },
     {
       "skill": "futures-lists",
@@ -1039,6 +1049,16 @@
       "tier": "基础版",
       "category": "期货数据",
       "description": "期货历史分钟 K 线，单合约或批量（futures_minutes，GET /api/v2/market/data/futures_minutes）。用户问期货分钟行情、1/5/15/30/60 分钟 K 线、多只期货合约分钟走势时使用。必填 --start、--end 与 --symbol / --symbols 之一；可选 --interval、--limit。"
+    },
+    {
+      "skill": "futures-minutes-single",
+      "route": "/api/v2/market/data/futures_minutes/single",
+      "doc_title": "期货历史分钟K线单合约",
+      "doc_url": "https://market.ft.tech/gateway/doc/p/1r54drig",
+      "doc_md": "https://market.ft.tech/gateway/doc/pages/1r54drig.md",
+      "tier": "基础版",
+      "category": "期货数据",
+      "description": "查询单个期货合约的历史分钟 K 线（futures_minutes_single，GET /api/v2/market/data/futures_minutes/single）。用户问某个期货合约的 1/5/15/30/60 分钟历史行情、指定时间段的期货分钟走势时使用。必填 --symbol、--start、--end；可选 --interval、--limit。"
     },
     {
       "skill": "futures-realtime-day-kline",
@@ -2259,6 +2279,16 @@
       "tier": "免费版",
       "category": "股票数据",
       "description": "查询停牌股票列表。可选 --trade-date。接口：GET /api/v1/market/data/suspension-list。"
+    },
+    {
+      "skill": "sw-index-daily-quotes",
+      "route": "/api/v1/market/data/sw-index/daily-quotes",
+      "doc_title": "申万指数日行情",
+      "doc_url": "https://market.ft.tech/gateway/doc/p/59aeqfx9",
+      "doc_md": "https://market.ft.tech/gateway/doc/pages/59aeqfx9.md",
+      "tier": "免费版",
+      "category": "指数专题",
+      "description": "查询申万指数日行情（sw_index_daily_quotes，GET /api/v1/market/data/sw-index/daily-quotes）。用户问申万指数某天/某区间的收盘点位、成交量额、涨跌幅、换手率、市盈率、市净率、市值或股息率，或按申万行业分类（一级/二级/三级行业、市场表征、风格指数等）筛选指数时使用。支持 --all 自动翻页。"
     },
     {
       "skill": "sw-index-history-minutes",

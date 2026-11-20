@@ -133,8 +133,8 @@ python run.py stock-ipos --all
 | **ETF专题** | 17 | `etf-adjust-factor`、`etf-announcements`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-component-details`、`etf-components-all`、`etf-description-all`、`etf-minutes` 等 17 个 |
 | **债券专题** | 9 | `cb-lists`、`convertible-bond-candlesticks`、`convertible-bond-candlesticks-batch`、`convertible-bond-minutes`、`convertible-bond-realtime-day-kline`、`convertible-bond-realtime-minute-kline`、`convertible-bond-szse-directed-trades`、`convertible-bond-szse-matching-trades` 等 9 个 |
 | **公募基金** | 18 | `fund-asset-allocation-single-fund-paginated`、`fund-basicinfo-single-fund`、`fund-cal-return-single-fund-specific-period`、`fund-classification-single-fund`、`fund-company-list-paginated`、`fund-fee-single-fund-paginated`、`fund-holder-structure-single-fund`、`fund-index-tracking-funds` 等 18 个 |
-| **指数专题** | 15 | `global-index-daily-kline`、`index-candlesticks`、`index-candlesticks-batch`、`index-description-all`、`index-description-paginated`、`index-minutes`、`index-minutes-batch`、`index-realtime-day-kline` 等 15 个 |
-| **期货数据** | 17 | `eastmoney-futures-position`、`eastmoney-futures-strange`、`futures-base-data`、`futures-kline`、`futures-kline-batch`、`futures-limit`、`futures-lists`、`futures-minutes` 等 17 个 |
+| **指数专题** | 16 | `global-index-daily-kline`、`index-candlesticks`、`index-candlesticks-batch`、`index-description-all`、`index-description-paginated`、`index-minutes`、`index-minutes-batch`、`index-realtime-day-kline` 等 16 个 |
+| **期货数据** | 19 | `eastmoney-futures-position`、`eastmoney-futures-strange`、`futures-base-data`、`futures-daily-kline`、`futures-kline`、`futures-kline-batch`、`futures-limit`、`futures-lists` 等 19 个 |
 | **现货数据** | 2 | `bullion-price`、`sge-spot-description-all` |
 | **港股数据** | 2 | `hk-candlesticks`、`hsi-daily-weight` |
 | **美股数据** | 2 | `eastmoney-us-stock-daily-ohlc`、`eastmoney-us-stock-list` |

@@ -1,7 +1,7 @@
 # 子技能索引
 
 > 本文件由 `tools/index_skills.py --write` 生成，请勿手改。
-> 共 246 个子技能；「在线文档」为可直接抓取的 markdown 链接。
+> 共 249 个子技能；「在线文档」为可直接抓取的 markdown 链接。
 > 按需读取本文件做路由，日常对话不必加载；文件较大，建议按分组或关键词检索，
 > 精简清单用 `python run.py --index`（名称 + 触发场景）。
 
@@ -203,7 +203,7 @@
 | `fund-share-single-fund-paginated` | 基金份额 | `/api/v1/market/data/fund/fund-share` | 按基金代码分页查询基金份额变动。当用户需要查询基金份额变动（期末/期初份额、申购赎回、份额变动率），按 stati_perd 统计周期（日… | 免费版 | [基金份额](https://market.ft.tech/gateway/doc/pages/0vi7kat2.md) |
 | `fund-support-symbols-all-funds-paginated` | 基金支持标的 | `/api/v1/market/data/fund/fund-support-symbols` | Get paginated list of all supported fund symbols with code and name. … | 免费版 | [基金支持标的](https://market.ft.tech/gateway/doc/pages/87xbi3pr.md) |
 
-## 指数专题（15）
+## 指数专题（16）
 
 | 子技能 | 接口 | 路由 | 触发场景 | 套餐 | 在线文档 |
 |---|---|---|---|---|---|
@@ -218,23 +218,26 @@
 | `index-realtime-minute-kline` | 指数实时分钟K线 | `/api/v4/market/data/index-realtime-minute-kline` | 查询指数当前交易日实时 1 分钟 K 线。必填 --symbols，按空格分隔，单次最多 20 个。接口：GET /api/v4/mark… | 专业版 | [指数实时分钟K线](https://market.ft.tech/gateway/doc/pages/bzo0v549.md) |
 | `index-weight-list` | 指数权重列表 | `/api/v1/market/data/index/index_weight` | 分页查询指数成份权重明细（market.ft.tech）。必填 index_code；可选 date、分页。每条含成份代码、名称、权重及该… | 免费版 | [指数权重列表](https://market.ft.tech/gateway/doc/pages/xym4pwjo.md) |
 | `index-weight-summary` | 指数权重汇总 | `/api/v1/market/data/index/index_weight_summary` | 分页查询指数权重汇总（market.ft.tech）。可按 index_code 查询指定指数各期权重的 date 与 url_hash。… | 免费版 | [指数权重汇总](https://market.ft.tech/gateway/doc/pages/vezscfb4.md) |
+| `sw-index-daily-quotes` | 申万指数日行情 | `/api/v1/market/data/sw-index/daily-quotes` | 查询申万指数日行情（sw_index_daily_quotes，GET /api/v1/market/data/sw-index/dail… | 免费版 | [申万指数日行情](https://market.ft.tech/gateway/doc/pages/59aeqfx9.md) |
 | `sw-index-history-minutes` | 申万指数历史分钟K线 | `/api/v1/market/data/sw-index/history-minutes` | 按指数代码与日期区间查询申万指数的一分钟 K 线历史行情，返回分页结构（指数代码/名称、交易时间、开高低收、成交量额），支持 --all … | 免费版 | [申万指数历史分钟K线](https://market.ft.tech/gateway/doc/pages/vltgbxfw.md) |
 | `sw-industry-constituent-history` | 申万行业成份股历史 | `/api/v1/market/data/sw-industry/constituent-history` | 查询单个申万行业当前有效的成份股归属记录。可用参数：--industry_code。接口：GET /api/v1/market/data/… | 免费版 | [申万行业成份股历史](https://market.ft.tech/gateway/doc/pages/os0w8opk.md) |
 | `sw-industry-daily-metrics` | 申万行业日度指标 | `/api/v1/market/data/sw-industry/daily-metrics` | 查询单个申万行业的日频估值/资金/量价指标时间序列，包含 PE（LYR/TTM 及分位/中位数）、PB、股息率、换手率、总市值、收盘价、破… | 免费版 | [申万行业日度指标](https://market.ft.tech/gateway/doc/pages/9p19gdz0.md) |
 | `sw-industry-overview` | 申万行业总览 | `/api/v1/market/data/sw-industry/overview` | 按交易日查询申万行业全部层级（一、二、三级行业）的估值概况快照，含成份股数、PE（LYR/TTM）及历史分位、PB 及分位、股息率及分位。… | 免费版 | [申万行业总览](https://market.ft.tech/gateway/doc/pages/x1q1shn7.md) |
 
-## 期货数据（17）
+## 期货数据（19）
 
 | 子技能 | 接口 | 路由 | 触发场景 | 套餐 | 在线文档 |
 |---|---|---|---|---|---|
 | `eastmoney-futures-position` | 东方财富期货持仓 | `/api/v1/market/data/eastmoney-futures-position` | 获取东方财富期货每日成交持仓排行榜数据，按合约/会员维度给出成交量、多头、空头、净多头、净空头的排名与持仓量及变化，含多头增/减仓、空头增… | 免费版 | [东方财富期货持仓](https://market.ft.tech/gateway/doc/pages/7al9wvew.md) |
 | `eastmoney-futures-strange` | 东方财富期货龙虎榜 | `/api/v1/market/data/eastmoney-futures-strange` | 查询东方财富期货龙虎榜面板（成交量/持仓量多空排名等）。用户提到「东财期货龙虎榜」「期货龙虎榜面板」「期货会员排名」「eastmoney … | 免费版 | [东方财富期货龙虎榜](https://market.ft.tech/gateway/doc/pages/h5s1a7oc.md) |
 | `futures-base-data` | 中国期货基础数据 | `/api/v1/market/data/futures/futures-base-data` | 查询指定交易日的期货合约要素，包括交易单位、最小变动价位、保证金、合约乘数、上市日、最后交易日和交割信息。可用参数：--trade-dat… | 免费版 | [中国期货基础数据](https://market.ft.tech/gateway/doc/pages/qd32szq6.md) |
+| `futures-daily-kline` | 期货官方日K与9999主连 | `/api/v1/market/data/futures/daily-kline` | 查询期货真实合约或 9999 主连的官方日 K（futures_daily_kline，GET /api/v1/market/data/f… | 免费版 | [期货官方日K与9999主连](https://market.ft.tech/gateway/doc/pages/g7x1q4wp.md) |
 | `futures-kline` | 期货合约历史K线 | `/api/v1/market/data/futures/kline` | 查询期货合约历史 K 线（期货合约日/周/月/季 K 线，futures_kline）。用户问期货合约 K 线、期货日K/周K/月K、合约… | 免费版 | [期货合约历史K线](https://market.ft.tech/gateway/doc/pages/j3w50zz7.md) |
 | `futures-kline-batch` | 批量期货合约历史K线 | `/api/v2/market/data/futures/kline/batch` | 批量查询多个期货合约的历史 K 线（futures_kline_batch，GET /api/v2/market/data/futures… | 基础版 | [批量期货合约历史K线](https://market.ft.tech/gateway/doc/pages/0ausz81h.md) |
-| `futures-limit` | 期货合约涨跌停价 | `/api/v1/market/data/futures/ft-limit` | 查询期货合约每日涨停价、跌停价和最低保证金率。接口：GET /api/v1/market/data/futures/ft-limit。 | 免费版 | [期货合约涨跌停价](https://market.ft.tech/gateway/doc/pages/5nbz5zdb.md) |
+| `futures-limit` | 期货合约涨跌停价 | `/api/v1/market/data/futures/ft-limit` | 查询期货合约每日涨停价、跌停价。接口：GET /api/v1/market/data/futures/ft-limit。 | 免费版 | [期货合约涨跌停价](https://market.ft.tech/gateway/doc/pages/5nbz5zdb.md) |
 | `futures-lists` | 中国期货列表 | `/api/v1/market/data/futures/futures-lists` | 查询指定交易日的期货合约列表，包括合约代码、交易所、品种、中文名称和合约类型。可用参数：--trade-date。接口：GET /api/… | 免费版 | [中国期货列表](https://market.ft.tech/gateway/doc/pages/rffbd7ih.md) |
 | `futures-minutes` | 期货历史分钟K线 | `/api/v2/market/data/futures_minutes` | 期货历史分钟 K 线，单合约或批量（futures_minutes，GET /api/v2/market/data/futures_min… | 基础版 | [期货历史分钟K线](https://market.ft.tech/gateway/doc/pages/6je0p1c6.md) |
+| `futures-minutes-single` | 期货历史分钟K线单合约 | `/api/v2/market/data/futures_minutes/single` | 查询单个期货合约的历史分钟 K 线（futures_minutes_single，GET /api/v2/market/data/futu… | 基础版 | [期货历史分钟K线单合约](https://market.ft.tech/gateway/doc/pages/1r54drig.md) |
 | `futures-realtime-day-kline` | 期货实时日K线 | `/api/v4/market/data/futures-realtime-day-kline` | 查询期货合约当前交易日的实时日 K 线（futures_realtime_day_kline，GET /api/v4/market/dat… | 专业版 | [期货实时日K线](https://market.ft.tech/gateway/doc/pages/ko4fup34.md) |
 | `futures-realtime-minute-kline` | 期货实时分钟K线 | `/api/v4/market/data/futures_minutes/realtime` | 查询期货合约当前交易日的实时 1 分钟 K 线（futures_minutes_realtime，GET /api/v4/market/d… | 专业版 | [期货实时分钟K线](https://market.ft.tech/gateway/doc/pages/tvhg1858.md) |
 | `futures-settle` | 期货每日结算参数 | `/api/v1/market/data/futures/fut-settle` | 查询期货合约每日结算价、手续费和保证金参数。接口：GET /api/v1/market/data/futures/fut-settle。 | 免费版 | [期货每日结算参数](https://market.ft.tech/gateway/doc/pages/hvux2jh0.md) |

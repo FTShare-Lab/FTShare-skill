@@ -75,6 +75,7 @@ route	doc_title	doc_url	tier	category
 /api/v1/market/data/fund/fund-risk-level	基金风险等级	https://market.ft.tech/gateway/doc/p/ws3whvws	免费版	公募基金
 /api/v1/market/data/fund/fund-share	基金份额	https://market.ft.tech/gateway/doc/p/0vi7kat2	免费版	公募基金
 /api/v1/market/data/fund/fund-support-symbols	基金支持标的	https://market.ft.tech/gateway/doc/p/87xbi3pr	免费版	公募基金
+/api/v1/market/data/futures/daily-kline	期货官方日K与9999主连	https://market.ft.tech/gateway/doc/p/g7x1q4wp	免费版	期货数据
 /api/v1/market/data/futures/ft-limit	期货合约涨跌停价	https://market.ft.tech/gateway/doc/p/5nbz5zdb	免费版	期货数据
 /api/v1/market/data/futures/fut-settle	期货每日结算参数	https://market.ft.tech/gateway/doc/p/hvux2jh0	免费版	期货数据
 /api/v1/market/data/futures/fut-weekly-detail	期货主要品种交易周报	https://market.ft.tech/gateway/doc/p/wao8q91z	免费版	期货数据
@@ -142,6 +143,7 @@ route	doc_title	doc_url	tier	category
 /api/v1/market/data/stock-list	股票列表	https://market.ft.tech/gateway/doc/p/3ot2m3sk	免费版	股票数据
 /api/v1/market/data/stock-st-history	股票历史ST状态	https://market.ft.tech/gateway/doc/p/hs1q3li4	免费版	股票数据
 /api/v1/market/data/suspension-list	停牌列表	https://market.ft.tech/gateway/doc/p/e42u4fqk	免费版	股票数据
+/api/v1/market/data/sw-index/daily-quotes	申万指数日行情	https://market.ft.tech/gateway/doc/p/59aeqfx9	免费版	指数专题
 /api/v1/market/data/sw-index/history-minutes	申万指数历史分钟K线	https://market.ft.tech/gateway/doc/p/vltgbxfw	免费版	指数专题
 /api/v1/market/data/sw-industry/constituent-history	申万行业成份股历史	https://market.ft.tech/gateway/doc/p/os0w8opk	免费版	指数专题
 /api/v1/market/data/sw-industry/daily-metrics	申万行业日度指标	https://market.ft.tech/gateway/doc/p/9p19gdz0	免费版	指数专题
@@ -190,6 +192,7 @@ route	doc_title	doc_url	tier	category
 /api/v2/market/data/fund/index-fund	指数跟踪基金	https://market.ft.tech/gateway/doc/p/vfl9rnr6	基础版	公募基金
 /api/v2/market/data/futures/kline/batch	批量期货合约历史K线	https://market.ft.tech/gateway/doc/p/0ausz81h	基础版	期货数据
 /api/v2/market/data/futures_minutes	期货历史分钟K线	https://market.ft.tech/gateway/doc/p/6je0p1c6	基础版	期货数据
+/api/v2/market/data/futures_minutes/single	期货历史分钟K线单合约	https://market.ft.tech/gateway/doc/p/1r54drig	基础版	期货数据
 /api/v2/market/data/hk/hk-candlesticks	港股K线	https://market.ft.tech/gateway/doc/p/k4v3vd8x	基础版	港股数据
 /api/v2/market/data/holder/stock-ggmx-buy-ranking	董监高增持排名	https://market.ft.tech/gateway/doc/p/zbq8gkmi	基础版	股票数据
 /api/v2/market/data/holder/stock-ggmx-sell-ranking	董监高减持排名	https://market.ft.tech/gateway/doc/p/sqg80974	基础版	股票数据

@@ -20,7 +20,7 @@ description: 查询期货合约历史 K 线（期货合约日/周/月/季 K 线�
 
 | 参数名 | 类型 | 是否必填 | 描述 | 取值示例 | 备注 |
 |--------|------|----------|------|----------|------|
-| symbol | string | 是 | 期货合约代码 | A2605.DCE | 只接受交易所全称后缀 `.SHFE`/`.INE`/`.DCE`/`.CZCE`/`.CFFEX`/`.GFEX`；短后缀或未列出的后缀会返回 HTTP 400 |
+| symbol | string | 是 | 不带交易所后缀的期货合约代码 | A2605 | 请求不区分大小写；CZCE 真实合约必须使用四位年份代码（如 `AP2612`），三位代码不符合接口代码规范 |
 | interval | string | 否 | K 线周期 | daily | `daily`、`weekly`、`monthly`、`quarterly`，兼容 `1d`/`1w`/`1mo`/`1q`；默认 `daily` |
 | start | int | 否 | 起始时间戳（毫秒） | 1756431000000 | 按北京时间解释，闭区间；可省略时间范围 |
 | end | int | 否 | 结束时间戳（毫秒） | 1756791000000 | 闭区间；不能单独传入，须与 `start` 同时使用，跨度不超过 12 个自然月 |
@@ -34,7 +34,7 @@ items 数组：
 
 | 字段名 | 类型 | 说明 |
 |--------|------|------|
-| symbol | string | 去除交易所后缀并转小写的合约代码 |
+| symbol | string | 不带交易所后缀的官网合约代码；返回大小写沿用对应交易所官网格式，例如 CZCE/CFFEX 通常为大写，其他交易所通常为小写 |
 | datetime | int | K 线时间戳（毫秒） |
 | trade_date | int | 交易日 YYYYMMDD |
 | open / high / low / close | number | 开盘价 / 最高价 / 最低价 / 收盘价 |
@@ -49,16 +49,16 @@ items 数组：
 ## 4. 调用方式
 
 ```bash
-python <RUN_PY> futures-kline --symbol A2605.DCE --interval daily --limit 5
-python <RUN_PY> futures-kline --symbol A2605.DCE --interval weekly --limit 5
-python <RUN_PY> futures-kline --symbol A2605.DCE --start 1756431000000 --end 1756791000000
+python <RUN_PY> futures-kline --symbol A2605 --interval daily --limit 5
+python <RUN_PY> futures-kline --symbol A2605 --interval weekly --limit 5
+python <RUN_PY> futures-kline --symbol A2605 --start 1756431000000 --end 1756791000000
 ```
 
 `<RUN_PY>` 为主 SKILL.md 同级 `run.py` 的绝对路径。输出 JSON；HTTP 错误输出到 stderr 并以非零状态退出。
 
 ## 5. 注意事项
 
-- 合约代码只接受交易所全称后缀（`.SHFE`/`.INE`/`.DCE`/`.CZCE`/`.CFFEX`/`.GFEX`）；短后缀（`.SHF`/`.CZC`/`.CFE`/`.GFE`）及其它未列出的后缀会返回 HTTP 400。
+- 合约代码使用不带交易所后缀的裸代码，请求不区分大小写；CZCE 真实合约必须使用四位年份代码（如 `AP2612`），三位代码不符合接口代码规范。
 - 周、月、季 K 线由历史日 K 线按北京时间聚合生成。
 - `end` 不能单独传入，必须与 `start` 同时使用（handler 会本地校验并拒绝）；同时传入时跨度不得超过 12 个自然月。
 - 返回结果按 K 线时间升序排列；`limit` 保留查询范围内最新的记录。

@@ -38,10 +38,12 @@ python <RUN_PY> stock-prospectuses --stock-code 600000.SH --page 1 --page-size 2
 python <RUN_PY> stock-candlesticks-batch --symbols 600519.SH,600036.SH --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> etf-candlesticks-batch --symbols 510300.XSHG,159915.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
 python <RUN_PY> index-candlesticks-batch --symbols 000300.XSHG,399001.XSHE --interval-unit Day --since-ts-millis 1787000000000 --until-ts-millis 1787191200000
-python <RUN_PY> futures-kline --symbol A2605.DCE --interval daily --limit 5
-python <RUN_PY> futures-kline-batch --symbols A2605.DCE,M2605.DCE --interval daily --limit 5
-python <RUN_PY> futures-minutes --symbol A2605.DCE --interval 5min --start 1787000000000 --end 1787191200000 --limit 5
-python <RUN_PY> futures-realtime-day-kline --symbols A2605.DCE,M2605.DCE
+python <RUN_PY> futures-kline --symbol A2605 --interval daily --limit 5
+python <RUN_PY> futures-kline-batch --symbols A2605,M2605 --interval daily --limit 5
+python <RUN_PY> futures-minutes --symbol A2605 --interval 5min --start 1787000000000 --end 1787191200000 --limit 5
+python <RUN_PY> futures-minutes-single --symbol A2611 --interval 5min --start 1787000000000 --end 1787191200000 --limit 500
+python <RUN_PY> futures-daily-kline --symbol A9999.DCE --start-date 20261101 --end-date 20261117 --page 1 --page-size 5
+python <RUN_PY> futures-realtime-day-kline --symbols A2605,M2605
 python <RUN_PY> etf-pcf-infos --symbol 510300.SH --trade-date 20260909
 python <RUN_PY> etf-net-value --etf-code 510300 --nav-date 20260909
 python <RUN_PY> etf-share --etf-code 510300 --page 1 --page-size 5
@@ -65,6 +67,7 @@ python <RUN_PY> sge-spot-description-all --category spot_deferred --active-only
 python <RUN_PY> market-announcements --keyword 回购 --start-date 20261001 --end-date 20261031 --page 1 --page-size 20
 python <RUN_PY> periodic-reports --stock-code 000001.SZ --report-type annual --page 1 --page-size 20
 python <RUN_PY> index-fut-depth --trade-date 20261030 --code-prefix IF
+python <RUN_PY> sw-index-daily-quotes --index-code 801001 --start-date 20261101 --end-date 20261111 --page 1 --page-size 2
 ```
 
 下载类：
@@ -91,13 +94,13 @@ python <RUN_PY> periodic-reports --url-hash 37801609...68090432 --output ./repor
 定位顺序：
 
 1. **快速路由**：`python <RUN_PY> --index` 输出「名称 + 触发场景」一行一个；`--index --json` 输出结构化 JSON（含 route / doc_url / tier），便于程序化匹配。
-2. **完整索引**：`sub-skills/INDEX.md`，246 个子技能按业务域分组，含「子技能 / 接口 / 路由 / 触发场景 / 套餐 / 在线文档」；按需读取，不必整体加载。
+2. **完整索引**：`sub-skills/INDEX.md`，249 个子技能按业务域分组，含「子技能 / 接口 / 路由 / 触发场景 / 套餐 / 在线文档」；按需读取，不必整体加载。
 3. **机器可读映射**：`sub-skills/manifest.tsv`（`skill / route / doc_title / doc_url / tier / category / description`）；`sub-skills/doc-map.tsv` 保存路由到文档标题/链接/套餐的映射。
 4. **单接口细节**：读对应 `sub-skills/<名称>/SKILL.md`；完整字段与示例见其指向的在线文档（markdown 链接可直接抓取）。
 
 索引与映射由 `python tools/index_skills.py --write` 从仓库自身生成（路由取 handler、文档标题与链接取 `sub-skills/doc-map.tsv`），不要手改；`--check` 校验是否过期并检查路由与文档映射是否齐全。
 
-各业务域子技能数量（以 `INDEX.md` 为准）：股票 134、宏观 23、基金 18、期货 17、ETF 17、指数 15、债券 9、大模型语料 7、美股 2、现货 2、港股 2。
+各业务域子技能数量（以 `INDEX.md` 为准）：股票 134、宏观 23、基金 18、期货 19、ETF 17、指数 16、债券 9、大模型语料 7、美股 2、现货 2、港股 2。
 
 ## 输出与错误
 
