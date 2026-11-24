@@ -46,7 +46,6 @@ description: 批量查询多个指数的历史 K 线（index_candlesticks_batch�
 | ts_millis_open | integer | 开盘时间戳 | 毫秒 |
 | turnover | string | 成交额（指数成分股合计）；JSON 中为字符串以保留精度 | 元 |
 | volume | integer | 成交量（指数成分股合计） | - |
-| turnover_rate | number / null | 换手率；指数批量历史 K 线当前固定为 `null` | % |
 
 ## 4. 调用方式
 

@@ -1,11 +1,11 @@
 # 子技能索引
 
 > 本文件由 `tools/index_skills.py --write` 生成，请勿手改。
-> 共 249 个子技能；「在线文档」为可直接抓取的 markdown 链接。
+> 共 254 个子技能；「在线文档」为可直接抓取的 markdown 链接。
 > 按需读取本文件做路由，日常对话不必加载；文件较大，建议按分组或关键词检索，
 > 精简清单用 `python run.py --index`（名称 + 触发场景）。
 
-## 股票数据（134）
+## 股票数据（138）
 
 | 子技能 | 接口 | 路由 | 触发场景 | 套餐 | 在线文档 |
 |---|---|---|---|---|---|
@@ -15,8 +15,8 @@
 | `ashare-code-change` | A股代码变更 | `/api/v1/market/data/stk-code-change` | 查询 A 股代码变更历史。Use when user asks about 股票代码变更、改名换码、代码迁移或北交所升板代码历史。 | 免费版 | [A股代码变更](https://market.ft.tech/gateway/doc/pages/yuzopjw5.md) |
 | `ashare-code-change-timeline` | A股代码变更时间线 | `/api/v1/market/data/stk_code_change_timeline` | 查询 A 股代码变更时间线（全量）。Use when user asks about A 股代码变更时间线、换码事件全量列表、代码迁移对照… | 免费版 | [A股代码变更时间线](https://market.ft.tech/gateway/doc/pages/0a0mfc8k.md) |
 | `ashare-interactions` | e互动 | `/api/v2/market/data/ashare-interactions` | 按提问日期范围查询 A 股上市公司互动问答，返回公司、行业、问题、答复及其时间等业务信息。接口：GET /api/v2/market/da… | 基础版 | [e互动](https://market.ft.tech/gateway/doc/pages/wzxfo6gw.md) |
-| `ashare-news-sentiment-factors` | A股新闻情绪因子 | `/api/v3/market/data/ashare-news-sentiment-factors` | 查询指定 A 股的新闻情绪因子。必填 --trade-code 与 --start-date；区间跨度不得超过 31 天。接口：GET /… | 进阶版 | [A股新闻情绪因子](https://market.ft.tech/gateway/doc/pages/zdxwn9lx.md) |
-| `ashare-rating-factor-snapshot` | A股相关性 Top-K | `/api/v3/market/data/ashare-rating-factor-snapshot` | 查询指定 A 股的 Top-K 相关公司。用户询问股票相关性、相关公司排名或相关性评分时使用。 | 进阶版 | [A股相关性 Top-K](https://market.ft.tech/gateway/doc/pages/hdns2u7u.md) |
+| `ashare-news-sentiment-factors` | A股新闻情绪因子 | `/api/v3/market/data/ashare-news-sentiment-factors` | 查询指定 A 股的新闻情绪因子。用户询问个股新闻情绪、利好利空判断、情绪分数或预测日因子时使用。支持单日 --date、--start-d… | 进阶版 | [A股新闻情绪因子](https://market.ft.tech/gateway/doc/pages/zdxwn9lx.md) |
+| `ashare-rating-factor-snapshot` | A股相关性 Top-K | `/api/v3/market/data/ashare-rating-factor-snapshot` | 查询 A 股相关性快照。用户询问股票相关性、相关公司、相关股票排名或相关性评分时使用。传 --trade-code 查单只股票的相关公司，… | 进阶版 | [A股相关性 Top-K](https://market.ft.tech/gateway/doc/pages/hdns2u7u.md) |
 | `ashare-status-change` | A股状态变更 | `/api/v1/market/data/stk-status-change` | 查询 A 股状态变更记录。Use when user asks about 上市、退市、暂停上市或股票状态变更。 | 免费版 | [A股状态变更](https://market.ft.tech/gateway/doc/pages/2zhtv2q3.md) |
 | `auction-results` | 集合竞价结果 | `/api/v2/market/data/auction-results` | 返回当日所有股票的盘前集合竞价结果（9:25 开盘集合竞价快照）：集合竞价开盘价/收盘价（最新价）、最高价、最低价、成交量、成交额、均价（… | 基础版 | [集合竞价结果](https://market.ft.tech/gateway/doc/pages/z7n8ucgi.md) |
 | `block-trades` | 大宗交易 | `/api/v1/market/data/block-trades` | 查询大宗交易列表。当用户需要获取 A 股大宗交易记录，包含买卖方营业部、成交价、成交量、溢价率等，或了解大宗交易列表时使用。 | 免费版 | [大宗交易](https://market.ft.tech/gateway/doc/pages/h7eun4xp.md) |
@@ -63,6 +63,10 @@
 | `report-announcement-list` | 报告公告列表 | `/api/v1/market/data/report-announcements/list` | 按公告日期分页查询报告公告列表，可选按证券代码过滤。用户提到「报告公告列表」「公告列表」「某日公告」「report announcemen… | 免费版 | [报告公告列表](https://market.ft.tech/gateway/doc/pages/4qspcoqt.md) |
 | `report-announcement-summary` | 报告公告摘要 | `/api/v2/market/data/report-announcements/summary` | 根据公告 ID 查询单条报告公告的摘要、标题、证券信息和处理状态。用户提到「报告公告摘要」「公告摘要」「单条公告详情」「report an… | 基础版 | [报告公告摘要](https://market.ft.tech/gateway/doc/pages/kfe01dfi.md) |
 | `risk-warning-stocks` | 风险警示股 | `/api/v1/market/data/risk-warning-stocks` | 按交易日查询风险警示股票列表。必填 --date，可选 --page、--page-size。接口：GET /api/v1/market/… | 免费版 | [风险警示股](https://market.ft.tech/gateway/doc/pages/3o4clccl.md) |
+| `sector-knowledge-facts` | 板块事实检索 | `/api/v3/market/data/sector-knowledge/facts` | 检索板块事实。当用户想了解某个板块的行业供需、公司事件、产业政策等事实性信息，或按关键词、分类、发布日期、影响力筛选板块事实时使用。Use… | — | 板块事实检索 |
+| `sector-knowledge-insights` | 板块洞察检索 | `/api/v3/market/data/sector-knowledge/insights` | 检索板块洞察。当用户想了解某个板块的景气研判、政策影响、资金轮动、产业链传导、风险预警等分析结论，或按置信度、影响力筛选板块洞察时使用。U… | — | 板块洞察检索 |
+| `sector-knowledge-search-options` | 板块知识检索选项 | `/api/v3/market/data/sector-knowledge/search-options` | 查询板块知识检索选项。当用户准备检索板块事实或板块洞察，需要先确认分类、板块类型、市场与排序的合法取值时使用。Use when user … | — | 板块知识检索选项 |
+| `sector-knowledge-sectors` | 板块描述列表 | `/api/v3/market/data/sector-knowledge/sectors` | 查询板块描述列表。当用户需要确认板块标准名称、板块类型、所属市场，或按名称关键词查找板块时使用。Use when user asks ab… | — | 板块描述列表 |
 | `security-search` | 标的搜索 | `/api/v1/market/security/search` | 按名称、代码或拼音搜索标的。必填 --query，可选 --limit。接口：GET /api/v1/market/security/se… | — | 标的搜索 |
 | `southbound` | 南向资金交易 | `/api/v1/market/data/southbound` | 查询南向资金交易数据。当用户需要查询指定交易日南向资金（港股通沪、港股通深）交易汇总数据，或了解南向资金交易数据时使用。 | 免费版 | [南向资金交易](https://market.ft.tech/gateway/doc/pages/ujoa8eup.md) |
 | `stk-ah-comparison` | AH股对比 | `/api/v1/market/data/hk/stk-ah-comparison` | 查询 A/H 股比价、涨跌幅和溢价率。用户询问港股与对应 A 股估值比较时使用。 | 免费版 | [AH股对比](https://market.ft.tech/gateway/doc/pages/8fr77co1.md) |
@@ -224,7 +228,7 @@
 | `sw-industry-daily-metrics` | 申万行业日度指标 | `/api/v1/market/data/sw-industry/daily-metrics` | 查询单个申万行业的日频估值/资金/量价指标时间序列，包含 PE（LYR/TTM 及分位/中位数）、PB、股息率、换手率、总市值、收盘价、破… | 免费版 | [申万行业日度指标](https://market.ft.tech/gateway/doc/pages/9p19gdz0.md) |
 | `sw-industry-overview` | 申万行业总览 | `/api/v1/market/data/sw-industry/overview` | 按交易日查询申万行业全部层级（一、二、三级行业）的估值概况快照，含成份股数、PE（LYR/TTM）及历史分位、PB 及分位、股息率及分位。… | 免费版 | [申万行业总览](https://market.ft.tech/gateway/doc/pages/x1q1shn7.md) |
 
-## 期货数据（19）
+## 期货数据（20）
 
 | 子技能 | 接口 | 路由 | 触发场景 | 套餐 | 在线文档 |
 |---|---|---|---|---|---|
@@ -232,6 +236,7 @@
 | `eastmoney-futures-strange` | 东方财富期货龙虎榜 | `/api/v1/market/data/eastmoney-futures-strange` | 查询东方财富期货龙虎榜面板（成交量/持仓量多空排名等）。用户提到「东财期货龙虎榜」「期货龙虎榜面板」「期货会员排名」「eastmoney … | 免费版 | [东方财富期货龙虎榜](https://market.ft.tech/gateway/doc/pages/h5s1a7oc.md) |
 | `futures-base-data` | 中国期货基础数据 | `/api/v1/market/data/futures/futures-base-data` | 查询指定交易日的期货合约要素，包括交易单位、最小变动价位、保证金、合约乘数、上市日、最后交易日和交割信息。可用参数：--trade-dat… | 免费版 | [中国期货基础数据](https://market.ft.tech/gateway/doc/pages/qd32szq6.md) |
 | `futures-daily-kline` | 期货官方日K与9999主连 | `/api/v1/market/data/futures/daily-kline` | 查询期货真实合约或 9999 主连的官方日 K（futures_daily_kline，GET /api/v1/market/data/f… | 免费版 | [期货官方日K与9999主连](https://market.ft.tech/gateway/doc/pages/g7x1q4wp.md) |
+| `futures-dominant-mapping` | 期货主力合约映射 | `/api/v1/market/data/futures/dominant-mapping` | 查询指定生效交易日的期货主力合约映射，返回各交易所各品种的主力合约代码与规则版本。当用户询问期货主力合约、主连对应真实合约、某日主力是哪个… | — | 期货主力合约映射 |
 | `futures-kline` | 期货合约历史K线 | `/api/v1/market/data/futures/kline` | 查询期货合约历史 K 线（期货合约日/周/月/季 K 线，futures_kline）。用户问期货合约 K 线、期货日K/周K/月K、合约… | 免费版 | [期货合约历史K线](https://market.ft.tech/gateway/doc/pages/j3w50zz7.md) |
 | `futures-kline-batch` | 批量期货合约历史K线 | `/api/v2/market/data/futures/kline/batch` | 批量查询多个期货合约的历史 K 线（futures_kline_batch，GET /api/v2/market/data/futures… | 基础版 | [批量期货合约历史K线](https://market.ft.tech/gateway/doc/pages/0ausz81h.md) |
 | `futures-limit` | 期货合约涨跌停价 | `/api/v1/market/data/futures/ft-limit` | 查询期货合约每日涨停价、跌停价。接口：GET /api/v1/market/data/futures/ft-limit。 | 免费版 | [期货合约涨跌停价](https://market.ft.tech/gateway/doc/pages/5nbz5zdb.md) |

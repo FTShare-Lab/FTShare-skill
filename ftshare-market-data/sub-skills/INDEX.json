@@ -68,7 +68,7 @@
       "doc_md": "https://market.ft.tech/gateway/doc/pages/zdxwn9lx.md",
       "tier": "进阶版",
       "category": "股票数据",
-      "description": "查询指定 A 股的新闻情绪因子。必填 --trade-code 与 --start-date；区间跨度不得超过 31 天。接口：GET /api/v3/market/data/ashare-news-sentiment-factors。"
+      "description": "查询指定 A 股的新闻情绪因子。用户询问个股新闻情绪、利好利空判断、情绪分数或预测日因子时使用。支持单日 --date、--start-date/--end-date 区间（跨度不超过 31 天）或都不传查当天。接口：GET /api/v3/market/data/ashare-news-sentiment-factors。"
     },
     {
       "skill": "ashare-rating-factor-snapshot",
@@ -78,7 +78,7 @@
       "doc_md": "https://market.ft.tech/gateway/doc/pages/hdns2u7u.md",
       "tier": "进阶版",
       "category": "股票数据",
-      "description": "查询指定 A 股的 Top-K 相关公司。用户询问股票相关性、相关公司排名或相关性评分时使用。"
+      "description": "查询 A 股相关性快照。用户询问股票相关性、相关公司、相关股票排名或相关性评分时使用。传 --trade-code 查单只股票的相关公司，不传则分页遍历全市场。接口：GET /api/v3/market/data/ashare-rating-factor-snapshot。"
     },
     {
       "skill": "ashare-status-change",
@@ -1001,6 +1001,16 @@
       "description": "查询期货真实合约或 9999 主连的官方日 K（futures_daily_kline，GET /api/v1/market/data/futures/daily-kline）。用户问期货日线、主力连续合约日 K、某品种 9999 主连走势、某个交易日或日期区间的期货官方日行情时使用。必填 --symbol；日期用 --trade-date 单日，或用 --start-date/--end-date 区间。"
     },
     {
+      "skill": "futures-dominant-mapping",
+      "route": "/api/v1/market/data/futures/dominant-mapping",
+      "doc_title": "期货主力合约映射",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "期货数据",
+      "description": "查询指定生效交易日的期货主力合约映射，返回各交易所各品种的主力合约代码与规则版本。当用户询问期货主力合约、主连对应真实合约、某日主力是哪个合约或主力换月时使用。Use when user asks about 期货主力合约、主力映射、dominant contract."
+    },
+    {
       "skill": "futures-kline",
       "route": "/api/v1/market/data/futures/kline",
       "doc_title": "期货合约历史K线",
@@ -1539,6 +1549,46 @@
       "tier": "免费版",
       "category": "股票数据",
       "description": "按交易日查询风险警示股票列表。必填 --date，可选 --page、--page-size。接口：GET /api/v1/market/data/risk-warning-stocks。"
+    },
+    {
+      "skill": "sector-knowledge-facts",
+      "route": "/api/v3/market/data/sector-knowledge/facts",
+      "doc_title": "板块事实检索",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "检索板块事实。当用户想了解某个板块的行业供需、公司事件、产业政策等事实性信息，或按关键词、分类、发布日期、影响力筛选板块事实时使用。Use when user asks about 板块事实、板块消息面、板块舆情、sector facts."
+    },
+    {
+      "skill": "sector-knowledge-insights",
+      "route": "/api/v3/market/data/sector-knowledge/insights",
+      "doc_title": "板块洞察检索",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "检索板块洞察。当用户想了解某个板块的景气研判、政策影响、资金轮动、产业链传导、风险预警等分析结论，或按置信度、影响力筛选板块洞察时使用。Use when user asks about 板块洞察、板块研判、板块观点、sector insights."
+    },
+    {
+      "skill": "sector-knowledge-search-options",
+      "route": "/api/v3/market/data/sector-knowledge/search-options",
+      "doc_title": "板块知识检索选项",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "查询板块知识检索选项。当用户准备检索板块事实或板块洞察，需要先确认分类、板块类型、市场与排序的合法取值时使用。Use when user asks about 板块知识分类取值、板块检索枚举、sector knowledge options."
+    },
+    {
+      "skill": "sector-knowledge-sectors",
+      "route": "/api/v3/market/data/sector-knowledge/sectors",
+      "doc_title": "板块描述列表",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "查询板块描述列表。当用户需要确认板块标准名称、板块类型、所属市场，或按名称关键词查找板块时使用。Use when user asks about 板块列表、板块标准名、板块描述、sector list."
     },
     {
       "skill": "security-search",
