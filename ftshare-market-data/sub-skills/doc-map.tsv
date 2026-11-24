@@ -248,3 +248,7 @@ route	doc_title	doc_url	tier	category
 /api/v4/market/data/stock-intraday	标的分时数据 2.0	https://market.ft.tech/gateway/doc/p/yl2uyd8x	专业版	股票数据
 /api/v4/market/data/stock-realtime-day-kline	股票实时日K线	https://market.ft.tech/gateway/doc/p/pe9d82db	专业版	股票数据
 /api/v4/market/data/stock-realtime-minute-kline	股票实时分钟K线	https://market.ft.tech/gateway/doc/p/k4qem4nh	专业版	股票数据
+/api/v3/market/data/sector-knowledge/facts	板块事实检索			股票数据
+/api/v3/market/data/sector-knowledge/insights	板块洞察检索			股票数据
+/api/v3/market/data/sector-knowledge/sectors	板块描述列表			股票数据
+/api/v3/market/data/sector-knowledge/search-options	板块知识检索选项			股票数据

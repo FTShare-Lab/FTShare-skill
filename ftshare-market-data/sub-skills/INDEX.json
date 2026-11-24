@@ -1541,6 +1541,46 @@
       "description": "按交易日查询风险警示股票列表。必填 --date，可选 --page、--page-size。接口：GET /api/v1/market/data/risk-warning-stocks。"
     },
     {
+      "skill": "sector-knowledge-facts",
+      "route": "/api/v3/market/data/sector-knowledge/facts",
+      "doc_title": "板块事实检索",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "检索板块事实。当用户想了解某个板块的行业供需、公司事件、产业政策等事实性信息，或按关键词、分类、发布日期、影响力筛选板块事实时使用。Use when user asks about 板块事实、板块消息面、板块舆情、sector facts."
+    },
+    {
+      "skill": "sector-knowledge-insights",
+      "route": "/api/v3/market/data/sector-knowledge/insights",
+      "doc_title": "板块洞察检索",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "检索板块洞察。当用户想了解某个板块的景气研判、政策影响、资金轮动、产业链传导、风险预警等分析结论，或按置信度、影响力筛选板块洞察时使用。Use when user asks about 板块洞察、板块研判、板块观点、sector insights."
+    },
+    {
+      "skill": "sector-knowledge-search-options",
+      "route": "/api/v3/market/data/sector-knowledge/search-options",
+      "doc_title": "板块知识检索选项",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "查询板块知识检索选项。当用户准备检索板块事实或板块洞察，需要先确认分类、板块类型、市场与排序的合法取值时使用。Use when user asks about 板块知识分类取值、板块检索枚举、sector knowledge options."
+    },
+    {
+      "skill": "sector-knowledge-sectors",
+      "route": "/api/v3/market/data/sector-knowledge/sectors",
+      "doc_title": "板块描述列表",
+      "doc_url": "",
+      "doc_md": "",
+      "tier": "",
+      "category": "股票数据",
+      "description": "查询板块描述列表。当用户需要确认板块标准名称、板块类型、所属市场，或按名称关键词查找板块时使用。Use when user asks about 板块列表、板块标准名、板块描述、sector list."
+    },
+    {
       "skill": "security-search",
       "route": "/api/v1/market/security/search",
       "doc_title": "标的搜索",

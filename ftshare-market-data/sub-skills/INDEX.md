@@ -1,11 +1,11 @@
 # 子技能索引
 
 > 本文件由 `tools/index_skills.py --write` 生成，请勿手改。
-> 共 249 个子技能；「在线文档」为可直接抓取的 markdown 链接。
+> 共 253 个子技能；「在线文档」为可直接抓取的 markdown 链接。
 > 按需读取本文件做路由，日常对话不必加载；文件较大，建议按分组或关键词检索，
 > 精简清单用 `python run.py --index`（名称 + 触发场景）。
 
-## 股票数据（134）
+## 股票数据（138）
 
 | 子技能 | 接口 | 路由 | 触发场景 | 套餐 | 在线文档 |
 |---|---|---|---|---|---|
@@ -63,6 +63,10 @@
 | `report-announcement-list` | 报告公告列表 | `/api/v1/market/data/report-announcements/list` | 按公告日期分页查询报告公告列表，可选按证券代码过滤。用户提到「报告公告列表」「公告列表」「某日公告」「report announcemen… | 免费版 | [报告公告列表](https://market.ft.tech/gateway/doc/pages/4qspcoqt.md) |
 | `report-announcement-summary` | 报告公告摘要 | `/api/v2/market/data/report-announcements/summary` | 根据公告 ID 查询单条报告公告的摘要、标题、证券信息和处理状态。用户提到「报告公告摘要」「公告摘要」「单条公告详情」「report an… | 基础版 | [报告公告摘要](https://market.ft.tech/gateway/doc/pages/kfe01dfi.md) |
 | `risk-warning-stocks` | 风险警示股 | `/api/v1/market/data/risk-warning-stocks` | 按交易日查询风险警示股票列表。必填 --date，可选 --page、--page-size。接口：GET /api/v1/market/… | 免费版 | [风险警示股](https://market.ft.tech/gateway/doc/pages/3o4clccl.md) |
+| `sector-knowledge-facts` | 板块事实检索 | `/api/v3/market/data/sector-knowledge/facts` | 检索板块事实。当用户想了解某个板块的行业供需、公司事件、产业政策等事实性信息，或按关键词、分类、发布日期、影响力筛选板块事实时使用。Use… | — | 板块事实检索 |
+| `sector-knowledge-insights` | 板块洞察检索 | `/api/v3/market/data/sector-knowledge/insights` | 检索板块洞察。当用户想了解某个板块的景气研判、政策影响、资金轮动、产业链传导、风险预警等分析结论，或按置信度、影响力筛选板块洞察时使用。U… | — | 板块洞察检索 |
+| `sector-knowledge-search-options` | 板块知识检索选项 | `/api/v3/market/data/sector-knowledge/search-options` | 查询板块知识检索选项。当用户准备检索板块事实或板块洞察，需要先确认分类、板块类型、市场与排序的合法取值时使用。Use when user … | — | 板块知识检索选项 |
+| `sector-knowledge-sectors` | 板块描述列表 | `/api/v3/market/data/sector-knowledge/sectors` | 查询板块描述列表。当用户需要确认板块标准名称、板块类型、所属市场，或按名称关键词查找板块时使用。Use when user asks ab… | — | 板块描述列表 |
 | `security-search` | 标的搜索 | `/api/v1/market/security/search` | 按名称、代码或拼音搜索标的。必填 --query，可选 --limit。接口：GET /api/v1/market/security/se… | — | 标的搜索 |
 | `southbound` | 南向资金交易 | `/api/v1/market/data/southbound` | 查询南向资金交易数据。当用户需要查询指定交易日南向资金（港股通沪、港股通深）交易汇总数据，或了解南向资金交易数据时使用。 | 免费版 | [南向资金交易](https://market.ft.tech/gateway/doc/pages/ujoa8eup.md) |
 | `stk-ah-comparison` | AH股对比 | `/api/v1/market/data/hk/stk-ah-comparison` | 查询 A/H 股比价、涨跌幅和溢价率。用户询问港股与对应 A 股估值比较时使用。 | 免费版 | [AH股对比](https://market.ft.tech/gateway/doc/pages/8fr77co1.md) |

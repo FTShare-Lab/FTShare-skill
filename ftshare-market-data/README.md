@@ -129,7 +129,7 @@ python run.py stock-ipos --all
 <!-- BEGIN: skills-table -->
 | 域 | 子技能数 | 代表子 skill |
 |---|---|---|
-| **股票数据** | 134 | `10jqk-board-list`、`abnormal-trading-details`、`abnormal-trading-overview`、`ashare-code-change`、`ashare-code-change-timeline`、`ashare-interactions`、`ashare-news-sentiment-factors`、`ashare-rating-factor-snapshot` 等 134 个 |
+| **股票数据** | 138 | `10jqk-board-list`、`abnormal-trading-details`、`abnormal-trading-overview`、`ashare-code-change`、`ashare-code-change-timeline`、`ashare-interactions`、`ashare-news-sentiment-factors`、`ashare-rating-factor-snapshot` 等 138 个 |
 | **ETF专题** | 17 | `etf-adjust-factor`、`etf-announcements`、`etf-candlesticks`、`etf-candlesticks-batch`、`etf-component-details`、`etf-components-all`、`etf-description-all`、`etf-minutes` 等 17 个 |
 | **债券专题** | 9 | `cb-lists`、`convertible-bond-candlesticks`、`convertible-bond-candlesticks-batch`、`convertible-bond-minutes`、`convertible-bond-realtime-day-kline`、`convertible-bond-realtime-minute-kline`、`convertible-bond-szse-directed-trades`、`convertible-bond-szse-matching-trades` 等 9 个 |
 | **公募基金** | 18 | `fund-asset-allocation-single-fund-paginated`、`fund-basicinfo-single-fund`、`fund-cal-return-single-fund-specific-period`、`fund-classification-single-fund`、`fund-company-list-paginated`、`fund-fee-single-fund-paginated`、`fund-holder-structure-single-fund`、`fund-index-tracking-funds` 等 18 个 |

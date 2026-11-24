@@ -68,6 +68,10 @@ python <RUN_PY> market-announcements --keyword 回购 --start-date 20261001 --en
 python <RUN_PY> periodic-reports --stock-code 000001.SZ --report-type annual --page 1 --page-size 20
 python <RUN_PY> index-fut-depth --trade-date 20261030 --code-prefix IF
 python <RUN_PY> sw-index-daily-quotes --index-code 801001 --start-date 20261101 --end-date 20261111 --page 1 --page-size 2
+python <RUN_PY> sector-knowledge-search-options
+python <RUN_PY> sector-knowledge-sectors --market CN --name-keyword 半导体
+python <RUN_PY> sector-knowledge-facts --sector-name A股半导体 --fact-category 行业供需 --start-date 20260101 --end-date 20261123 --sort latest
+python <RUN_PY> sector-knowledge-insights --sector-name A股半导体 --insight-category 产业景气研判 --min-confidence 0.8 --sort confidence
 ```
 
 下载类：
@@ -94,7 +98,7 @@ python <RUN_PY> periodic-reports --url-hash 37801609...68090432 --output ./repor
 定位顺序：
 
 1. **快速路由**：`python <RUN_PY> --index` 输出「名称 + 触发场景」一行一个；`--index --json` 输出结构化 JSON（含 route / doc_url / tier），便于程序化匹配。
-2. **完整索引**：`sub-skills/INDEX.md`，249 个子技能按业务域分组，含「子技能 / 接口 / 路由 / 触发场景 / 套餐 / 在线文档」；按需读取，不必整体加载。
+2. **完整索引**：`sub-skills/INDEX.md`，253 个子技能按业务域分组，含「子技能 / 接口 / 路由 / 触发场景 / 套餐 / 在线文档」；按需读取，不必整体加载。
 3. **机器可读映射**：`sub-skills/manifest.tsv`（`skill / route / doc_title / doc_url / tier / category / description`）；`sub-skills/doc-map.tsv` 保存路由到文档标题/链接/套餐的映射。
 4. **单接口细节**：读对应 `sub-skills/<名称>/SKILL.md`；完整字段与示例见其指向的在线文档（markdown 链接可直接抓取）。
 
