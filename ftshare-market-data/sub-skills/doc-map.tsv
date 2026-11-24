@@ -252,3 +252,4 @@ route	doc_title	doc_url	tier	category
 /api/v3/market/data/sector-knowledge/insights	板块洞察检索			股票数据
 /api/v3/market/data/sector-knowledge/sectors	板块描述列表			股票数据
 /api/v3/market/data/sector-knowledge/search-options	板块知识检索选项			股票数据
+/api/v1/market/data/futures/dominant-mapping	期货主力合约映射			期货数据

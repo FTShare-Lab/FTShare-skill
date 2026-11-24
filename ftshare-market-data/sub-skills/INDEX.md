@@ -1,7 +1,7 @@
 # 子技能索引
 
 > 本文件由 `tools/index_skills.py --write` 生成，请勿手改。
-> 共 253 个子技能；「在线文档」为可直接抓取的 markdown 链接。
+> 共 254 个子技能；「在线文档」为可直接抓取的 markdown 链接。
 > 按需读取本文件做路由，日常对话不必加载；文件较大，建议按分组或关键词检索，
 > 精简清单用 `python run.py --index`（名称 + 触发场景）。
 
@@ -228,7 +228,7 @@
 | `sw-industry-daily-metrics` | 申万行业日度指标 | `/api/v1/market/data/sw-industry/daily-metrics` | 查询单个申万行业的日频估值/资金/量价指标时间序列，包含 PE（LYR/TTM 及分位/中位数）、PB、股息率、换手率、总市值、收盘价、破… | 免费版 | [申万行业日度指标](https://market.ft.tech/gateway/doc/pages/9p19gdz0.md) |
 | `sw-industry-overview` | 申万行业总览 | `/api/v1/market/data/sw-industry/overview` | 按交易日查询申万行业全部层级（一、二、三级行业）的估值概况快照，含成份股数、PE（LYR/TTM）及历史分位、PB 及分位、股息率及分位。… | 免费版 | [申万行业总览](https://market.ft.tech/gateway/doc/pages/x1q1shn7.md) |
 
-## 期货数据（19）
+## 期货数据（20）
 
 | 子技能 | 接口 | 路由 | 触发场景 | 套餐 | 在线文档 |
 |---|---|---|---|---|---|
@@ -236,6 +236,7 @@
 | `eastmoney-futures-strange` | 东方财富期货龙虎榜 | `/api/v1/market/data/eastmoney-futures-strange` | 查询东方财富期货龙虎榜面板（成交量/持仓量多空排名等）。用户提到「东财期货龙虎榜」「期货龙虎榜面板」「期货会员排名」「eastmoney … | 免费版 | [东方财富期货龙虎榜](https://market.ft.tech/gateway/doc/pages/h5s1a7oc.md) |
 | `futures-base-data` | 中国期货基础数据 | `/api/v1/market/data/futures/futures-base-data` | 查询指定交易日的期货合约要素，包括交易单位、最小变动价位、保证金、合约乘数、上市日、最后交易日和交割信息。可用参数：--trade-dat… | 免费版 | [中国期货基础数据](https://market.ft.tech/gateway/doc/pages/qd32szq6.md) |
 | `futures-daily-kline` | 期货官方日K与9999主连 | `/api/v1/market/data/futures/daily-kline` | 查询期货真实合约或 9999 主连的官方日 K（futures_daily_kline，GET /api/v1/market/data/f… | 免费版 | [期货官方日K与9999主连](https://market.ft.tech/gateway/doc/pages/g7x1q4wp.md) |
+| `futures-dominant-mapping` | 期货主力合约映射 | `/api/v1/market/data/futures/dominant-mapping` | 查询指定生效交易日的期货主力合约映射，返回各交易所各品种的主力合约代码与规则版本。当用户询问期货主力合约、主连对应真实合约、某日主力是哪个… | — | 期货主力合约映射 |
 | `futures-kline` | 期货合约历史K线 | `/api/v1/market/data/futures/kline` | 查询期货合约历史 K 线（期货合约日/周/月/季 K 线，futures_kline）。用户问期货合约 K 线、期货日K/周K/月K、合约… | 免费版 | [期货合约历史K线](https://market.ft.tech/gateway/doc/pages/j3w50zz7.md) |
 | `futures-kline-batch` | 批量期货合约历史K线 | `/api/v2/market/data/futures/kline/batch` | 批量查询多个期货合约的历史 K 线（futures_kline_batch，GET /api/v2/market/data/futures… | 基础版 | [批量期货合约历史K线](https://market.ft.tech/gateway/doc/pages/0ausz81h.md) |
 | `futures-limit` | 期货合约涨跌停价 | `/api/v1/market/data/futures/ft-limit` | 查询期货合约每日涨停价、跌停价。接口：GET /api/v1/market/data/futures/ft-limit。 | 免费版 | [期货合约涨跌停价](https://market.ft.tech/gateway/doc/pages/5nbz5zdb.md) |
